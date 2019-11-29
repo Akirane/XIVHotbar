@@ -1,0 +1,17 @@
+<hotbar>
+    <field>
+        <hotbar_3></hotbar_3>
+        <hotbar_4></hotbar_4>
+        <hotbar_2></hotbar_2>
+        <hotbar_1></hotbar_1>
+
+    </field>
+    <battle>
+        <hotbar_3></hotbar_3>
+        <hotbar_4></hotbar_4>
+        <hotbar_2></hotbar_2>
+        <hotbar_1></hotbar_1>
+
+    </battle>
+
+</hotbar>

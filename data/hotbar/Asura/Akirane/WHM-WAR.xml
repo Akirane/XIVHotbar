@@ -1,0 +1,523 @@
+<hotbar>
+    <field>
+        <hotbar_3>
+            <slot_2>
+                <target>stal</target>
+                <type>ma</type>
+                <action>Paralyna</action>
+                <alias>Par.</alias>
+
+            </slot_2>
+            <slot_0>
+                <target>me</target>
+                <type>ma</type>
+                <action>Aquaveil</action>
+                <alias>Aq.</alias>
+
+            </slot_0>
+            <slot_4>
+                <target>stal</target>
+                <type>ma</type>
+                <action>Blindna</action>
+                <alias>Bli.</alias>
+
+            </slot_4>
+            <slot_3>
+                <target>stal</target>
+                <type>ma</type>
+                <action>Poisona</action>
+                <alias>Poi.</alias>
+
+            </slot_3>
+            <slot_1>
+                <target>stal</target>
+                <type>ma</type>
+                <action>Viruna</action>
+                <alias>Vir.</alias>
+
+            </slot_1>
+
+        </hotbar_3>
+        <hotbar_4>
+            <slot_4>
+                <target>me</target>
+                <type>ma</type>
+                <action>Barthundra</action>
+                <alias>BrTh</alias>
+
+            </slot_4>
+            <slot_7>
+                <target>me</target>
+                <type>ma</type>
+                <action>Barparalyzra</action>
+                <alias>BrPar</alias>
+
+            </slot_7>
+            <slot_2>
+                <target>me</target>
+                <type>ma</type>
+                <action>Shellra V</action>
+                <alias></alias>
+
+            </slot_2>
+            <slot_5>
+                <target>me</target>
+                <type>ma</type>
+                <action>Barpoisonra</action>
+                <alias>BrPoi</alias>
+
+            </slot_5>
+            <slot_8>
+                <target>me</target>
+                <type>ma</type>
+                <action>Baramnesra</action>
+                <alias>BrAmn</alias>
+
+            </slot_8>
+            <slot_3>
+                <target>me</target>
+                <type>ma</type>
+                <action>Barwatera</action>
+                <alias>BrWa</alias>
+
+            </slot_3>
+            <slot_1>
+                <target>me</target>
+                <type>ma</type>
+                <action>Protectra V</action>
+                <alias></alias>
+
+            </slot_1>
+
+        </hotbar_4>
+        <hotbar_2>
+            <slot_2>
+                <target>me</target>
+                <type>ma</type>
+                <action>Mihli Aliapoh</action>
+                <alias>MA</alias>
+
+            </slot_2>
+            <slot_7>
+                <target>me</target>
+                <type>ma</type>
+                <action>Qultada</action>
+                <alias>Qul.</alias>
+
+            </slot_7>
+            <slot_9>
+                <target>stal</target>
+                <type>ma</type>
+                <action>Sneak</action>
+                <alias>Snk.</alias>
+
+            </slot_9>
+            <slot_6>
+                <target>me</target>
+                <type>ma</type>
+                <action>Arciela II</action>
+                <alias>Arc.II</alias>
+
+            </slot_6>
+            <slot_3>
+                <target>me</target>
+                <type>ma</type>
+                <action>Ulmia</action>
+                <alias>Ulmia</alias>
+
+            </slot_3>
+            <slot_4>
+                <target>me</target>
+                <type>ma</type>
+                <action>Kupofried</action>
+                <alias>Kupof.</alias>
+
+            </slot_4>
+            <slot_5>
+                <target>me</target>
+                <type>ma</type>
+                <action>Zeid II</action>
+                <alias>Zeid2</alias>
+
+            </slot_5>
+            <slot_8>
+                <target>me</target>
+                <type>ma</type>
+                <action>Sylvie (UC)</action>
+                <alias>Sylvie</alias>
+
+            </slot_8>
+            <slot_1>
+                <target>me</target>
+                <type>ma</type>
+                <action>Joachim</action>
+                <alias>Joa.</alias>
+
+            </slot_1>
+            <slot_0>
+                <target>stal</target>
+                <type>ma</type>
+                <action>Invisible</action>
+                <alias>Inv.</alias>
+
+            </slot_0>
+
+        </hotbar_2>
+        <hotbar_1>
+            <slot_2>
+                <target>me</target>
+                <type>ct</type>
+                <action>dismount</action>
+                <alias>Dismnt.</alias>
+
+            </slot_2>
+            <slot_7>
+                <target>me</target>
+                <type>item</type>
+                <action>Assassin&apos;s drink</action>
+                <alias>M.Acc</alias>
+
+            </slot_7>
+            <slot_9>
+                <target>me</target>
+                <type>item</type>
+                <action>echo drops</action>
+                <alias>Echo</alias>
+
+            </slot_9>
+            <slot_6>
+                <target>me</target>
+                <type>ma</type>
+                <action>Phalanx</action>
+                <alias>Phx.</alias>
+
+            </slot_6>
+            <slot_1>
+                <target>me</target>
+                <type>ct</type>
+                <action>mount crab</action>
+                <alias>Crab</alias>
+
+            </slot_1>
+            <slot_4>
+                <target>me</target>
+                <type>ma</type>
+                <action>Stoneskin</action>
+                <alias></alias>
+
+            </slot_4>
+            <slot_5>
+                <target>me</target>
+                <type>ma</type>
+                <action>Blink</action>
+                <alias>Blink</alias>
+
+            </slot_5>
+            <slot_8>
+                <target>me</target>
+                <type>item</type>
+                <action>Braver&apos;s drink</action>
+                <alias>Att.Up</alias>
+
+            </slot_8>
+            <slot_0>
+                <target>t</target>
+                <type>item</type>
+                <action>Special Gobbiedial Key</action>
+                <alias>G.Key</alias>
+
+            </slot_0>
+            <slot_3>
+                <target>stal</target>
+                <type>ma</type>
+                <action>Cure III</action>
+                <alias></alias>
+
+            </slot_3>
+
+        </hotbar_1>
+
+    </field>
+    <battle>
+        <hotbar_3>
+            <slot_2>
+                <target>me</target>
+                <type>ja</type>
+                <action>Convert</action>
+                <alias>Conv.</alias>
+
+            </slot_2>
+            <slot_7>
+                <target>me</target>
+                <type>ja</type>
+                <action>Berserk</action>
+                <alias>Ber.</alias>
+
+            </slot_7>
+            <slot_1>
+                <target>me</target>
+                <type>ma</type>
+                <action>Boost-STR</action>
+                <alias>STR</alias>
+
+            </slot_1>
+            <slot_6>
+                <target>me</target>
+                <type>ma</type>
+                <action>Boost-DEX</action>
+                <alias>DEX</alias>
+
+            </slot_6>
+            <slot_0>
+                <target>me</target>
+                <type>ma</type>
+                <action>Stoneskin</action>
+                <alias></alias>
+
+            </slot_0>
+            <slot_4>
+                <target>me</target>
+                <type>ma</type>
+                <action>Esuna</action>
+                <alias>Esuna</alias>
+
+            </slot_4>
+            <slot_5>
+                <target>stal</target>
+                <type>ma</type>
+                <action>Sacrifice</action>
+                <alias></alias>
+
+            </slot_5>
+            <slot_8>
+                <target>t</target>
+                <type>ws</type>
+                <action>Black Halo</action>
+                <alias>BH</alias>
+
+            </slot_8>
+            <slot_9>
+                <target>me</target>
+                <type>ma</type>
+                <action>Blink</action>
+                <alias>Blink</alias>
+
+            </slot_9>
+            <slot_3>
+                <target>stal</target>
+                <type>ma</type>
+                <action>Arise</action>
+                <alias>Arise</alias>
+
+            </slot_3>
+
+        </hotbar_3>
+        <hotbar_4>
+            <slot_9>
+                <target>stnpc</target>
+                <type>ma</type>
+                <action>Banish III</action>
+                <alias></alias>
+
+            </slot_9>
+            <slot_7>
+                <target>me</target>
+                <type>ja</type>
+                <action>Afflatus Solace</action>
+                <alias></alias>
+
+            </slot_7>
+            <slot_6>
+                <target>t</target>
+                <type>ws</type>
+                <action>Hexa Strike</action>
+                <alias>Hexa.</alias>
+
+            </slot_6>
+            <slot_2>
+                <target>me</target>
+                <type>ma</type>
+                <action>Barstonra</action>
+                <alias>BrStn</alias>
+
+            </slot_2>
+            <slot_4>
+                <target>me</target>
+                <type>ma</type>
+                <action>Aquaveil</action>
+                <alias>Aq.</alias>
+
+            </slot_4>
+            <slot_5>
+                <target>stal</target>
+                <type>ma</type>
+                <action>Cure III</action>
+                <alias></alias>
+
+            </slot_5>
+            <slot_8>
+                <target>me</target>
+                <type>ja</type>
+                <action>Afflatus Misery</action>
+                <alias></alias>
+
+            </slot_8>
+            <slot_1>
+                <target>me</target>
+                <type>ma</type>
+                <action>Barparalyzra</action>
+                <alias>BrPar</alias>
+
+            </slot_1>
+            <slot_0>
+                <target>stnpc</target>
+                <type>ma</type>
+                <action>Holy II</action>
+                <alias>Holy II</alias>
+
+            </slot_0>
+
+        </hotbar_4>
+        <hotbar_2>
+            <slot_2>
+                <target>stnpc</target>
+                <type>ma</type>
+                <action>Dia II</action>
+                <alias></alias>
+
+            </slot_2>
+            <slot_7>
+                <target>stnpc</target>
+                <type>ma</type>
+                <action>Silence</action>
+                <alias>Siln.</alias>
+
+            </slot_7>
+            <slot_9>
+                <target>me</target>
+                <type>ja</type>
+                <action>Sublimation</action>
+                <alias>Sub.</alias>
+
+            </slot_9>
+            <slot_6>
+                <target>stal</target>
+                <type>ma</type>
+                <action>Erase</action>
+                <alias>Era.</alias>
+
+            </slot_6>
+            <slot_0>
+                <target>stal</target>
+                <type>ma</type>
+                <action>Poisona</action>
+                <alias>Poi.</alias>
+
+            </slot_0>
+            <slot_4>
+                <target>stal</target>
+                <type>ma</type>
+                <action>Cursna</action>
+                <alias>Cursna</alias>
+
+            </slot_4>
+            <slot_5>
+                <target>stal</target>
+                <type>ma</type>
+                <action>Paralyna</action>
+                <alias>Para.</alias>
+
+            </slot_5>
+            <slot_8>
+                <target>t</target>
+                <type>ws</type>
+                <action>Mystic Boon</action>
+                <alias>MB</alias>
+
+            </slot_8>
+            <slot_3>
+                <target>stnpc</target>
+                <type>ma</type>
+                <action>Paralyze</action>
+                <alias>Para.</alias>
+
+            </slot_3>
+            <slot_1>
+                <target>stal</target>
+                <type>ma</type>
+                <action>Cure V</action>
+                <alias></alias>
+
+            </slot_1>
+
+        </hotbar_2>
+        <hotbar_1>
+            <slot_2>
+                <target>stal</target>
+                <type>ma</type>
+                <action>Curaga III</action>
+                <alias> </alias>
+
+            </slot_2>
+            <slot_0>
+                <target>stnpc</target>
+                <type>ma</type>
+                <action>Flash</action>
+                <alias>Flash</alias>
+
+            </slot_0>
+            <slot_6>
+                <target>stnpc</target>
+                <type>ma</type>
+                <action>Repose</action>
+                <alias>Rep.</alias>
+
+            </slot_6>
+            <slot_9>
+                <target>me</target>
+                <type>ma</type>
+                <action>Ice Spikes</action>
+                <alias>Ice.Sp.</alias>
+
+            </slot_9>
+            <slot_4>
+                <target>stnpc</target>
+                <type>ma</type>
+                <action>Slow</action>
+                <alias></alias>
+
+            </slot_4>
+            <slot_5>
+                <target>stal</target>
+                <type>ma</type>
+                <action>Regen IV</action>
+                <alias></alias>
+
+            </slot_5>
+            <slot_8>
+                <target>me</target>
+                <type>ma</type>
+                <action>Auspice</action>
+                <alias> </alias>
+
+            </slot_8>
+            <slot_3>
+                <target>stal</target>
+                <type>ma</type>
+                <action>Haste</action>
+                <alias> </alias>
+
+            </slot_3>
+            <slot_1>
+                <target>stal</target>
+                <type>ma</type>
+                <action>Cure IV</action>
+                <alias> </alias>
+
+            </slot_1>
+
+        </hotbar_1>
+
+    </battle>
+
+</hotbar>

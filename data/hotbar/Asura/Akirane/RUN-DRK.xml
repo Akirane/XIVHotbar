@@ -1,0 +1,291 @@
+<hotbar>
+    <field>
+        <hotbar_3></hotbar_3>
+        <hotbar_2>
+            <slot_6>
+                <target>me</target>
+                <type>ma</type>
+                <action>Arciela II</action>
+                <alias>Arc.II</alias>
+
+            </slot_6>
+            <slot_4>
+                <target>me</target>
+                <type>ma</type>
+                <action>Iroha II</action>
+                <alias>Iroha2</alias>
+
+            </slot_4>
+            <slot_5>
+                <target>me</target>
+                <type>ma</type>
+                <action>Zeid II</action>
+                <alias>Zeid2</alias>
+
+            </slot_5>
+            <slot_3>
+                <target>me</target>
+                <type>ma</type>
+                <action>Ulmia</action>
+                <alias>Ulmia</alias>
+
+            </slot_3>
+            <slot_2>
+                <target>me</target>
+                <type>ma</type>
+                <action>Yoran-Oran (UC)</action>
+                <alias>Yor.</alias>
+
+            </slot_2>
+            <slot_1>
+                <target>me</target>
+                <type>ma</type>
+                <action>Trion</action>
+                <alias>Trion</alias>
+
+            </slot_1>
+
+        </hotbar_2>
+        <hotbar_1>
+            <slot_6>
+                <target>stal</target>
+                <type>ma</type>
+                <action>Shell V</action>
+                <alias>She.V</alias>
+
+            </slot_6>
+            <slot_2>
+                <target>me</target>
+                <type>ct</type>
+                <action>dismount</action>
+                <alias>Dismnt.</alias>
+
+            </slot_2>
+            <slot_5>
+                <target>stal</target>
+                <type>ma</type>
+                <action>Protect V</action>
+                <alias>Pro.V</alias>
+
+            </slot_5>
+            <slot_1>
+                <target>me</target>
+                <type>ct</type>
+                <action>mount raptor</action>
+                <alias>Raptor</alias>
+
+            </slot_1>
+            <slot_0>
+                <target>me</target>
+                <type>ct</type>
+                <action>map</action>
+                <alias>Map</alias>
+
+            </slot_0>
+
+        </hotbar_1>
+
+    </field>
+    <battle>
+        <hotbar_3>
+            <slot_7>
+                <target>me</target>
+                <type>ja</type>
+                <action>Last Resort</action>
+                <alias>L.R.</alias>
+
+            </slot_7>
+            <slot_1>
+                <target>me</target>
+                <type>ja</type>
+                <action>Vallation</action>
+                <alias>Vall.</alias>
+
+            </slot_1>
+            <slot_4>
+                <target>me</target>
+                <type>ja</type>
+                <action>Liement</action>
+                <alias>Lie.</alias>
+
+            </slot_4>
+            <slot_5>
+                <target>me</target>
+                <type>ma</type>
+                <action>Battuta</action>
+                <alias>Bat.</alias>
+
+            </slot_5>
+            <slot_8>
+                <target>me</target>
+                <type>ja</type>
+                <action>Souleater</action>
+                <alias>S.E</alias>
+
+            </slot_8>
+            <slot_2>
+                <target>me</target>
+                <type>ja</type>
+                <action>Pflug</action>
+                <alias>Pflug</alias>
+
+            </slot_2>
+            <slot_3>
+                <target>me</target>
+                <type>ja</type>
+                <action>Valiance</action>
+                <alias>Vali.</alias>
+
+            </slot_3>
+
+        </hotbar_3>
+        <hotbar_2>
+            <slot_9>
+                <target>me</target>
+                <type>ja</type>
+                <action>Lux</action>
+                <alias>Lux</alias>
+
+            </slot_9>
+            <slot_7>
+                <target>me</target>
+                <type>ja</type>
+                <action>Sulpor</action>
+                <alias>Sul.</alias>
+
+            </slot_7>
+            <slot_1>
+                <target>me</target>
+                <type>ja</type>
+                <action>Composure</action>
+                <alias>Comp.</alias>
+
+            </slot_1>
+            <slot_6>
+                <target>me</target>
+                <type>ja</type>
+                <action>Tellus</action>
+                <alias>Tel.</alias>
+
+            </slot_6>
+            <slot_3>
+                <target>me</target>
+                <type>ja</type>
+                <action>Ignis</action>
+                <alias>Ignis</alias>
+
+            </slot_3>
+            <slot_4>
+                <target>me</target>
+                <type>ja</type>
+                <action>Gelus</action>
+                <alias>Gelus</alias>
+
+            </slot_4>
+            <slot_5>
+                <target>me</target>
+                <type>ja</type>
+                <action>Flabra</action>
+                <alias>Flabra</alias>
+
+            </slot_5>
+            <slot_8>
+                <target>me</target>
+                <type>ja</type>
+                <action>Unda</action>
+                <alias>Unda</alias>
+
+            </slot_8>
+            <slot_2>
+                <target>me</target>
+                <type>ma</type>
+                <action>Crusade</action>
+                <alias>Crus.</alias>
+
+            </slot_2>
+            <slot_0>
+                <target>me</target>
+                <type>ja</type>
+                <action>Tenebrae</action>
+                <alias>Ten.</alias>
+
+            </slot_0>
+
+        </hotbar_2>
+        <hotbar_1>
+            <slot_2>
+                <target>t</target>
+                <type>ma</type>
+                <action>Stun</action>
+                <alias>Stun</alias>
+
+            </slot_2>
+            <slot_7>
+                <target>stal</target>
+                <type>ma</type>
+                <action>Phalanx II</action>
+                <alias>Ph.2</alias>
+
+            </slot_7>
+            <slot_1>
+                <target>stal</target>
+                <type>ma</type>
+                <action>Regen IV</action>
+                <alias>R.IV</alias>
+
+            </slot_1>
+            <slot_6>
+                <target>stal</target>
+                <type>ma</type>
+                <action>Shell V</action>
+                <alias>Shl.5</alias>
+
+            </slot_6>
+            <slot_9>
+                <target>me</target>
+                <type>ma</type>
+                <action>Ice Spikes</action>
+                <alias>Ice.Sp.</alias>
+
+            </slot_9>
+            <slot_4>
+                <target>t</target>
+                <type>ja</type>
+                <action>Lunge</action>
+                <alias>Lunge</alias>
+
+            </slot_4>
+            <slot_5>
+                <target>me</target>
+                <type>ja</type>
+                <action>Swordplay</action>
+                <alias>Swrd.</alias>
+
+            </slot_5>
+            <slot_8>
+                <target>me</target>
+                <type>ma</type>
+                <action>Phalanx</action>
+                <alias>Phal.</alias>
+
+            </slot_8>
+            <slot_3>
+                <target>t</target>
+                <type>ma</type>
+                <action>Flash</action>
+                <alias>Flash</alias>
+
+            </slot_3>
+            <slot_0>
+                <target>t</target>
+                <type>ws</type>
+                <action>Resolution</action>
+                <alias>Res.</alias>
+
+            </slot_0>
+
+        </hotbar_1>
+
+    </battle>
+
+</hotbar>

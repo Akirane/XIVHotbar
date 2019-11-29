@@ -1,0 +1,198 @@
+<hotbar>
+    <field>
+        <hotbar_3></hotbar_3>
+        <hotbar_2>
+            <slot_6>
+                <target>me</target>
+                <type>ma</type>
+                <action>Arciela II</action>
+                <alias>Arc.II</alias>
+
+            </slot_6>
+            <slot_4>
+                <target>me</target>
+                <type>ma</type>
+                <action>Iroha II</action>
+                <alias>Iroha2</alias>
+
+            </slot_4>
+            <slot_5>
+                <target>me</target>
+                <type>ma</type>
+                <action>Zeid II</action>
+                <alias>Zeid2</alias>
+
+            </slot_5>
+            <slot_1>
+                <target>me</target>
+                <type>ma</type>
+                <action>Trion</action>
+                <alias>Trion</alias>
+
+            </slot_1>
+            <slot_2>
+                <target>me</target>
+                <type>ma</type>
+                <action>Yoran-Oran (UC)</action>
+                <alias>Yor.</alias>
+
+            </slot_2>
+            <slot_3>
+                <target>me</target>
+                <type>ma</type>
+                <action>Ulmia</action>
+                <alias>Ulmia</alias>
+
+            </slot_3>
+
+        </hotbar_2>
+        <hotbar_1>
+            <slot_2>
+                <target>me</target>
+                <type>ct</type>
+                <action>dismount</action>
+                <alias>Dismnt.</alias>
+
+            </slot_2>
+            <slot_1>
+                <target>me</target>
+                <type>ct</type>
+                <action>mount raptor</action>
+                <alias>Raptor</alias>
+
+            </slot_1>
+            <slot_9>
+                <icon>return-trust</icon>
+                <type>ct</type>
+                <alias>No Trusts</alias>
+                <action>returntrust all</action>
+
+            </slot_9>
+            <slot_0>
+                <target>me</target>
+                <type>ct</type>
+                <action>map</action>
+                <alias>Map</alias>
+
+            </slot_0>
+            <slot_3>
+                <target>t</target>
+                <type>ma</type>
+                <action>Dia II</action>
+                <alias>Dia II</alias>
+
+            </slot_3>
+
+        </hotbar_1>
+
+    </field>
+    <battle>
+        <hotbar_3></hotbar_3>
+        <hotbar_2>
+            <slot_3>
+                <target>t</target>
+                <type>ws</type>
+                <action>Slug Shot</action>
+                <alias>Slg.Sh.</alias>
+
+            </slot_3>
+            <slot_9>
+                <target>me</target>
+                <type>ma</type>
+                <action>Tonko: Ni</action>
+                <alias>To.Ni</alias>
+
+            </slot_9>
+            <slot_0>
+                <target>mo.ich.</target>
+                <type>ma</type>
+                <action>Monomi: Ichi</action>
+                <alias>me</alias>
+
+            </slot_0>
+            <slot_4>
+                <target>t</target>
+                <type>ct</type>
+                <action>ra</action>
+                <alias>RA</alias>
+
+            </slot_4>
+
+        </hotbar_2>
+        <hotbar_1>
+            <slot_2>
+                <target>me</target>
+                <type>ja</type>
+                <action>Barrage</action>
+                <alias>Brg.</alias>
+
+            </slot_2>
+            <slot_7>
+                <target>me</target>
+                <type>ja</type>
+                <action>Scavenge</action>
+                <alias>Scvg.</alias>
+
+            </slot_7>
+            <slot_0>
+                <target>me</target>
+                <type>ma</type>
+                <action>Utsusemi: Ni</action>
+                <alias>Ut.Ni</alias>
+
+            </slot_0>
+            <slot_6>
+                <target>stnpc</target>
+                <type>ja</type>
+                <action>Shadowbind</action>
+                <alias>Shd.B.</alias>
+
+            </slot_6>
+            <slot_3>
+                <target>me</target>
+                <type>ja</type>
+                <action>Sharpshot</action>
+                <alias>Shp.</alias>
+
+            </slot_3>
+            <slot_4>
+                <target>me</target>
+                <type>ja</type>
+                <action>Unlimited Shot</action>
+                <alias>Un.Sh.</alias>
+
+            </slot_4>
+            <slot_5>
+                <target>me</target>
+                <type>ja</type>
+                <action>Double Shot</action>
+                <alias>Dbl.Sh.</alias>
+
+            </slot_5>
+            <slot_8>
+                <target>st</target>
+                <type>ja</type>
+                <action>Eagle Eye Shot</action>
+                <alias>E.E</alias>
+
+            </slot_8>
+            <slot_9>
+                <target>me</target>
+                <type>ma</type>
+                <action>Utsusemi: Ichi</action>
+                <alias>Ut.Ich.</alias>
+
+            </slot_9>
+            <slot_1>
+                <target>me</target>
+                <type>ja</type>
+                <action>Velocity Shot</action>
+                <alias>Vl.Sh.</alias>
+
+            </slot_1>
+
+        </hotbar_1>
+
+    </battle>
+
+</hotbar>
