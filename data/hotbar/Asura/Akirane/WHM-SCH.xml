@@ -15,20 +15,6 @@
                 <alias>Bli.</alias>
 
             </slot_4>
-            <slot_0>
-                <target>me</target>
-                <type>ma</type>
-                <action>Aquaveil</action>
-                <alias>Aq.</alias>
-
-            </slot_0>
-            <slot_2>
-                <target>stal</target>
-                <type>ma</type>
-                <action>Paralyna</action>
-                <alias>Par.</alias>
-
-            </slot_2>
             <slot_7>
                 <target>me</target>
                 <type>item</type>
@@ -36,6 +22,20 @@
                 <alias>Poison.</alias>
 
             </slot_7>
+            <slot_2>
+                <target>stal</target>
+                <type>ma</type>
+                <action>Paralyna</action>
+                <alias>Par.</alias>
+
+            </slot_2>
+            <slot_5>
+                <target>stnpc</target>
+                <type>ma</type>
+                <action>Silena</action>
+                <alias>Sil.</alias>
+
+            </slot_5>
             <slot_8>
                 <target></target>
                 <type>gs</type>
@@ -324,6 +324,13 @@
                 <alias>D.A.</alias>
 
             </slot_5>
+            <slot_8>
+                <target>t</target>
+                <type>ws</type>
+                <action>Black Halo</action>
+                <alias>BH</alias>
+
+            </slot_8>
             <slot_0>
                 <target>me</target>
                 <type>ma</type>
@@ -404,13 +411,6 @@
                 <alias></alias>
 
             </slot_1>
-            <slot_0>
-                <target>t</target>
-                <type>ma</type>
-                <action>Holy II</action>
-                <alias>Holy II</alias>
-
-            </slot_0>
 
         </hotbar_4>
         <hotbar_2>
@@ -517,7 +517,7 @@
             </slot_6>
             <slot_9>
                 <target>me</target>
-                <type>ma</type>
+                <type>ja</type>
                 <action>Divine Caress</action>
                 <alias>Div.Ca.</alias>
 

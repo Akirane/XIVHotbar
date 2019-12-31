@@ -1,7 +1,7 @@
 
 xivhotbar_keybinds_general['Root'] = {
     -- #1 Hotbar
-	{'f 1 1', 'ct', '/htb mount crab', 'me', 'Crab'},
+	{'f 1 1', 'ct', '/htb mount Raptor', 'me', 'Rapt.'},
 	-- {'f 1 2', 'ct', 'dismount', 'me', 'Dismnt.'},
 	{'f 1 7', 'item', "Panacea",'me', 'Pana.'},
 	{'f 1 8', 'item', "Remedy",'me', 'Rem.'},

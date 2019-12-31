@@ -1,5 +1,5 @@
 # xivhotbar - [WIP]
-This addon adds a hotbar to FFXI, akin to those of more modern MMOs, along with recast times and mp/tp costs. It can also trigger custom commands.
+This version is further work on SirEdeonX's original addon, you can check his work from here: https://github.com/SirEdeonX/FFXIAddons/tree/master/xivhotbar. 
 
 ![alt text](http://i.imgur.com/RnpVLbZ.png)
 
@@ -20,6 +20,13 @@ This is a very simple version with a lot of features still missing and A LOT of 
 
 ##### Latest Changes:
 ```
+ 30/11/19
+	- Now most file operations use .lua instead of .xml files, making loading much faster.
+	- Increased the number of hotbars showed simultaneously from 3 to 4.
+	- Added numbers to distinguish which hotbars are currently in use.
+	- Disabled the auto switching of hotbars in battle.
+	- Removed MP and TP cost.
+
  09/05/17
     - Added various addon commands
  08/05/17
@@ -33,9 +40,12 @@ This is a very simple version with a lot of features still missing and A LOT of 
  ```
 
 ##### Limitations:
-1. The addon doesn't override the game's keys. So when activating the third hotbar with CTRL, the macro bar ingame will show and activate too. To go around it, you can use an empty macro page.
-2. The skill icons and info used were copied from the Timers plugin (you don't need to have it installed). As such, there are some icons that don't work and wrong elements on some skills
-3. 2hours recast is not working
+1. This addon binds keys, these keybinds will remain even after the addon is unloaded. Therefore take care with what you bind. 
+2. Due to how all SP share the same recast timer, it's currently not possible to show an icon for SP-abilities.
+
+##### Done:
+
+1. Add key mapping
 
 ##### Still todo:
 1. Add key mapping

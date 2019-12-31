@@ -10,25 +10,11 @@
             </slot_2>
             <slot_7>
                 <target>me</target>
-                <type>ma</type>
-                <action>Enwater</action>
-                <alias></alias>
+                <type>item</type>
+                <action>poison potion</action>
+                <alias>Poison.</alias>
 
             </slot_7>
-            <slot_0>
-                <target>me</target>
-                <type>ma</type>
-                <action>Aquaveil</action>
-                <alias>Aq.</alias>
-
-            </slot_0>
-            <slot_6>
-                <target>stnpc</target>
-                <type>ma</type>
-                <action>Water V</action>
-                <alias>Enfire II</alias>
-
-            </slot_6>
             <slot_9>
                 <target></target>
                 <type>gs</type>
@@ -36,6 +22,20 @@
                 <alias>TGAcc</alias>
 
             </slot_9>
+            <slot_6>
+                <target>stnpc</target>
+                <type>ma</type>
+                <action>Water V</action>
+                <alias>Enfire II</alias>
+
+            </slot_6>
+            <slot_3>
+                <target>stnpc</target>
+                <type>ma</type>
+                <action>Fire V</action>
+                <alias></alias>
+
+            </slot_3>
             <slot_4>
                 <target>stnpc</target>
                 <type>ma</type>
@@ -57,13 +57,6 @@
                 <alias>TGWep</alias>
 
             </slot_8>
-            <slot_3>
-                <target>stnpc</target>
-                <type>ma</type>
-                <action>Fire V</action>
-                <alias></alias>
-
-            </slot_3>
             <slot_1>
                 <target>stnpc</target>
                 <type>ma</type>
@@ -71,6 +64,13 @@
                 <alias></alias>
 
             </slot_1>
+            <slot_0>
+                <target>me</target>
+                <type>ja</type>
+                <action>Chainspell</action>
+                <alias> </alias>
+
+            </slot_0>
 
         </hotbar_3>
         <hotbar_4>
@@ -164,8 +164,8 @@
             <slot_6>
                 <target>me</target>
                 <type>ma</type>
-                <action>Arciela II</action>
-                <alias>Arc.II</alias>
+                <action>Koru-Moru</action>
+                <alias>Koru</alias>
 
             </slot_6>
             <slot_3>
@@ -192,8 +192,8 @@
             <slot_8>
                 <target>me</target>
                 <type>ma</type>
-                <action>Sylvie (UC)</action>
-                <alias>Sylvie</alias>
+                <action>Yoran-Oran (UC)</action>
+                <alias>Yoran</alias>
 
             </slot_8>
             <slot_1>
@@ -213,6 +213,20 @@
 
         </hotbar_2>
         <hotbar_1>
+            <slot_6>
+                <target>stnpc</target>
+                <type>ma</type>
+                <action>gravity ii</action>
+                <alias></alias>
+
+            </slot_6>
+            <slot_0>
+                <target>t</target>
+                <type>item</type>
+                <action>Special Gobbiedial Key</action>
+                <alias>G.Key</alias>
+
+            </slot_0>
             <slot_9>
                 <target>me</target>
                 <type>item</type>
@@ -223,38 +237,10 @@
             <slot_7>
                 <target>me</target>
                 <type>item</type>
-                <action>Assassin&apos;s drink</action>
-                <alias>M.Acc</alias>
+                <action>Panacea</action>
+                <alias>Pana.</alias>
 
             </slot_7>
-            <slot_6>
-                <target>me</target>
-                <type>item</type>
-                <action>Soldier&apos;s drink</action>
-                <alias>Atk.Up</alias>
-
-            </slot_6>
-            <slot_1>
-                <target>me</target>
-                <type>ct</type>
-                <action>/htb mount crab</action>
-                <alias>Crab</alias>
-
-            </slot_1>
-            <slot_4>
-                <target>me</target>
-                <type>ma</type>
-                <action>Stoneskin</action>
-                <alias></alias>
-
-            </slot_4>
-            <slot_5>
-                <target>me</target>
-                <type>item</type>
-                <action>Barbarian&apos;s drink</action>
-                <alias>Atk.Up</alias>
-
-            </slot_5>
             <slot_8>
                 <target>me</target>
                 <type>item</type>
@@ -262,20 +248,20 @@
                 <alias>Rem.</alias>
 
             </slot_8>
-            <slot_0>
-                <target>t</target>
-                <type>item</type>
-                <action>Special Gobbiedial Key</action>
-                <alias>G.Key</alias>
-
-            </slot_0>
-            <slot_3>
-                <target>stal</target>
+            <slot_5>
+                <target>stnpc</target>
                 <type>ma</type>
-                <action>Cure III</action>
+                <action>bind</action>
                 <alias></alias>
 
-            </slot_3>
+            </slot_5>
+            <slot_1>
+                <target>me</target>
+                <type>ct</type>
+                <action>/htb mount crab</action>
+                <alias>Crab</alias>
+
+            </slot_1>
 
         </hotbar_1>
 
@@ -289,6 +275,13 @@
                 <alias>Conv.</alias>
 
             </slot_2>
+            <slot_7>
+                <target>me</target>
+                <type>ma</type>
+                <action>utsusemi: ichi</action>
+                <alias>U.Ich.</alias>
+
+            </slot_7>
             <slot_1>
                 <target>me</target>
                 <type>ma</type>
@@ -376,13 +369,6 @@
                 <alias>CDC</alias>
 
             </slot_6>
-            <slot_2>
-                <target>me</target>
-                <type>ma</type>
-                <action>Aquaveil</action>
-                <alias>Aq.</alias>
-
-            </slot_2>
             <slot_4>
                 <target>me</target>
                 <type>ma</type>

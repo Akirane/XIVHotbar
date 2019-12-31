@@ -22,13 +22,6 @@
                 <alias>TGAcc</alias>
 
             </slot_9>
-            <slot_0>
-                <target>me</target>
-                <type>ma</type>
-                <action>Aquaveil</action>
-                <alias>Aq.</alias>
-
-            </slot_0>
 
         </hotbar_3>
         <hotbar_4></hotbar_4>
@@ -126,13 +119,6 @@
     </field>
     <battle>
         <hotbar_3>
-            <slot_2>
-                <target>me</target>
-                <type>ja</type>
-                <action>Berserk</action>
-                <alias>Ber.</alias>
-
-            </slot_2>
             <slot_3>
                 <target>me</target>
                 <type>ja</type>
@@ -140,6 +126,13 @@
                 <alias>Agg.</alias>
 
             </slot_3>
+            <slot_2>
+                <target>me</target>
+                <type>ja</type>
+                <action>Berserk</action>
+                <alias>Ber.</alias>
+
+            </slot_2>
             <slot_1>
                 <target>me</target>
                 <type>ja</type>
@@ -209,13 +202,6 @@
                 <alias>Bully</alias>
 
             </slot_4>
-            <slot_2>
-                <target>t</target>
-                <type>ws</type>
-                <action>Shadowstitch</action>
-                <alias>ShStch.</alias>
-
-            </slot_2>
             <slot_5>
                 <target>me</target>
                 <type>ja</type>
@@ -261,13 +247,6 @@
                 <alias>Col.</alias>
 
             </slot_7>
-            <slot_6>
-                <target>me</target>
-                <type>ja</type>
-                <action>Assassin&apos;s Charge</action>
-                <alias>As. Chrg.</alias>
-
-            </slot_6>
             <slot_0>
                 <target>t</target>
                 <type>ja</type>
@@ -275,13 +254,13 @@
                 <alias></alias>
 
             </slot_0>
-            <slot_4>
-                <target>t</target>
+            <slot_6>
+                <target>me</target>
                 <type>ja</type>
-                <action>Mug</action>
-                <alias>Mug</alias>
+                <action>Assassin&apos;s Charge</action>
+                <alias>A. Chg.</alias>
 
-            </slot_4>
+            </slot_6>
             <slot_10>
                 <target>me</target>
                 <type>ja</type>
@@ -289,6 +268,20 @@
                 <alias>Flee</alias>
 
             </slot_10>
+            <slot_4>
+                <target>t</target>
+                <type>ja</type>
+                <action>Mug</action>
+                <alias>Mug</alias>
+
+            </slot_4>
+            <slot_5>
+                <target>me</target>
+                <type>ja</type>
+                <action>Flee</action>
+                <alias>Flee</alias>
+
+            </slot_5>
             <slot_9>
                 <target>stal</target>
                 <type>ja</type>

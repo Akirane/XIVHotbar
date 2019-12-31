@@ -2,6 +2,7 @@
 xivhotbar_keybinds_job['Base'] = {
   -- Hotbar #1
   {'battle 1 1', 'ma', 'Regen IV', 'stal', 'R.IV'},
+--   {'battle 1 2', 'ma', 'Refresh II', 'stal', 'Rfrs2.'},
   {'battle 1 3', 'ma', 'Flash', 't', 'Flash'},
   {'battle 1 4', 'ja', 'Lunge', 't', 'Lunge'},
   {'battle 1 5', 'ja', 'Swordplay', 'me', 'Swrd.'},

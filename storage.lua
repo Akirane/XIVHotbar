@@ -54,12 +54,13 @@ end
 
 -- update file with hotbar
 function storage:save_hotbar(new_hotbar)
-    if not self.file:exists() then
-        error('Hotbar file could not be found!')
-        return
-    end
+    --if not self.file:exists() then
+    --    error('Hotbar file could not be found!')
+    --    return
+    --end
 
-    self.file:write(table.to_xml(new_hotbar))
+    --self.file:write(table.to_xml(new_hotbar))
+	return
 end
 
 return storage

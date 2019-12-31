@@ -47,6 +47,7 @@ function action_manager:build(type, action, target, alias, icon)
     end
 
     return new_action
+
 end
 
 -- build a custom action
