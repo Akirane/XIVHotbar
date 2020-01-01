@@ -3,6 +3,8 @@ This version is further work on SirEdeonX's original addon, you can check his wo
 
 ##### Latest Changes:
 ```
+ 1/1/20
+	- Added support for changing actions based on which avatar you are summoning. Take a look at data/Akirane/SMN.lua if you need an example on how to use it.
  30/11/19
 	- Now most file operations use .lua instead of .xml files, making loading much faster.
 	- Increased the number of hotbars showed simultaneously from 3 to 4.
