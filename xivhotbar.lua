@@ -369,11 +369,15 @@ windower.register_event('addon command', function(command, ...)
         else
             windower.chat.input('/mount '..args[1]..' <me>')
         end
-
-
-
-
-
+	elseif command == 'summon' then
+		local avatar_id = player:determine_summoner_id(args[1])
+		if (avatar_id == 0) then
+			print("Error, couldn't find avatar '"..args[1].."'... Unable to load actions for it.")
+		else
+			player:load_job_ability_actions(avatar_id)
+            ui:load_player_hotbar(player.hotbar, player.vitals, player.hotbar_settings.active_environment)
+		end
+        windower.chat.input('/ma '..args[1]..' <me>')
     elseif command == 'execute' then
         -- print("Running execute command. "..tonumber(args[1]).." "..tonumber(args[2]))
         change_active_hotbar(tonumber(args[1]))

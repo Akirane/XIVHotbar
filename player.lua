@@ -35,13 +35,23 @@ local player = {}
 
 buff_table = {
     [211] = 'Light Arts',
-    [212] = 'Dark Arts'
+    [212] = 'Dark Arts',
+	[1001] = 'Carbuncle',
+	[1002] = 'Ifrit',
+	[1003] = 'Shiva',
+	[1004] = 'Leviathan',
+	[1005] = 'Ramuh',
+	[1006] = 'Fenrir',
+	[1007] = 'Diabolos',
+	[1008] = 'Alexander',
+	[1009] = 'Caith Sith',
+	[1010] = 'Garuda',
+	[1011] = 'Odin',
+	[1012] = 'Titan',
+	[1013] = 'Atomos',
 }
 
-zone_table = {
-    [288] = 'Medicine',
-    [289] = 'Medicine',
-    [291] = 'Medicine'
+summoner_table = {
 }
 
 player.name = ''
@@ -194,8 +204,6 @@ function init_action_table(actions_table)
     actions_table.target = {}
     actions_table.alias = {}
 end
-
--- function player:load_zone_macros(zone_id)
 
 function player:load_job_ability_actions(buff_id)
     if (job_ability_actions.environment ~= nil) then
@@ -444,6 +452,15 @@ function player:add_action(action, environment, hotbar, slot)
     end
 
     self.hotbar[environment]['hotbar_' .. hotbar]['slot_' .. slot] = action
+end
+
+function player:determine_summoner_id(pet_name)
+	for buff_id, buff_name in pairs(buff_table) do
+		if buff_name == pet_name then
+			return buff_id
+		end
+	end
+	return 0
 end
 
 -- execute action from given slot
