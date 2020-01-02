@@ -28,8 +28,23 @@
 
 local keyboard = {}
 
-keyboard.less_great = -1
+-- Legends:
+-- %: Keybinding is only registered when the chat window is *not* open
+-- ^: CTRL
+-- !: Alt
+-- ~: Shift
+-- For example: "%~1" means "Shift+1" when chat window is not active.
 
+keyboard.hotbar_table = 
+{
+  {'%1', '%2', '%3', '!q', '%5', '%6', '%7', '%8', '%9', '%O'},          -- Row #1
+  {'!1', '%e', '!e', '%q', '!w', '%t', '!7', '^O', '!m', '^m'},          -- Row #2
+  {'^1', '^2', '^3', '^4', '^5', '^6', '^7', '^8', '^9', '^0'},          -- Row #3
+  {'%~1', '%~2', '%~3', '%~4', '%~q', '%~e', '%~r', '%~t', '%~c', '%~f'} -- Row #4
+}
+
+-- Anything below is currently not used, considering removing everything in the future.
+keyboard.less_great = -1
 keyboard.esc = 1
 keyboard.key_1 = 2
 keyboard.key_2 = 3
@@ -65,14 +80,7 @@ keyboard.up = 200
 keyboard.down = 208
 keyboard.left = 203
 keyboard.right = 205
-
-keyboard.hotbar_table = 
-{
-  {'%1', '%2', '%3', '!q', '%5', '%6', '%7', '%8', '%9', '%O'},
-  {'!1', '%e', '!e', '%q', '!w', '%t', '!7', '^O', '!m', '^m'},
-  {'^1', '^2', '^3', '^4', '^5', '^6', '^7', '^8', '^9', '^0'},
-  {'%~1', '%~2', '%~3', '%~4', '%~q', '%~e', '%~r', '%~t', '%~c', '%~f'}
-}
+-- End of unused content
 
 
 

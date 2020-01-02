@@ -19,7 +19,6 @@ xivhotbar_keybinds_job['Base'] = {
   {'battle 2 3', 'ma', 'Paralyze II', 'stnpc', ''},
   {'battle 2 4', 'ma', 'Enthunder II', 'me', ''},
   {'battle 2 7', 'ma', 'Silence', 'stnpc', 'Siln.'},
-  {'battle 2 8', 'ws', 'Savage Blade', 't', 'Svg.Bl.'},
   {'battle 2 9', 'ma', 'Sneak', 'stal', 'Snk.'},
   {'battle 2 0', 'ma', 'Invisible', 'stal', 'Inv.'},
   -- Hotbar #3
@@ -27,8 +26,6 @@ xivhotbar_keybinds_job['Base'] = {
   {'battle 3 3', 'ja', 'Saboteur', 'me', 'Sbtr.'},
   {'battle 3 4', 'ma', 'Dispel', 'stnpc', 'Disp.'},
   {'battle 3 5', 'ma', 'Temper II', 'me', ''},
-  {'battle 3 6', 'ws', 'Seraph Blade', 't', 'SeraB'},
-  {'battle 3 8', 'ws', 'Sanguine Blade', 't', 'SB'},
   {'battle 3 9', 'ma', 'Blink', 'me', 'Blink'},
   {'battle 3 0', 'ma', 'Stoneskin', 'me', ''},
 
@@ -38,7 +35,6 @@ xivhotbar_keybinds_job['Base'] = {
   {'battle 4 1', 'ma', 'Gain-STR', 'me', 'STR'},
   {'battle 4 5', 'ma', 'Cure III', 'stal', ''},
 
-  {'battle 4 6', 'ws', 'Chant Du Cygne', 't', 'CDC'},
   {'battle 4 7', 'ma',  'Frazzle III', 'stnpc', ''},
   {'battle 4 8', 'ma',  'Distract III', 'stnpc', ''},
   {'battle 4 9', 'ma',  'Addle II', 'stnpc', ''},
@@ -99,6 +95,14 @@ xivhotbar_keybinds_job['Dark Arts'] = {
   {'b 4 4', 'ma', 'Impact', 'stnpc', 'Imp.'},
   {'b 2 5', 'ma', 'Poison II', 'stnpc', ''},
   {'b 2 6', 'ma', 'Thunder V', 'stnpc', ''}
+}
+
+xivhotbar_keybinds_job['Sword'] = {
+  -- Battle
+  {'battle 4 6', 'ws', 'Chant Du Cygne', 't', 'CDC'},
+  {'battle 2 8', 'ws', 'Savage Blade', 't', 'Svg.Bl.'},
+  {'battle 3 6', 'ws', 'Seraph Blade', 't', 'SeraB'},
+  {'battle 3 8', 'ws', 'Sanguine Blade', 't', 'SB'},
 }
 
 xivhotbar_keybinds_job['WAR'] = {

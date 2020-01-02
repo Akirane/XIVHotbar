@@ -36,6 +36,7 @@ local player = {}
 buff_table = {
     [211] = 'Light Arts',
     [212] = 'Dark Arts',
+	-- Avatars
 	[1001] = 'Carbuncle',
 	[1002] = 'Ifrit',
 	[1003] = 'Shiva',
@@ -44,14 +45,15 @@ buff_table = {
 	[1006] = 'Fenrir',
 	[1007] = 'Diabolos',
 	[1008] = 'Alexander',
-	[1009] = 'Caith Sith',
+	[1009] = 'Cait Sith',
 	[1010] = 'Garuda',
 	[1011] = 'Odin',
 	[1012] = 'Titan',
 	[1013] = 'Atomos',
-}
-
-summoner_table = {
+	-- Weapons
+	[2001] = 'Sword',
+	[2002] = 'Dagger',
+	[2003] = 'Club',
 }
 
 player.name = ''
