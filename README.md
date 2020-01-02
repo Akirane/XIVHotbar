@@ -1,7 +1,7 @@
 # xivhotbar - [WIP]
 This version is further work on SirEdeonX's original addon, you can check his work from here: https://github.com/SirEdeonX/FFXIAddons/tree/master/xivhotbar. The test branch contains new experimental features that might end up in the master branch.
 
-![XIVHotbar](/images/demo/demo2.png)
+![XIVHotbar](/images/demo/demo2.PNG)
 ##### Latest Changes:
 ```
  1/1/20
