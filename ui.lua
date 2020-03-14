@@ -107,11 +107,10 @@ ui.disabled_slots.no_vitals = {}
 ui.disabled_slots.on_cooldown = {}
 
 ui.is_setup = false
------------------------------
--- Helpers
------------------------------
+----------------------------------
+-- Text/Image related functions --
+----------------------------------
 
--- setup images
 function setup_image(image, path)
     image:path(path)
     image:repeat_xy(1, 1)
@@ -131,7 +130,7 @@ function setup_slot(image, path)
     image:size(ui.image_width, ui.image_height)
     image:show()
 end
--- setup text
+
 function setup_text(text, theme_options)
     text:bg_alpha(0)
     text:bg_visible(false)
@@ -156,14 +155,13 @@ function ui:get_slot_y(h, i)
     return self.pos_y - (((h - 1) * (self.hotbar_spacing-3)))
 end
 
------------------------------
--- Setup UI
------------------------------
+--------------
+-- Setup UI --
+--------------
 
 function ui:change_image(environment, hotbar, slot)
 end
 
--- setup ui
 function ui:setup(theme_options)
     database:import()
 
@@ -423,9 +421,9 @@ function ui:show(player_hotbar, environment)
     end
 end
 
------------------------------
--- Actions UI
------------------------------
+----------------
+-- Actions UI --
+----------------
 
 -- load player hotbar
 function ui:load_player_hotbar(player_hotbar, player_vitals, environment)
@@ -529,24 +527,22 @@ function ui:load_action(hotbar, slot, action, player_vitals)
         self.hotbars[hotbar].slot_icon[slot]:pos(self:get_slot_x(hotbar, slot), self:get_slot_y(hotbar, slot))
         self.hotbars[hotbar].slot_icon[slot]:path(windower.addon_path .. '/images/icons/custom/item.png')
         self.hotbars[hotbar].slot_icon[slot]:show()
+	-- If action is a gearswap type
     elseif action.type == 'gs' then
         self.hotbars[hotbar].slot_icon[slot]:pos(self:get_slot_x(hotbar, slot), self:get_slot_y(hotbar, slot))
         self.hotbars[hotbar].slot_icon[slot]:path(windower.addon_path .. '/images/icons/custom/gear.png')
         self.hotbars[hotbar].slot_icon[slot]:show()
+	-- If no custom icon is defined, just put on a gear.
     else
         self.hotbars[hotbar].slot_icon[slot]:pos(self:get_slot_x(hotbar, slot), self:get_slot_y(hotbar, slot))
         self.hotbars[hotbar].slot_icon[slot]:path(windower.addon_path .. '/images/icons/custom/cog.png')
         self.hotbars[hotbar].slot_icon[slot]:show()
     end
 
-
-
     -- if action is custom
     if action.icon ~= nil then
         self.hotbars[hotbar].slot_background[slot]:alpha(200)
         self.hotbars[hotbar].slot_icon[slot]:pos(self:get_slot_x(hotbar, slot), self:get_slot_y(hotbar, slot))
-        -- self.hotbars[hotbar].slot_icon[slot]:path(windower.addon_path .. '/images/icons/custom/gear-wheel-icon.png')
-        -- self.hotbars[hotbar].slot_icon[slot]:path(windower.addon_path .. '/images/other/gear-wheel-icon.png')
 		self.hotbars[hotbar].slot_icon[slot]:path(windower.addon_path .. '/images/icons/custom/' .. action.icon .. '.png')
         self.hotbars[hotbar].slot_icon[slot]:show()
     end
@@ -568,21 +564,6 @@ function ui:load_action(hotbar, slot, action, player_vitals)
     end
 end
 
-function determine_weaponskill_icon(skill)
-    -- print(skill.id)
-    if tonumber(skill.id) >= 208 and tonumber(skill.id) <= 221 then
-        return '/images/icons/weapons/gun.png'
-    elseif tonumber(skill.id) >= 18 and tonumber(skill.id) <= 31 then
-        return '/images/icons/weapons/dagger.png'
-    elseif tonumber(skill.id) == 224 then 
-        return '/images/icons/weapons/dagger.png'
-    elseif tonumber(skill.id) >= 48 and tonumber(skill.id) <= 60 then 
-        return '/images/icons/weapons/great-sword.png'
-    else 
-        return '/images/icons/weapons/sword.png'
-    end
-end
-
 -- reset slot
 function ui:clear_slot(hotbar, slot)
     self.hotbars[hotbar].slot_background[slot]:alpha(self.theme.slot_opacity)
@@ -599,9 +580,9 @@ function ui:clear_slot(hotbar, slot)
     self.hotbars[hotbar].slot_cost[slot]:text('')
 end
 
------------------------------
--- Disabled Slots
------------------------------
+--------------------
+-- Disabled Slots --
+--------------------
 
 -- check player vitals
 function ui:check_vitals(player_hotbar, player_vitals, environment)
@@ -798,9 +779,9 @@ function ui:toggle_slot(hotbar, slot, is_enabled, out_of_range)
 end
 
 
------------------------------
--- Feedback UI
------------------------------
+-----------------
+-- Feedback UI --
+-----------------
 
 -- trigger feedback visuals in given hotbar and slot
 function ui:trigger_feedback(hotbar, slot)

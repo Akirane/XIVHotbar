@@ -2,7 +2,7 @@
 xivhotbar_keybinds_general['Root'] = {
     -- #1 Hotbar
 	{'f 1 1', 'ct', '/htb mount crab', 'me', 'Crab'},
-	{'f 1 9', 'item', "echo drops",'me', 'Echo'},
+	{'f 1 9', 'item', "remedy",'me', 'Rem.'},
 	{'f 1 0', 'item',  "Special Gobbiedial Key", 't', 'G.Key'},
 	{'f 3 7', 'item', "poison potion",'me', 'Poison.'},
 

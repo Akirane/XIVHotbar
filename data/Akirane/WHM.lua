@@ -2,7 +2,7 @@ xivhotbar_keybinds_job['Base'] = {
   -- Battle hotbar
   -- Hotbar #1
   {'battle 1 1', 'ma', 'Cure IV', 'stal', ' '},
-  {'battle 1 2', 'ma', 'Curaga III', 'stal', ' '},
+  {'battle 1 2', 'ma', 'Cura III', 'me', ' '},
   {'battle 1 3', 'ma', 'Haste', 'stal', ' '},
   {'battle 1 4', 'ma', 'Slow', 'stnpc', ''},
   {'battle 1 5', 'ma', 'Regen IV', 'stal', ''},
@@ -101,7 +101,6 @@ xivhotbar_keybinds_job['Dark Arts'] = {
   {'b 4 3', 'ja', 'Manifestation', 'me', 'AoE'},
   {'b 4 4', 'ma', 'Impact', 'stnpc', 'Imp.'},
   {'b 2 5', 'ma', 'Poison II', 'stnpc', ''},
-  {'b 2 6', 'ma', 'Thunder V', 'stnpc', ''}
 }
 
 xivhotbar_keybinds_job['WAR'] = {
@@ -127,8 +126,9 @@ xivhotbar_keybinds_job['NIN'] = {
 
 xivhotbar_keybinds_job['BLM'] = {
   {'battle 2 5', 'ja', 'Elemental Seal', 'me', 'Ele.'},
-  {'battle 2 6', 'ma', 'Stun', 'bt', 'Stun'},
-  {'battle 3 1', 'ja', 'Chainspell', 'me', 'CS'},
+  {'battle 2 6', 'ma', 'Erase', 'stal', 'Erase'},
+  {'battle 3 1', 'ma', 'Paralyna', 'stal', 'Para'},
+  {'battle 3 2', 'ma', 'Blindna', 'stal', 'Blindna'},
   -- General
   {'f 3 1', 'ma', 'Stonega II', 'stnpc', 'Sga.II'},
   {'f 3 2', 'ma', 'Waterga II', 'stnpc', 'Wga.II'},
@@ -143,6 +143,11 @@ xivhotbar_keybinds_job['BLM'] = {
   {'b 4 3', 'ma', 'Firaga', 'stnpc', 'Firaga'},
   {'b 4 4', 'ma', 'Thundaga', 'stnpc', 'Th.ga'},
   {'f 4 8', 'ma', 'Sleep', 'stnpc', 'Slp.'}
+}
+xivhotbar_keybinds_job['DRK'] = {
+  {'b 3 1', 'ma', 'Absorb-TP', 'stnpc', 'A.Tp.'},
+  {'b 3 5', 'ma', 'Esuna', 'me', 'Esun'},
+  {'b 3 2', 'ma', 'Sacrifice', 'stal', 'Sac.'},
 }
 xivhotbar_keybinds_job['SCH'] = {
   -- General 

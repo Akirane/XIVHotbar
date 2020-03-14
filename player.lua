@@ -205,6 +205,7 @@ function init_action_table(actions_table)
     actions_table.action = {}
     actions_table.target = {}
     actions_table.alias = {}
+	actions_table.icon = {}
 end
 
 function player:load_job_ability_actions(buff_id)
@@ -260,7 +261,8 @@ function player:load_job_ability_actions(buff_id)
     end
     for key in pairs(job_ability_actions.environment) do 
         self:add_action(
-            action_manager:build(job_ability_actions.type[key], job_ability_actions.action[key], job_ability_actions.target[key], job_ability_actions.alias[key], nil),
+            action_manager:build(job_ability_actions.type[key], job_ability_actions.action[key], 
+								 job_ability_actions.target[key], job_ability_actions.alias[key], nil),
             job_ability_actions.environment[key],
             job_ability_actions.hotbar[key],
             job_ability_actions.slot[key]
@@ -276,14 +278,18 @@ function player:load_from_lua()
     init_action_table(general_actions)
 
     fill_table = function(file_table, file_key, actions_table)
-        local xkey = T(file_table[1]:split(' '))
-        actions_table.environment[file_key] = xkey[1]
-        actions_table.hotbar[file_key]      = xkey[2]
-        actions_table.slot[file_key]        = xkey[3]
+		-- Slot_key is for example 'battle 1 2' in a job file.
+        local slot_key = T(file_table[1]:split(' '))
+        actions_table.environment[file_key] = slot_key[1]
+        actions_table.hotbar[file_key]      = slot_key[2]
+        actions_table.slot[file_key]        = slot_key[3]
         actions_table.type[file_key]        = file_table[2]
         actions_table.action[file_key]      = file_table[3]
         actions_table.target[file_key]      = file_table[4]
         actions_table.alias[file_key]       = file_table[5]
+		if (file_table[6] ~= nil) then
+			actions_table.icon[file_key]       = file_table[6]
+		end
     end
 
     parse_binds = function(fhotbar)
@@ -299,7 +305,6 @@ function player:load_from_lua()
         else
             for key, val in pairs(subjob_actions.environment) do
                 self:remove_action()
-
             end
             subjob_actions = {}
         end
@@ -331,7 +336,7 @@ function player:load_from_lua()
 
         for key in pairs(actions.environment) do 
             self:add_action(
-                action_manager:build(actions.type[key], actions.action[key], actions.target[key], actions.alias[key], nil),
+                action_manager:build(actions.type[key], actions.action[key], actions.target[key], actions.alias[key], actions.icon[key]),
                 actions.environment[key],
                 actions.hotbar[key],
                 actions.slot[key]
@@ -480,6 +485,8 @@ function player:execute_action(slot)
 
         windower.chat.input(command)
         return
+	elseif action.type == 'macro' then
+        windower.chat.input('//'.. action.action)
     elseif action.type == 'ws' then
         windower.chat.input('//'.. action.action)
 

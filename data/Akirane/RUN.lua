@@ -22,11 +22,13 @@ xivhotbar_keybinds_job['Base'] = {
   {'battle 2 9', 'ja', 'Lux', 'me', 'Lux'},
   {'battle 2 10','ja', 'Tenebrae', 'me', 'Ten.'},
   -- Hotbar #3
-  {'battle 3 1', 'ja', 'Vallation', 'me', 'Vall.'},
+  -- It's now possible to use your own custom images by adding a 6th argument
+  {'battle 3 1', 'ja', 'Vallation', 'me', 'Vall.', 'cog'},
   {'battle 3 2', 'ja', 'Pflug', 'me', 'Pflug'},
   {'battle 3 3', 'ja', 'Valiance', 'me', 'Vali.'},
   {'battle 3 4', 'ja', 'Liement', 'me', 'Lie.'},
   {'battle 3 5', 'ma', 'Battuta', 'me', 'Bat.'},
+  {'battle 3 6', 'ct', '/htb macro', 'me', 'SCH SC', 'attack'},
   {'f 1 5', 'ma', 'Protect V', 'stal', 'Pro.V'},
   {'f 1 6', 'ma', 'Shell V', 'stal', 'She.V'}
 }
@@ -36,5 +38,21 @@ xivhotbar_keybinds_job['DRK'] = {
   {'battle 3 7', 'ja', 'Last Resort', 'me', 'L.R.'},
   {'battle 3 8', 'ja', 'Souleater', 'me', 'S.E'}
 }
+
+----------------------
+-- User defined macros 
+----------------------
+--
+-- Idea here is you should be able to define your 
+-- own macros through functions in job files. Right now an exact copy 
+-- of this function is shown at line 36 in xivhotbar.lua called 
+-- sch_skillchain(). It only prints out two lines 
+-- with a one second delay, but I think this example should be
+-- sufficient to create your own macro.
+function xivhotbar_keybinds_job:sch_skillchain()
+	windower.chat.input('/party greetings no. 1')
+	coroutine.sleep(1)
+	windower.chat.input('/party greetings no. 2')
+end
 
 return xivhotbar_keybinds_job

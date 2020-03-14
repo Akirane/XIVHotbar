@@ -42,7 +42,6 @@ function action_manager:build(type, action, target, alias, icon)
     new_action.alias = alias
 
     if icon ~= nil then
-      print(icon)
         new_action.icon = icon
     end
 
