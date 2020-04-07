@@ -321,10 +321,6 @@ function ui:setup_environment_numbers()
     self.active_environment['battle']:text('2')
     self.active_1_pos_y = self.pos_y - (ui.hotbar.rows-1)*(self.hotbar_spacing)+10 -- self.hotbar_spacing
     self.active_2_pos_y = self.pos_y - (ui.hotbar.rows-2)*(self.hotbar_spacing)+10--(ui.image_height + self.hotbar_spacing-3)+5
-	print("Y position: " .. self.pos_y)
-	print(self.hotbar_spacing)
-	print(self.active_1_pos_y)
-	print(self.active_2_pos_y)
     self.active_environment['field']:pos(self.pos_x+self.hotbar_width+ 10, self.active_1_pos_y)
     self.active_environment['field']:size(22)
     self.active_environment['field']:show()
