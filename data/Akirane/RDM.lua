@@ -19,7 +19,8 @@ xivhotbar_keybinds_job['Base'] = {
   {'battle 2 3', 'ma', 'Paralyze II', 'stnpc', ''},
   {'battle 2 4', 'ma', 'Enthunder II', 'me', ''},
   {'battle 2 7', 'ma', 'Silence', 'stnpc', 'Siln.'},
-  {'battle 2 9', 'ma', 'Sneak', 'stal', 'Snk.'},
+  {'battle 2 9', 'gs', 'equip engaged[\'Magic Evasion\']', '', 'M.Eva'},
+ -- {'battle 2 9', 'ma', 'Sneak', 'stal', 'Snk.'},
   {'battle 2 0', 'ma', 'Invisible', 'stal', 'Inv.'},
   -- Hotbar #3
   {'battle 3 2', 'ja', 'Convert', 'me', 'Conv.'},
@@ -45,9 +46,9 @@ xivhotbar_keybinds_job['Base'] = {
   -- Hotbar #1
   {'f 1 5', 'ma',  'Blink', 'me', 'Blink'},
   {'f 1 5', 'item',  "Barbarian's drink", 'me', 'Atk.Up'},
-  {'f 1 6', 'item',  "Soldier's drink", 'me', 'Atk.Up'},
-  {'f 1 7', 'item',  "Assassin's drink", 'me', 'M.Acc'},
-  {'f 1 8', 'item',  "Braver's drink", 'me', 'Att.Up'},
+  --{'f 1 6', 'item',  "Soldier's drink", 'me', 'Atk.Up'},
+  --{'f 1 7', 'item',  "Assassin's drink", 'me', 'M.Acc'},
+  --{'f 1 8', 'item',  "Braver's drink", 'me', 'Att.Up'},
 
   -- Hotbar #2
   {'f 2 0', 'ma', 'enthunder', 'me', 'Enth.'},
@@ -73,7 +74,8 @@ xivhotbar_keybinds_job['Base'] = {
   {'f 4 0',  'ma', 'Enstone II', 'me', ''},
   {'f 1 5', 'ma', 'bind', 'stnpc',''},
   {'f 1 6', 'ma', 'gravity ii', 'stnpc',''},
-  {'battle 4 6', 'ws', 'Chant Du Cygne', 't', 'CDC'},
+ -- {'battle 4 6', 'ws', 'Chant Du Cygne', 't', 'CDC'},
+  {'battle 4 6', 'ws', 'evisceration', 't', 'Evi.'},
   {'battle 2 8', 'ws', 'Savage Blade', 't', 'Svg.Bl.'},
   {'battle 3 6', 'ws', 'Seraph Blade', 't', 'SeraB'},
   {'battle 3 8', 'ws', 'Sanguine Blade', 't', 'SB'},

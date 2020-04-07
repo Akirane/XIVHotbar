@@ -38,7 +38,7 @@ local text_setup = {
 
 local environment_text_setup = {
     flags = {
-        draggable = false
+        draggable = false,
     }
 }
 
@@ -135,8 +135,6 @@ function setup_text(text, theme_options)
     text:bg_alpha(0)
     text:bg_visible(false)
     text:font(theme_options.font)
-    -- text:font('Lucida Console')
-
     text:size(9)
     text:color(theme_options.font_color_red, theme_options.font_color_green, theme_options.font_color_blue)
     text:stroke_transparency(theme_options.font_stroke_alpha)
@@ -321,8 +319,12 @@ end
 function ui:setup_environment_numbers()
     self.active_environment['field']:text('1')
     self.active_environment['battle']:text('2')
-    self.active_1_pos_y = self.pos_y - 4*(ui.image_height + self.hotbar_spacing)+2
-    self.active_2_pos_y = self.pos_y - 3*(ui.image_height + self.hotbar_spacing-3)+5
+    self.active_1_pos_y = self.pos_y - (ui.hotbar.rows-1)*(self.hotbar_spacing)+10 -- self.hotbar_spacing
+    self.active_2_pos_y = self.pos_y - (ui.hotbar.rows-2)*(self.hotbar_spacing)+10--(ui.image_height + self.hotbar_spacing-3)+5
+	print("Y position: " .. self.pos_y)
+	print(self.hotbar_spacing)
+	print(self.active_1_pos_y)
+	print(self.active_2_pos_y)
     self.active_environment['field']:pos(self.pos_x+self.hotbar_width+ 10, self.active_1_pos_y)
     self.active_environment['field']:size(22)
     self.active_environment['field']:show()
@@ -345,7 +347,7 @@ function ui:setup_metrics(theme_options)
     setup_text(self.active_environment['field'], theme_options) 
     setup_text(self.active_environment['battle'], theme_options) 
 
-	ui:setup_environment_numbers()
+	print("Setting up environment Numbers...")
 
     self.hotbar_width = (400 + theme_options.slot_spacing * 9)
     self.scale = 1.5
@@ -370,14 +372,17 @@ function ui:setup_metrics(theme_options)
     end
 
     self.hotbar_spacing = theme_options.hotbar_spacing 
+	ui:setup_environment_numbers()
 end
 
 -- hide all ui components
 function ui:hide()
     self.battle_notice:hide()
     self.feedback_icon:hide()
-    self.active_environment['battle']:hide()
-    self.active_environment['field']:hide()
+	if (self.active_environment ~= nil) then
+		self.active_environment['battle']:hide()
+		self.active_environment['field']:hide()
+	end
     self.inventory_count:hide()
 
     for h=1,self.theme.hotbar_number,1 do
@@ -397,8 +402,10 @@ end
 
 -- show ui components
 function ui:show(player_hotbar, environment)
-    self.active_environment['battle']:show()
-    self.active_environment['field']:show()
+	if (self.active_environment ~= nil) then
+		self.active_environment['battle']:show()
+		self.active_environment['field']:show()
+	end
     self.inventory_count:show()
     if self.theme.hide_battle_notice == false and environment == 'battle' then self.battle_notice:show() end
 

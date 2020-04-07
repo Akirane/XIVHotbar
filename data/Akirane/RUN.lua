@@ -2,43 +2,73 @@
 xivhotbar_keybinds_job['Base'] = {
   -- Hotbar #1
   {'battle 1 1', 'ma', 'Regen IV', 'stal', 'R.IV'},
-  {'battle 1 3', 'ma', 'Flash', 't', 'Flash'},
+  {'battle 1 3', 'ma', 'Flash', 'stnpc', 'Flash'},
   {'battle 1 4', 'ja', 'Lunge', 't', 'Lunge'},
   {'battle 1 5', 'ja', 'Swordplay', 'me', 'Swrd.'},
-  {'battle 1 6', 'ma', 'Shell V', 'stal', 'Shl.5'},
-  {'battle 1 7', 'ma', 'Phalanx II', 'stal', 'Ph.2'},
+  {'battle 1 6', 'ma', 'Protect IV', 'stal', ''},
+  {'battle 1 7', 'ma', 'Shell V', 'stal', ''},
   {'battle 1 8', 'ma', 'Phalanx', 'me','Phal.'},
   {'battle 1 9', 'ma', 'Ice Spikes', 'me','Ice.Sp.'},
-  {'battle 1 10', 'ws', 'Resolution', 't', 'Res.'},
+  {'battle 1 0', 'ws', 'Resolution', 't', 'Res.'},
   -- Hotbar #2
-  {'battle 2 1', 'ja', 'Composure', 'me', 'Comp.'},
+  {'battle 2 1', 'gs', 'equip lycurgos', '', 'Axe.'},
   {'battle 2 2', 'ma', 'Crusade', 'me', 'Crus.'},
-  {'battle 2 3', 'ja', 'Ignis', 'me', 'Ignis'},
-  {'battle 2 4', 'ja', 'Gelus', 'me', 'Gelus'},
-  {'battle 2 5', 'ja', 'Flabra', 'me', 'Flabra'},
-  {'battle 2 6', 'ja', 'Tellus', 'me', 'Tel.'},
-  {'battle 2 7', 'ja', 'Sulpor', 'me', 'Sul.'},
-  {'battle 2 8', 'ja', 'Unda', 'me', 'Unda'},
-  {'battle 2 9', 'ja', 'Lux', 'me', 'Lux'},
-  {'battle 2 10','ja', 'Tenebrae', 'me', 'Ten.'},
+  {'battle 2 3', 'ja', 'Ignis', 'me', 'Ignis', 'ignis-icon'},
+  {'battle 2 4', 'ja', 'Gelus', 'me', 'Gelus', 'gelus-icon'},
+  {'battle 2 5', 'ja', 'Flabra', 'me', 'Flabra', 'flabra-icon'},
+  {'battle 2 6', 'ja', 'Tellus', 'me', 'Tel.', 'tellus-icon'},
+  {'battle 2 7', 'ja', 'Sulpor', 'me', 'Sul.', 'sulpor-icon'},
+  {'battle 2 8', 'ja', 'Unda', 'me', 'Und.', 'unda-icon'},
+  {'battle 2 9', 'ja', 'Lux', 'me', 'Lux', 'lux-icon'},
+  {'battle 2 0','ja', 'Tenebrae', 'me', 'Ten.', 'tenebrae-icon'},
   -- Hotbar #3
   -- It's now possible to use your own custom images by adding a 6th argument
-  {'battle 3 1', 'ja', 'Vallation', 'me', 'Vall.', 'cog'},
-  {'battle 3 2', 'ja', 'Pflug', 'me', 'Pflug'},
-  {'battle 3 3', 'ja', 'Valiance', 'me', 'Vali.'},
-  {'battle 3 4', 'ja', 'Liement', 'me', 'Lie.'},
-  {'battle 3 5', 'ma', 'Battuta', 'me', 'Bat.'},
-  {'battle 3 6', 'ct', '/htb macro', 'me', 'SCH SC', 'attack'},
+  {'battle 3 0', 'ma', 'Stoneskin', 'me', 'SS'},
+  {'battle 3 1', 'ja', 'Gambit', 't', 'Gamb.', 'gambit-icon'},
+  {'battle 3 2', 'ja', 'Pflug', 'me', 'Pflug', 'pflug-icon'},
+  {'battle 3 3', 'ja', 'Valiance', 'me', 'Vali.', 'shellra'},
+  {'battle 3 4', 'ja', 'Liement', 'me', 'Lie.', 'liement-icon'},
+  {'battle 3 5', 'ma', 'Battuta', 'me', 'Bat.', 'battuta-icon'},
+  {'battle 3 6', 'ma', 'Foil', 'me', 'Foil', 'foil-icon'},
+  {'battle 4 5', 'ma', 'stun', 'stnpc', 'Stun.'},
+  {'battle 3 8', 'ws', 'Dimidiation', 't', 'Dimi.'},
+  {'battle 3 9', 'ma', 'Blink', 'me', ''},
+  {'battle 4 1', 'ma', 'Refresh', 'me', 'Ref.'},
+  {'battle 4 2', 'ma', 'Aquaveil', 'me', ''},
+  {'battle 4 3', 'ja', 'Vallation', 'me', 'Val.'},
+  {'battle 4 4', 'ma', 'Poisonga', 'stnpc', 'Pois.'},
+  {'battle 4 6', 'ws', 'Upheaval', 't', 'Uph.'},
+  {'battle 4 7', 'gs', 'equip engaged', '', 'eng.'},
+  {'battle 4 8', 'gs', 'equip idle', '', 'idl'},
+  {'battle 4 9', 'ja', 'vivacious pulse', 'me', 'Pulse', 'pulse-icon'},
+  {'battle 4 0', 'ja', 'One for All', 'me', 'OFA', 'shellra'},
   {'f 1 5', 'ma', 'Protect V', 'stal', 'Pro.V'},
-  {'f 1 6', 'ma', 'Shell V', 'stal', 'She.V'}
+  {'f 1 6', 'ma', 'Shell V', 'stal', 'She.V'},
+
 }
 
 xivhotbar_keybinds_job['DRK'] = {
-  {'battle 1 2', 'ma', 'Stun', 't', 'Stun'},
+  {'battle 1 2', 'ma', 'Stun', 'stnpc', 'Stun'},
   {'battle 3 7', 'ja', 'Last Resort', 'me', 'L.R.'},
   {'battle 3 8', 'ja', 'Souleater', 'me', 'S.E'}
 }
-
+xivhotbar_keybinds_job['WAR'] = {
+  {'battle 1 2', 'ja', 'Provoke', 'stnpc', 'Prov.'},
+  {'battle 3 7', 'ja', 'Berserk', 'me', 'Ber.'},
+  {'battle 3 8', 'ja', 'Warcry', 'me', 'War.'}
+}
+xivhotbar_keybinds_job['SAM'] = {
+  {'battle 1 2', 'ja', 'Hasso', 'me', 'Has.'},
+  {'battle 4 9', 'ja', 'Meditate', 'me', 'Med.'},
+  {'battle 4 0', 'ja', 'Sekkanoki', 'me', 'Sek.'}
+}
+xivhotbar_keybinds_job['BLU'] = {
+  {'battle 1 2', 'ma', 'Blank Gaze', 't', 'Blank'},
+  {'battle 5 1', 'ma', 'Cocoon', 'me', 'Coc.'},
+  {'b 5 2', 'ma', 'jettatura', 't', 'Jet.'},
+  {'b 5 3', 'ma', 'sheep song', 't', 'Sheep'},
+  {'b 5 4', 'ma', 'geist wall', 't', 'Geist'},
+}
 ----------------------
 -- User defined macros 
 ----------------------
@@ -49,10 +79,10 @@ xivhotbar_keybinds_job['DRK'] = {
 -- sch_skillchain(). It only prints out two lines 
 -- with a one second delay, but I think this example should be
 -- sufficient to create your own macro.
-function xivhotbar_keybinds_job:sch_skillchain()
-	windower.chat.input('/party greetings no. 1')
-	coroutine.sleep(1)
-	windower.chat.input('/party greetings no. 2')
-end
+-- function xivhotbar_keybinds_job:sch_skillchain()
+-- 	windower.chat.input('/party greetings no. 1')
+-- 	coroutine.sleep(1)
+-- 	windower.chat.input('/party greetings no. 2')
+-- end
 
 return xivhotbar_keybinds_job

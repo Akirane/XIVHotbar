@@ -32,7 +32,7 @@ control.initialized = false
 control.ready = false
 control.hide_hotbars = false
 control.in_battle = false
-control.rows = 4
+control.rows = 5
 control.columns = 10
 
 control.pressing_combo_key_1 = false

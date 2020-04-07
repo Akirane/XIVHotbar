@@ -371,7 +371,7 @@ function player:load_from_lua()
 
         for key in pairs(general_actions.environment) do 
             self:add_action(
-                action_manager:build(general_actions.type[key], general_actions.action[key], general_actions.target[key], general_actions.alias[key], nil),
+                action_manager:build(general_actions.type[key], general_actions.action[key], general_actions.target[key], general_actions.alias[key], general_actions.icon[key]),
                 general_actions.environment[key],
                 general_actions.hotbar[key],
                 general_actions.slot[key]
@@ -389,12 +389,8 @@ function player:create_default_hotbar()
     self:add_action(action_manager:build_custom('check', 'Check', 'check'), 'field', 1, 2)
     self:add_action(action_manager:build_custom('returntrust all', 'No Trusts', 'return-trust'), 'field', 1, 9)
     self:add_action(action_manager:build_custom('heal', 'Heal', 'heal'), 'field', 1, 0)
-
     self:add_action(action_manager:build_custom('check', 'Check', 'check'), 'battle', 1, 9)
     self:add_action(action_manager:build_custom('attack off', 'Disengage', 'disengage'), 'battle', 1, 0)
-
-    local new_hotbar = {}
-    new_hotbar.hotbar = self.hotbar
 end
 
 -- reset player hotbar
@@ -488,7 +484,7 @@ function player:execute_action(slot)
 	elseif action.type == 'macro' then
         windower.chat.input('//'.. action.action)
     elseif action.type == 'ws' then
-        windower.chat.input('//'.. action.action)
+        windower.chat.input('//'.. action.action .. ' <' .. action.target .. '>')
 
     elseif action.type == 'gs' then
         windower.chat.input('//gs ' .. action.action)

@@ -31,7 +31,7 @@ local theme = {}
 theme.apply = function (settings)
     local options = {}
 
-    options.hotbar_number = 4
+    options.hotbar_number = 5
     options.hide_empty_slots = settings.Hotbar.HideEmptySlots
     options.hide_action_names = settings.Hotbar.HideActionName
     options.hide_action_cost = settings.Hotbar.HideActionCost

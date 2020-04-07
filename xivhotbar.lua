@@ -82,23 +82,6 @@ local xiv
 -- initialize addon --
 function initialize()
 
-
-    local windower_player = windower.ffxi.get_player()
-    local server = resources.servers[windower.ffxi.get_info().server].en
-
-    if windower_player == nil then return end
-
-    player:initialize(windower_player, server, theme_options)
-    player:load_hotbar()
-    ui:setup(theme_options)
-    ui:load_player_hotbar(player.hotbar, player.vitals, player.hotbar_settings.active_environment)
-    ui.hotbar.ready = true
-    ui.hotbar.initialized = true
-    bind_keys()
-end
-
--- Initialize with lua  --
-function initialize_lua()
     local windower_player = windower.ffxi.get_player()
     local server = resources.servers[windower.ffxi.get_info().server].en
 
