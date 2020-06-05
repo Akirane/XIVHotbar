@@ -1,5 +1,5 @@
 --[[
-        Copyright © 2017, SirEdeonX
+        Copyright © 2020, SirEdeonX, Akirane
         All rights reserved.
 
         Redistribution and use in source and binary forms, with or without
@@ -17,7 +17,7 @@
         THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
         ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
         WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-        DISCLAIMED. IN NO EVENT SHALL SirEdeonX BE LIABLE FOR ANY
+        DISCLAIMED. IN NO EVENT SHALL SirEdeonX OR Akirane BE LIABLE FOR ANY
         DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
         (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
         LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
@@ -42,11 +42,11 @@ function action_manager:build(type, action, target, alias, icon)
     new_action.alias = alias
 
     if icon ~= nil then
-      print(icon)
         new_action.icon = icon
     end
 
     return new_action
+
 end
 
 -- build a custom action

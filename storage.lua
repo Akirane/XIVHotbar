@@ -1,5 +1,5 @@
 --[[
-        Copyright © 2017, SirEdeonX
+        Copyright © 2020, SirEdeonX, Akirane
         All rights reserved.
 
         Redistribution and use in source and binary forms, with or without
@@ -17,7 +17,7 @@
         THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
         ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
         WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-        DISCLAIMED. IN NO EVENT SHALL SirEdeonX BE LIABLE FOR ANY
+        DISCLAIMED. IN NO EVENT SHALL SirEdeonX OR Akirane BE LIABLE FOR ANY
         DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
         (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
         LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
@@ -54,12 +54,13 @@ end
 
 -- update file with hotbar
 function storage:save_hotbar(new_hotbar)
-    if not self.file:exists() then
-        error('Hotbar file could not be found!')
-        return
-    end
+    --if not self.file:exists() then
+    --    error('Hotbar file could not be found!')
+    --    return
+    --end
 
-    self.file:write(table.to_xml(new_hotbar))
+    --self.file:write(table.to_xml(new_hotbar))
+	return
 end
 
 return storage

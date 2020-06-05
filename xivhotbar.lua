@@ -1,5 +1,5 @@
 --[[    BSD License Disclaimer
-        Copyright © 2017, SirEdeonX
+        Copyright © 2020, SirEdeonX, Akirane
         All rights reserved.
 
         Redistribution and use in source and binary forms, with or without
@@ -17,7 +17,7 @@
         THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
         ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
         WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-        DISCLAIMED. IN NO EVENT SHALL SirEdeonX BE LIABLE FOR ANY
+        DISCLAIMED. IN NO EVENT SHALL SirEdeonX OR Akirane BE LIABLE FOR ANY
         DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
         (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
         LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
@@ -26,14 +26,30 @@
         SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ]]
 
--- Addon description
+-- Addon description --
 _addon.name = 'XIVHotbar'
-_addon.author = 'Akirane, Edeon'
-_addon.version = '0.1'
+_addon.author = 'Edeon, Akirane'
+_addon.version = '0.2'
 _addon.language = 'english'
 _addon.commands = {'xivhotbar', 'htb', 'execute'}
 
--- Libs
+---------------------------------
+-- User defined macro placeholder
+---------------------------------
+--
+-- Placeholder function for macros in the future.
+-- Goal is to be able to define macros in job 
+-- files instead of here.
+function sch_skillchain()
+	windower.chat.input('/party greetings no. 1')
+	coroutine.sleep(1)
+	windower.chat.input('/party greetings no. 2')
+end
+----------------------------------------
+-- End of user defined macro placeholder
+----------------------------------------
+
+-- Libs --
 config = require('config')
 file = require('files')
 texts = require('texts')
@@ -41,108 +57,96 @@ images = require('images')
 tables = require('tables')
 packets = require('packets')
 resources = require('resources')
-xml = require('libs/xml2')   -- TODO: REMOVE
 
--- User settings
+-- User settings --
 local defaults = require('defaults')
 local settings = config.load(defaults)
 config.save(settings)
 
--- Load theme options according to settings
+-- Load theme options according to settings --
 local theme = require('theme')
 local theme_options = theme.apply(settings)
 
--- Addon Dependencies
+-- Addon Dependencies --
 local action_manager = require('action_manager')
 local keyboard = require('keyboard_mapper')
 local player = require('player')
 local ui = require('ui')
 local xiv
 
------------------------------
+-------
 -- Main
------------------------------
+-------
 
--- initialize addon
+
+-- initialize addon --
 function initialize()
 
-
     local windower_player = windower.ffxi.get_player()
     local server = resources.servers[windower.ffxi.get_info().server].en
 
     if windower_player == nil then return end
 
+    bind_keys()
     player:initialize(windower_player, server, theme_options)
     player:load_hotbar()
     ui:setup(theme_options)
     ui:load_player_hotbar(player.hotbar, player.vitals, player.hotbar_settings.active_environment)
     ui.hotbar.ready = true
     ui.hotbar.initialized = true
-    bind_keys()
 end
 
--- Initialize with lua 
-function initialize_lua()
-    local windower_player = windower.ffxi.get_player()
-    local server = resources.servers[windower.ffxi.get_info().server].en
 
-    if windower_player == nil then return end
-
-    player:initialize(windower_player, server, theme_options)
-    player:load_hotbar()
-    ui:setup(theme_options)
-    ui:load_player_hotbar(player.hotbar, player.vitals, player.hotbar_settings.active_environment)
-    ui.hotbar.ready = true
-    ui.hotbar.initialized = true
-    bind_keys()
-end
-
--- bind keys
+-- bind keys --
 function bind_keys()
-    for hotbar_index = 1, ui.hotbar.rows do --i, v in ipairs(keyboard.hotbar_table) do
+	keyboard:parse_keybinds()
+    for hotbar_index = 1, ui.hotbar.rows do 
         for skill_index = 1, ui.hotbar.columns do
-            -- print('bind '..keyboard.hotbar_table[hotbar_index][skill_index]..' input //htb execute '..hotbar_index..' '..skill_index)
-            windower.send_command('bind '..keyboard.hotbar_table[hotbar_index][skill_index]..' input //htb execute '..hotbar_index..' '..skill_index)
+			windower.send_command('bind '..keyboard.hotbar_rows[hotbar_index][skill_index]..' input //htb execute '..hotbar_index..' '..skill_index)
         end
     end
 end
 
 
--- trigger hotbar action
+-- trigger hotbar action --
 function trigger_action(slot)
     player:execute_action(slot)
     ui:trigger_feedback(player.hotbar_settings.active_hotbar, slot)
 end
 
--- toggle between field and battle hotbars
+
+-- toggle between field and battle hotbars --
 function toggle_environment()
     player:toggle_environment()
 
     ui:load_player_hotbar(player.hotbar, player.vitals, player.hotbar_settings.active_environment)
 end
 
--- set battle environment
+
+-- set battle environment --
 function set_battle_environment(in_battle)
     player:set_battle_environment(in_battle)
     ui:load_player_hotbar(player.hotbar, player.vitals, player.hotbar_settings.active_environment)
 end
 
--- reload hotbar
+
+-- reload hotbar --
 function reload_hotbar()
     player:load_hotbar()
     ui:load_player_hotbar(player.hotbar, player.vitals, player.hotbar_settings.active_environment)
 end
 
--- change active hotbar
+
+-- change active hotbar --
 function change_active_hotbar(new_hotbar)
     player:change_active_hotbar(new_hotbar)
 end
 
------------------------------
--- Addon Commands
------------------------------
+--------------------
+-- Addon Commands -- --
+--------------------
 
--- command to set an action in a hotbar
+-- command to set an action in a hotbar --
 function set_action_command(args)
     if not args[5] then
         print('XIVHOTBAR: Invalid arguments: set <mode> <hotbar> <slot> <action_type> <action> <target (optional)> <alias (optional)> <icon (optional)>')
@@ -181,7 +185,7 @@ function set_action_command(args)
     reload_hotbar()
 end
 
--- command to delete an action from an hotbar
+-- command to delete an action from an hotbar --
 function delete_action_command(args)
     if not args[3] then
         print('XIVHOTBAR: Invalid arguments: del <mode> <hotbar> <slot>')
@@ -225,7 +229,7 @@ function flush_old_keybinds()
     end
 end
 
--- command to copy an action to another slot
+-- command to copy an action to another slot --
 function copy_action_command(args, is_moving)
     local command = 'copy'
     if is_moving then command = 'move' end
@@ -263,7 +267,7 @@ function copy_action_command(args, is_moving)
     reload_hotbar()
 end
 
--- command to update action alias
+-- command to update action alias --
 function update_alias_command(args)
     if not args[4] then
         print('XIVHOTBAR: Invalid arguments: alias <mode> <hotbar> <slot> <alias>')
@@ -295,7 +299,7 @@ function update_alias_command(args)
     reload_hotbar()
 end
 
--- command to update action icon
+-- command to update action icon --
 function update_icon_command(args)
     if not args[4] then
         print('XIVHOTBAR: Invalid arguments: icon <mode> <hotbar> <slot> <icon>')
@@ -327,22 +331,24 @@ function update_icon_command(args)
     reload_hotbar()
 end
 
------------------------------
--- Bind Events
------------------------------
+-----------------
+-- Bind Events --
+-----------------
 
--- -- ON LOGOUT
+
+-- ON LOGOUT --
 windower.register_event('logout', function()
     ui:hide()
 end)
 
--- ON COMMAND
+
+-- ON COMMAND --
 windower.register_event('addon command', function(command, ...)
     command = command and command:lower() or 'help'
     local args = {...}
 
-    -- if command == 'reload' then
-    --     return reload_hotbar()
+    -- if command == 'reload' then --
+    --     return reload_hotbar() --
 
     if command == 'set' then
         set_action_command(args)
@@ -369,13 +375,18 @@ windower.register_event('addon command', function(command, ...)
         else
             windower.chat.input('/mount '..args[1]..' <me>')
         end
-
-
-
-
-
+	elseif command == 'summon' then
+		local avatar_id = player:determine_summoner_id(args[1])
+		if (avatar_id == 0) then
+			print("Error, couldn't find avatar '"..args[1].."'... Unable to load actions for it.")
+		else
+			player:load_job_ability_actions(avatar_id)
+            ui:load_player_hotbar(player.hotbar, player.vitals, player.hotbar_settings.active_environment)
+		end
+        windower.chat.input('/ma '..args[1]..' <me>')
+	elseif command == 'macro' then
+		sch_skillchain()
     elseif command == 'execute' then
-        -- print("Running execute command. "..tonumber(args[1]).." "..tonumber(args[2]))
         change_active_hotbar(tonumber(args[1]))
         if tonumber(args[2]) <= 10 then 
             if tonumber(args[2]) == 10 then 
@@ -384,9 +395,6 @@ windower.register_event('addon command', function(command, ...)
                 trigger_action(tonumber(args[2]))
             end
         end
-    elseif command == 'flush' then
-        print("Flushing...")
-        flush_old_keybinds()
     elseif command == 'reload' then
         flush_old_keybinds()
         bind_keys()
@@ -394,7 +402,8 @@ windower.register_event('addon command', function(command, ...)
     end
 end)
 
--- ON KEY
+
+-- ON KEY --
 windower.register_event('keyboard', function(dik, flags, blocked)
     if ui.hotbar.ready == false or windower.ffxi.get_info().chat_open then
         return
@@ -409,41 +418,45 @@ windower.register_event('keyboard', function(dik, flags, blocked)
     end
 end)
 
--- ON PRERENDER
+
+-- ON PRERENDER --
 windower.register_event('prerender',function()
     if ui.hotbar.ready == false then
         return
     end
 
     if ui.feedback.is_active then
-        -- print('Feedback active.')
         ui:show_feedback()
     end
-    -- local t = windower.ffxi.get_mob_by_index(windower.ffxi.get_player().target_index or 0)
-    -- local distance = 0
-    -- if t ~= nil then 
-    --     distance = t.distance:sqrt()
-    -- end
+    -- local t = windower.ffxi.get_mob_by_index(windower.ffxi.get_player().target_index or 0) --
+    -- local distance = 0 --
+    -- if t ~= nil then  --
+    --     distance = t.distance:sqrt() --
+    -- end --
 
     if ui.is_setup and ui.hotbar.hide_hotbars == false then
         ui:check_recasts(player.hotbar, player.vitals, player.hotbar_settings.active_environment, distance)
     end
 end)
--- ON MP CHANGE
+
+
+-- ON MP CHANGE --
 windower.register_event('mp change', function(new, old)
     player.vitals.mp = new
     ui:check_vitals(player.hotbar, player.vitals, player.hotbar_settings.active_environment)
 end)
 
--- OM TP CHANGE
+
+-- OM TP CHANGE --
 windower.register_event('tp change', function(new, old)
     player.vitals.tp = new
     ui:check_vitals(player.hotbar, player.vitals, player.hotbar_settings.active_environment)
 end)
 
--- ON STATUS CHANGE
+
+-- ON STATUS CHANGE --
 windower.register_event('status change', function(new_status_id)
-    -- hide/show bar in cutscenes
+    -- hide/show bar in cutscenes --
     if ui.hotbar.hide_hotbars == false and new_status_id == 4 then
         ui.hotbar.hide_hotbars = true
         ui:hide()
@@ -453,23 +466,18 @@ windower.register_event('status change', function(new_status_id)
     end
 end)
 
--- ON LOGIN/LOAD
 
+-- ON LOGIN/LOAD --
 windower.register_event('login', 'load', function()
     if windower.ffxi.get_player() ~= nil then
         player.id = windower.ffxi.get_player().id
         initialize()
     end
 end)
-windower.register_event('zone change', 'load', function()
 
---     player:update_id(windower.get_player().id)
-end)
 
--- ON ACTION USED
-
+-- ON ACTION USED --
 windower.register_event('action', function(act)
-    -- print('used', act.param)
     if (act.param == 211 or act.param == 212) then 
         if (act.actor_id == player.id and act.category == 0x06) then
             player:load_job_ability_actions(act.param)
@@ -478,8 +486,8 @@ windower.register_event('action', function(act)
     end
 end)
 
--- ON ZONE 
 
+-- ON ZONE  --
 windower.register_event('incoming chunk', function(id, data)
     if (id == 0x00A) then 
         ui.hotbar.hide_hotbars = false
@@ -494,7 +502,8 @@ windower.register_event('add item', 'remove item', function(id, bag, index, coun
     ui:update_inventory_count()
 end)
 
--- ON JOB CHANGE
+
+-- ON JOB CHANGE --
 windower.register_event('job change',function(main_job, main_job_level, sub_job, sub_job_level)
     player:update_jobs(resources.jobs[main_job].ens, resources.jobs[sub_job].ens)
     reload_hotbar()

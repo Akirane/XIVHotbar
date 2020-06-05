@@ -7,15 +7,13 @@ xivhotbar_keybinds_job['Base'] = {
   {'battle 1 4', 'ma', 'Slow', 'stnpc', ''},
   {'battle 1 5', 'ma', 'Regen IV', 'stal', ''},
   {'battle 1 6', 'ma', 'Repose', 'stnpc','Rep.'},
-  -- {'battle 1 6', 'ma', 'Blizzard V', 't',' '},
 
   {'battle 1 7', 'ma', 'Curaga IV', 'stal', ''},
   {'battle 1 8', 'ma', 'Auspice', 'me',' '},
-  {'battle 1 9', 'ma', 'Divine Caress', 'me','Div.Ca.'},
+  {'battle 1 9', 'ja', 'Divine Caress', 'me','Div.Ca.'},
   {'battle 1 0', 'ma', 'Stona', 'stal', 'Stona'},
   -- Hotbar #2
   {'battle 2 1', 'ma', 'Cure V', 'stal', ''},
-  -- {'battle 2 2', 'ma', 'Bio II', 't', 'Bio II'},
   {'battle 2 2', 'ma', 'Dia II', 'stnpc', ''},
   {'battle 2 3', 'ma', 'Paralyze', 'stnpc', 'Para.'},
   {'battle 2 4', 'ma', 'Cursna', 'stal', 'Cursna'},
@@ -27,15 +25,11 @@ xivhotbar_keybinds_job['Base'] = {
   {'f 1 8',  'ma', 'Poisona', 'stal', 'Poisona'},
   {'battle 2 5', 'ma', 'Paralyna', 'stal', 'Para.'},
   {'battle 2 6', 'ma', 'Erase', 'stal', 'Era.'},
-  -- {'battle 2 8', 'ws', 'Death Blossom', 't', 'Svg.Bl.'},
-  -- {'battle 2 8', 'ws', 'Sanguine Blade', 't', 'Sng.Bl.'},
   -- Hotbar #3
   {'battle 3 3', 'ma', 'Arise', 'stal', 'Arise'},
   {'battle 3 4', 'ma', 'Esuna', 'me', 'Esuna'},
   {'battle 3 5', 'ma', 'Sacrifice', 'stal', ''},
-  -- {'battle 3 6', 'ma', 'Gain-INT', 'me', 'INT'},
   {'battle 3 8', 'ws', 'Black Halo', 't', 'BH'},
-  -- {'battle 3 8', 'ma', 'Blizzard IV', 't', ''},
   {'battle 3 9', 'ma', 'Blink', 'me', 'Blink'},
   {'battle 3 0', 'ma', 'Stoneskin', 'me', ''},
 
@@ -71,8 +65,7 @@ xivhotbar_keybinds_job['Base'] = {
   {'f 3 2',  'ma', 'Paralyna', 'stal', 'Par.'},
   {'f 3 3',  'ma', 'Poisona', 'stal', 'Poi.'},
   {'f 3 4',  'ma', 'Blindna', 'stal', 'Bli.'},
-  -- {'f 3 5',  'ma', '', 'stnpc', ''},
-  -- {'f 3 6',  'ma', '', 'stnpc', ''},
+  {'f 3 5',  'ma', 'Silena', 'stnpc', 'Sil.'},
 
   -- Hotbar #4
   {'f 4 1',  'ma', 'Protectra V', 'me', ''},
@@ -99,8 +92,6 @@ xivhotbar_keybinds_job['Light Arts'] = {
   {'battle 4 4', 'ma', 'Aquaveil', 'me', 'Aq.'},
   {'battle 2 5', 'ma', 'Paralyna', 'stal', 'Para.'},
   {'battle 2 6', 'ma', 'Erase', 'stal', 'Era.'},
-  -- {'b 4 4', 'ja', 'Addendum: White', 'me', 'A.Wh.'}
-  -- {'b 4 1', 'ma', 'Blindna', 'stal', 'Blnda'},
 }
 
 xivhotbar_keybinds_job['Dark Arts'] = {
@@ -118,8 +109,6 @@ xivhotbar_keybinds_job['WAR'] = {
   {'b 4 2', 'ma', 'Barstonra', 'me', 'BrStn'},
   {'battle 3 1', 'ma', 'Boost-STR', 'me', 'STR'},
   {'battle 3 7', 'ja', 'Berserk', 'me', 'Ber.'},
-  -- {'battle 3 8', 'ws', 'Judgment', 't', 'Judg.'}
-  -- {'battle 1 0', 'ja', 'Provoke', 't', 'Pro.'}
 }
 xivhotbar_keybinds_job['RDM'] = {
   {'battle 3 2', 'ja', 'Convert', 'me', 'Conv.'}
@@ -135,13 +124,6 @@ xivhotbar_keybinds_job['NIN'] = {
   {'battle 2 5', 'ma', 'Thunder II', 't', ''},
   {'battle 2 6', 'ma', 'Thunder V', 't', ''}
 }
--- xivhotbar_keybinds_job['WHM'] = { {'battle 3 1', 'ja', 'Divine Seal', 'me', 'Dvn.'},
---   {'battle 3 7', 'ma', 'Erase', 'st', 'Ers.'},
---   {'battle 3 8', 'ma', 'Curaga II', 'me', 'Cura.2'},
---   {'f 3 1', 'ma', 'Teleport-Dem', 'me', 'Tel-D'}, 
---   {'f 3 2', 'ma', 'Teleport-Holla', 'me', 'Tel-H'}, 
---   {'f 3 3', 'ma', 'Teleport-Mea', 'me', 'Tel-M'}
--- }
 
 xivhotbar_keybinds_job['BLM'] = {
   {'battle 2 5', 'ja', 'Elemental Seal', 'me', 'Ele.'},
@@ -160,28 +142,16 @@ xivhotbar_keybinds_job['BLM'] = {
   {'b 4 2', 'ma', 'Blizzaga', 'stnpc', 'Bli.ga'},
   {'b 4 3', 'ma', 'Firaga', 'stnpc', 'Firaga'},
   {'b 4 4', 'ma', 'Thundaga', 'stnpc', 'Th.ga'},
-  -- {'f 4 1', 'ma', 'Stone V', 'stnpc', 'Stn.V'},
-  -- {'f 4 2', 'ma', 'Water V', 'stnpc', 'Wtr.V'},
-  -- {'f 4 3', 'ma', 'Aero V', 'stnpc', 'Ae.V'},
-  -- {'f 4 4', 'ma', 'Blizzard V', 'stnpc', 'Bli.V'},
-  -- {'f 4 5', 'ma', 'Fire V', 'stnpc', 'Fir.V'},
-  -- {'f 4 6', 'ma', 'Thunder V', 'stnpc', 'Th.V'},
-  -- {'f 4 7', 'ma', 'Sleep II', 'stnpc', 'Slp.II'},
   {'f 4 8', 'ma', 'Sleep', 'stnpc', 'Slp.'}
 }
 xivhotbar_keybinds_job['SCH'] = {
   -- General 
-  -- {'f 3 7', 'ja', 'Alacrity', 'me', 'Ala.'},
-  -- {'f 3 8', 'ja', 'Manifestation', 'me', 'Mani.'},
-  -- {'f 3 9', 'ja', 'Parsimony', 'me', 'Pars.'},
 
   {'b 3 1', 'ja', 'Light Arts', 'me', 'L.A.'},
   {'b 3 5', 'ja', 'Dark Arts', 'me', 'D.A.'},
   {'b 3 2', 'ma', 'Sacrifice', 'stal', 'Sac.'},
   {'battle 2 9', 'ja', 'Sublimation', 'me', 'Sub.'},
 
-  -- {'f 4 5', 'ma', 'Bio II', 'stnpc', 'Bio2'},
-  -- {'f 4 6', 'ma', 'Noctohelix', 'stnpc', 'Nocto'}
 }
 
 return xivhotbar_keybinds_job
