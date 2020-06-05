@@ -106,7 +106,7 @@ When you've saved the changes you've made, proceed with reloading using `//htb r
 
 If you have done everything correctly, you'll end up with the following:
 
-![XIVHotbar](/images/demo/demo2.png)
+![Stymie](/images/demo/demo2.png)
 
 
 
