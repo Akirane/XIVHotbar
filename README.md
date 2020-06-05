@@ -3,6 +3,38 @@ This version is further work on SirEdeonX's original addon, you can check his wo
 
 ![XIVHotbar](/images/demo/demo1.png)
 
+## Getting started
+
+Create a folder with following structure inside *data* folder:
+
+```
+	<name-of-character>/<job>.lua
+```
+
+### Example of a basic `RDM.lua` file:
+
+```lua
+
+	-- Main job
+	xivhotbar_keybinds_job['Base'] = {
+	  {'battle 1 1', 'ma', 'Cure IV', 'stal', ' '},
+	}
+	
+	-- Sub job
+	xivhotbar_keybinds_job['SCH'] = {
+	  {'b 3 1', 'ja', 'Light Arts', 'me', 'L.A.'},
+	}
+	
+	return xivhotbar_keybinds_job
+```
+
+When you've saved the changes you've made, proceed with reloading using `//htb reload` or `//lua reload xivhotbar`. More in-depth examples are provided, `check data/Akirane` and `data/Waruharu`.
+
+## Commands
+
+- `//htb reload`: After you have made changes to the job-file, use this function to apply the new changes.
+- `\`: Change between hotbar 1 and 2.
+
 ##### How this version differentiates
 
 - Job files now use `.lua` instead of `.xml` files. The main difference is everything loads much faster now. This means there's no ingame support for inserting new actions.
@@ -12,10 +44,19 @@ This version is further work on SirEdeonX's original addon, you can check his wo
 
 ##### What is currently broken
 
-- The settngs.xml file will most likely not work anymore as intended. I'll fix this next.
+- The settngs.xml file will most likely not work as intended, edit with caution. 
 
 ##### Latest Changes:
 ```
+ 05/06/2020
+ 	- Added a brief explanation on getting started.
+ 	- Removed old libraries related to .xml-files.
+	- keyboard_mapper.lua has received an overhaul which makes it easier to work with keybinds now. Instead of '!a' you type in 'ALT + A' instead. 
+	- An inventory counter has been implemented.
+	- The number of hotbars has been increased to 5. I would like to implement a way to toggle as many hotbars as you like eventually.
+	- The hotbar now is now hidden during conversations with NPC or zoning.
+	- player.lua has been simplified.
+	- The functions `windower.ffxi.get_spell_recasts()` and `windower.ffxi.get_ability_recasts()` will now only be called once per prerender update.
  2/1/20 
 	- Corrected some minor spelling errors, will eventually push a new update based on feedback received. 
  1/1/20
@@ -24,8 +65,9 @@ This version is further work on SirEdeonX's original addon, you can check his wo
 	- Now most file operations use .lua instead of .xml files, making loading much faster.
 	- Increased the number of hotbars showed simultaneously from 3 to 4.
 	- Added numbers to distinguish which hotbars are currently in use.
-	- Disabled the auto switching of hotbars in battle, press "\" to toggle between hotbars.
-	- Removed MP and TP cost.
+	- Disabled the auto switching of hotbars in battle, press "\" to toggle between them instead.
+	- Removed MP and TP cost as they were inaccurate.
+	- Removed progression bar on abilities/spells because of changing between hotbars caused them to start over with full boxes.
 
  09/05/17
     - Added various addon commands
@@ -39,20 +81,35 @@ This version is further work on SirEdeonX's original addon, you can check his wo
     - released WIP version
  ```
 
-##### Currently supported addons
+## Currently supported addons
 
 - GearSwap
 - Send
 
-##### How to use:
+## How to use:
 
 - keyboard_mapper.lua have a table called keyboard.hotbar_table, there you can bind keys.
 
-##### Limitations:
+## Limitations:
 1. This addon binds keys, these keybinds will remain even after the addon is unloaded. Therefore take care with what you bind. 
-2. Due to how all SP share the same recast timer, it's currently not possible to show an icon for SP-abilities.
+2. Due to how all SP share the same recast timer, it's currently not possible to show an icon for SP-abilities automatically, I recommend referencing to an image like this:
 
-##### Done:
+### Adding an image to SP-abilities
+
+1. Copy the matching icon from `<xivhotbar-location>/images/icons/abilities` then paste it to `<xivhotbar-location>/images/icons/custom` remember to rename it to something else.
+2. I want to map **Stymie** to the hotbar, therefore I renamed the image to "Stymie.png".
+3. Each action accepts 5 or 6 items, the difference with the ladder is it tells the addon to use a custom .png image.
+
+```
+  {'battle 5 0', 'ja',  'Stymie', 'me', 'Stym.', 'Stymie'},
+```
+
+If you have done everything correctly, you'll end up with the following:
+
+![XIVHotbar](/images/demo/demo2.png)
+
+
+
+## Done:
 
 1. Add key mapping
-

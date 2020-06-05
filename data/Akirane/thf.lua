@@ -11,12 +11,13 @@
     {'battle 1 6', 'ja', 'Assassin\'s Charge', 'me', 'A. Chg.'},
     {'battle 1 7', 'ja', 'Collaborator', 'stal', 'Col.'},
     {'battle 1 9', 'ja', 'Accomplice', 'stal', 'Acc.'},
-    {'battle 1 0', 'gs', 'equip engaged', '', 'Melee'},
-    {'battle 2 9', 'gs', 'equip engaged[\'Hybrid\']', '', 'Melee'},
-    {'battle 2 0', 'gs', 'equip engaged', '', 'Melee'},
+    --{'battle 1 0', 'gs', 'equip engaged', '', 'Norm.'},
+    {'battle 2 9', 'gs', 'equip engaged[\'Hybrid\']', '', 'Hybr.'},
+    {'battle 2 0', 'gs', 'equip engaged', '', 'Norm.'},
   -- Hotbar #2
     {'battle 2 1', 'ws', 'Aeolian Edge', 't', 'A.E.'},
-    {'battle 2 2', '/ct', 'Evisceration', 'stnpc', 'Evi.'},
+    --{'battle 2 2', '/ct', 'Evisceration', 'stnpc', 'Evi.'},
+    {'battle 2 2', 'ws', 'savage blade', 't', 'SB'},
     {'battle 2 3', 'ja', 'Despoil', 't', 'Desp.'},
     {'battle 2 4', 'ja', 'Bully', 'stnpc', 'Bully'},
     {'battle 2 5', 'ja', 'Hide', 'me', 'Hide'},
@@ -30,6 +31,8 @@
     {'battle 4 7', 'ws', 'Empyreal Arrow', 't', 'EA'},
     {'battle 4 9', 'ws', 'Mandalic Stab', 't', 'MB'},
     {'battle 4 0', 'ws', 'Mandalic Stab', 'stnpc', 'MB'},
+
+    {'battle 5 9', 'gs', 'equip engaged[\'ERegen\']', '', 'EReg.'},
 
 }
 
@@ -64,6 +67,10 @@ xivhotbar_keybinds_job['RUN'] = {
     {'battle 1 8', 'ma', 'flash', 'stnpc', ''},
     {'battle 3 1', 'ja', 'Lux', 'me', 'Lux'},
     {'battle 3 2', 'ja', 'vallation', 'me', 'Val.'}
+}
+
+xivhotbar_keybinds_job['RDM'] = {
+    {'battle 1 8', 'ma', 'dispel', 't', 'Disp.'}
 }
 
 return xivhotbar_keybinds_job

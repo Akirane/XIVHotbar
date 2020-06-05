@@ -18,8 +18,8 @@ xivhotbar_keybinds_general['Root'] = {
 	{'f 2 8', 'ma', 'Yoran-Oran (UC)', 'me', 'Yoran'},
 
 	{'f 3 7', 'item', "poison potion",'me', 'Poison.', 'poison'},
-    {'f 3 8', 'gs', 'toggle weapon','','TGWep'},
-    {'f 3 9', 'gs', 'toggle acc','','TGAcc'},
+    {'f 3 8', 'gs', 'c toggle weapon','','TGWep'},
+    {'f 3 9', 'gs', 'c toggle acc','','TGAcc'},
 }
 
 xivhotbar_keybinds_general['Medicine'] = {

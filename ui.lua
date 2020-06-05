@@ -1,5 +1,5 @@
 --[[
-        Copyright © 2017, SirEdeonX
+        Copyright © 2020, SirEdeonX, Akirane
         All rights reserved.
 
         Redistribution and use in source and binary forms, with or without
@@ -17,7 +17,7 @@
         THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
         ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
         WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-        DISCLAIMED. IN NO EVENT SHALL SirEdeonX BE LIABLE FOR ANY
+        DISCLAIMED. IN NO EVENT SHALL SirEdeonX OR Akirane BE LIABLE FOR ANY
         DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
         (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
         LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
@@ -252,7 +252,7 @@ function ui:init_slot(hotbar, row, column, theme_options)
 	hotbar.slot_recast_text[column]:color(100, 200, 255)
 	hotbar.slot_recast_text[column]:size(9)
 	hotbar.slot_recast_text[column]:hide()
-	hotbar.slot_key[column]:text(convert_string(keyboard.hotbar_table[row][column]))
+	hotbar.slot_key[column]:text(convert_string(keyboard.hotbar_rows[row][column]))
 end
 
 function ui:setup_feedback(theme_options)
@@ -636,6 +636,8 @@ end
 
 -- check action recasts
 function ui:check_recasts(player_hotbar, player_vitals, environment, distance)
+	local ability_recasts = windower.ffxi.get_ability_recasts()
+	local spell_recasts = windower.ffxi.get_spell_recasts()
     for h=1, ui.hotbar.rows, 1 do
         for i=1, ui.hotbar.columns, 1 do
             local slot = i
@@ -647,25 +649,26 @@ function ui:check_recasts(player_hotbar, player_vitals, environment, distance)
                 self:clear_recast(h, i)
             else
                 local skill = nil
-                local skill_recasts = nil
+                local action_recasts = nil
                 local in_cooldown = false
                 local is_in_seconds = false
 
                 -- if its magic, look for it in spells
                 if action.type == 'ma' and database.spells[(action.action):lower()] ~= nil then
                     skill = database.spells[(action.action):lower()]
-                    skill_recasts = windower.ffxi.get_spell_recasts()
+                    action_recasts = spell_recasts
+                    is_in_seconds = false
                 elseif (action.type == 'ja' or action.type == 'ws') and database.abilities[(action.action):lower()] ~= nil then
                     skill = database.abilities[(action.action):lower()]
-                    skill_recasts = windower.ffxi.get_ability_recasts()
+                    action_recasts = ability_recasts
                     is_in_seconds = true
                 end
 
                 -- check if skill is in cooldown
-                if skill ~= nil and skill_recasts[tonumber(skill.icon)] ~= nil and skill_recasts[tonumber(skill.icon)] > 0 then
+                if skill ~= nil and action_recasts[tonumber(skill.icon)] ~= nil and action_recasts[tonumber(skill.icon)] > 0 then
                     -- register first cooldown to calculate percentage
                     if self.disabled_slots.on_cooldown[action.action] == nil then
-                        self.disabled_slots.on_cooldown[action.action] = skill_recasts[tonumber(skill.icon)]
+                        self.disabled_slots.on_cooldown[action.action] = action_recasts[tonumber(skill.icon)]
 
                         -- setup recast elements
                         self.hotbars[h].slot_recast[i]:path(windower.addon_path..'/images/other/black-square.png')
@@ -684,7 +687,7 @@ function ui:check_recasts(player_hotbar, player_vitals, environment, distance)
 
                     -- show recast animation
                     if self.theme.hide_recast_animation == false or self.theme.hide_recast_text == false then
-                        local recast_time = calc_recast_time(skill_recasts[tonumber(skill.icon)], is_in_seconds)
+                        local recast_time = calc_recast_time(action_recasts[tonumber(skill.icon)], is_in_seconds)
 
                         in_cooldown = true
 
@@ -692,7 +695,6 @@ function ui:check_recasts(player_hotbar, player_vitals, environment, distance)
                         if self.theme.hide_recast_animation == false then
                             self.hotbars[h].slot_recast[i]:alpha(5)
                             self.hotbars[h].slot_recast[i]:size(ui.image_width, ui.image_height)
-                            -- self.hotbars[h].slot_recast[i]:pos(self:get_slot_x(h, i), self:get_slot_y(h, i) + (ui.image_height - new_height))
                             self.hotbars[h].slot_recast[i]:pos(self:get_slot_x(h, i), self:get_slot_y(h, i))
                             self.hotbars[h].slot_recast[i]:show()
                         end
@@ -739,7 +741,6 @@ function calc_recast_time(time, in_seconds)
         if recast >= 10 then
             recast = string.format("%dm", recast)
         elseif recast >= 1 then
-            -- recast = string.format("%dm", recast)
             local minutes_in_seconds = minutes*60
             local seconds = time - minutes_in_seconds
             if recast >= 10 then 
@@ -749,18 +750,14 @@ function calc_recast_time(time, in_seconds)
             end
         else
             recast = string.format("%ds", recast * 60)
-            -- recast = string.format("%ds", math.round(recast * 10)*0.1)
         end
     else
         if recast >= 60 then
             local minutes = recast/60
-            -- local seconds = ((recast/60.0) - (recast/60))*60
             recast = string.format("%dm", minutes)
-            -- recast = string.format("%dm %ds", (recast / 60), math.round(recast * 10))
         elseif recast >= 1 then 
             recast = string.format("%ds", math.round(recast * 10)*0.1)
         else
-            -- recast = string.format("%ds", math.round(recast * 10)*0.1)
             recast = string.format("%.1fs", math.round(recast * 10)*0.1)
         end
     end

@@ -1,5 +1,5 @@
 --[[
-        Copyright © 2017, SirEdeonX
+        Copyright © 2020, SirEdeonX, Akirane
         All rights reserved.
 
         Redistribution and use in source and binary forms, with or without
@@ -17,7 +17,7 @@
         THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
         ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
         WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-        DISCLAIMED. IN NO EVENT SHALL SirEdeonX BE LIABLE FOR ANY
+        DISCLAIMED. IN NO EVENT SHALL SirEdeonX OR Akirane BE LIABLE FOR ANY
         DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
         (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
         LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
@@ -74,11 +74,9 @@ player.hotbar_settings.active_hotbar = 1
 player.hotbar_settings.active_environment = 'battle'
 
 _innerG = {}
-_innerG._xivhotbar_keybinds_job = {}
-_innerJ = {}
-_innerJ._xivhotbar_keybinds_job = {}
-_innerH = {}
-_innerH._xivhotbar_keybinds_general = {}
+_innerG.xivhotbar_keybinds_job = {}
+general_table = {}
+general_table.xivhotbar_keybinds_general = {}
 
 function create_table(_new_table, _table_key)
     setmetatable(_new_table, {
@@ -101,62 +99,49 @@ function create_table(_new_table, _table_key)
 })
 end
 
-setmetatable(_innerG,  
-{
+local keybinds_job_table = {
     __index = function(g, k)
-        local t = rawget(rawget(g, '_xivhotbar_keybinds_job'), k)
+        local t = rawget(rawget(g, 'xivhotbar_keybinds_job'), k)
         if not t then
             t = {}
-            rawset(rawget(g, '_xivhotbar_keybinds_job'), k, t)
+            rawset(rawget(g, 'xivhotbar_keybinds_job'), k, t)
         end
         return t
     end,
     __newindex = function(g, k, v)
-        local t = rawget(rawget(g, '_xivhotbar_keybinds_job'), k)
+        local t = rawget(rawget(g, 'xivhotbar_keybinds_job'), k)
         if t and type(v) == 'table' then
             for k, v in pairs(v) do
                 t[k] = v
             end
         end
     end
-})
-setmetatable(_innerJ,  
-{
+}
+
+local general_keybinds_table = {
     __index = function(g, k)
-        local t = rawget(rawget(g, '_xivhotbar_keybinds_job'), k)
+        local t = rawget(rawget(g, 'xivhotbar_keybinds_general'), k)
         if not t then
             t = {}
-            rawset(rawget(g, '_xivhotbar_keybinds_job'), k, t)
+            rawset(rawget(g, 'xivhotbar_keybinds_general'), k, t)
         end
         return t
     end,
     __newindex = function(g, k, v)
-        local t = rawget(rawget(g, '_xivhotbar_keybinds_job'), k)
+        local t = rawget(rawget(g, 'xivhotbar_keybinds_general'), k)
         if t and type(v) == 'table' then
             for k, v in pairs(v) do
                 t[k] = v
             end
         end
     end
-})
-setmetatable(_innerH, {
-    __index = function(g, k)
-        local t = rawget(rawget(g, '_xivhotbar_keybinds_general'), k)
-        if not t then
-            t = {}
-            rawset(rawget(g, '_xivhotbar_keybinds_general'), k, t)
-        end
-        return t
-    end,
-    __newindex = function(g, k, v)
-        local t = rawget(rawget(g, '_xivhotbar_keybinds_general'), k)
-        if t and type(v) == 'table' then
-            for k, v in pairs(v) do
-                t[k] = v
-            end
-        end
-    end
-})
+}
+
+-- Initialize keybinds tables
+setmetatable(_innerG, keybinds_job_table)
+--setmetatable(_innerJ, keybinds_job_table)
+setmetatable(general_table, general_keybinds_table)
+
 -- initialize player
 function player:initialize(windower_player, server, theme_options)
     self.name = windower_player.name
@@ -165,12 +150,9 @@ function player:initialize(windower_player, server, theme_options)
     self.server = server
     self.buffs = windower_player.buffs
     self.id = windower_player.id
-
     self.hotbar_settings.max = theme_options.hotbar_number
-
     self.vitals.mp = windower_player.vitals.mp
     self.vitals.tp = windower_player.vitals.tp
-
     storage:setup(self)
 end
 
@@ -197,6 +179,68 @@ actions = {}
 general_actions = {}
 local job_ability_actions = {}
 
+local function fill_table(file_table, file_key, actions_table)
+	-- Slot_key is for example 'battle 1 2' in a job file.
+	local slot_key = T(file_table[1]:split(' '))
+	actions_table.environment[file_key] = slot_key[1]
+	actions_table.hotbar[file_key]      = slot_key[2]
+	actions_table.slot[file_key]        = slot_key[3]
+	actions_table.type[file_key]        = file_table[2]
+	actions_table.action[file_key]      = file_table[3]
+	actions_table.target[file_key]      = file_table[4]
+	actions_table.alias[file_key]       = file_table[5]
+	if (file_table[6] ~= nil) then
+		actions_table.icon[file_key]    = file_table[6]
+	end
+end
+
+function player:add_actions(action_table)
+    for key in pairs(action_table.environment) do 
+        self:add_action(
+			action_manager:build(
+				action_table.type[key], 
+				action_table.action[key], 
+				action_table.target[key], 
+				action_table.alias[key], 
+				action_table.icon[key] 
+			),
+            action_table.environment[key],
+            action_table.hotbar[key],
+            action_table.slot[key]
+        )
+    end
+end
+
+local function remove_actions(action_table)
+	for key, val in pairs(action_table.environment) do
+		self:remove_action(action_table.environment[key],
+							action_table.hotbar[key],
+							action_table.slot[key])
+	end
+end
+
+local function parse_binds(fhotbar)
+	for key, val in pairs(fhotbar['Base']) do
+		fill_table(fhotbar['Base'][key], key, actions)
+	end
+	if (fhotbar[player.sub_job] ~= nil) then
+		for key, val in pairs(fhotbar[player.sub_job]) do
+			fill_table(fhotbar[player.sub_job][key], key, subjob_actions)
+		end
+	else
+		for key, val in pairs(subjob_actions.environment) do
+			self:remove_action()
+		end
+		subjob_actions = {}
+	end
+end
+
+local function parse_general_binds(hotbar)
+	for key, val in pairs(hotbar['Root']) do
+		fill_table(hotbar['Root'][key], key, general_actions)
+	end
+end
+
 function init_action_table(actions_table)
     actions_table.environment = {}
     actions_table.hotbar = {}
@@ -209,180 +253,89 @@ function init_action_table(actions_table)
 end
 
 function player:load_job_ability_actions(buff_id)
+
     if (job_ability_actions.environment ~= nil) then
         if (table.getn(job_ability_actions.environment) ~= 0) then
-            for key, val in pairs(job_ability_actions.environment) do
-                self:remove_action(job_ability_actions.environment[key],
-                                    job_ability_actions.hotbar[key],
-                                    job_ability_actions.slot[key])
-            end
+			remove_actions(job_ability_actions.environment)
         end
     end
+
     init_action_table(job_ability_actions)
-    fill_table = function(file_table, file_key, actions_table)
-        local xkey = T(file_table[1]:split(' '))
-        actions_table.environment[file_key] = xkey[1]
-        actions_table.hotbar[file_key] = xkey[2]
-        actions_table.slot[file_key] = xkey[3]
-        actions_table.type[file_key] = file_table[2]
-        actions_table.action[file_key] = file_table[3]
-        actions_table.target[file_key] = file_table[4]
-        actions_table.alias[file_key] = file_table[5]
-    end
-    parse_binds = function(fhotbar)
-        if (fhotbar[buff_table[buff_id]] ~= nil) then
-            for key, val in pairs(fhotbar[buff_table[buff_id]]) do
-                fill_table(fhotbar[buff_table[buff_id]][key], key, job_ability_actions)
-            end
-        else
-            for key, val in pairs(job_ability_actions.environment) do
-                self:remove_action()
-            end
-            job_ability_actions = {}
-        end
-    end
+
     local basepath = windower.addon_path .. 'data/'..player.name..'/'
-    local general_file, file
-    file = loadfile(basepath .. player.main_job .. '.lua')
-    if file == nil then 
-        print("Error, couldn't find %s file!":format(player.main_job))
+	local job_file = loadfile(basepath .. player.main_job .. '.lua')
+	local stance_actions = {}
+	stance_actions.xivhotbar_keybinds_job = {}
+	setmetatable(stance_actions, keybinds_job_table)
+    if job_file == nil then 
+        print("Error, couldn't find %s job_file!":format(player.main_job))
 		return
     else
-        setfenv(file, _innerJ)
-        local root = file()
+        setfenv(job_file, stance_actions)
+        local root = job_file()
         if not root then
-            _innerJ._xivhotbar_keybinds_job = {}
-            _innerJ._binds = {}
+            stance_actions.xivhotbar_keybinds_job = {}
+            stance_actions.binds = {}
             return
         end
-        _innerJ._xivhotbar_keybinds_job = {}
-        _innerJ._xivhotbar_keybinds_job[root] = _innerJ._xivhotbar_keybinds_job[root] or 'Root'
+        stance_actions.xivhotbar_keybinds_job = {}
+        stance_actions.xivhotbar_keybinds_job[root] = stance_actions.xivhotbar_keybinds_job[root] or 'Root'
         parse_binds(root)
     end
-    for key in pairs(job_ability_actions.environment) do 
-        self:add_action(
-            action_manager:build(job_ability_actions.type[key], job_ability_actions.action[key], 
-								 job_ability_actions.target[key], job_ability_actions.alias[key], nil),
-            job_ability_actions.environment[key],
-            job_ability_actions.hotbar[key],
-            job_ability_actions.slot[key]
-        )
-    end
+	self:add_actions(stance_actions)
 end
 
 -- load a hotbar from existing lua file
 function player:load_from_lua()
-    -- windower.console.write('XIVHOTBAR: load hotbars for ' .. storage.filename)
+
     init_action_table(subjob_actions)
     init_action_table(actions)
     init_action_table(general_actions)
 
-    fill_table = function(file_table, file_key, actions_table)
-		-- Slot_key is for example 'battle 1 2' in a job file.
-        local slot_key = T(file_table[1]:split(' '))
-        actions_table.environment[file_key] = slot_key[1]
-        actions_table.hotbar[file_key]      = slot_key[2]
-        actions_table.slot[file_key]        = slot_key[3]
-        actions_table.type[file_key]        = file_table[2]
-        actions_table.action[file_key]      = file_table[3]
-        actions_table.target[file_key]      = file_table[4]
-        actions_table.alias[file_key]       = file_table[5]
-		if (file_table[6] ~= nil) then
-			actions_table.icon[file_key]       = file_table[6]
-		end
-    end
-
-    parse_binds = function(fhotbar)
-        -- rawset(names, top, rawget(_innerG._xivhotbar_keybinds_job, fbinds))
-
-        for key, val in pairs(fhotbar['Base']) do
-            fill_table(fhotbar['Base'][key], key, actions)
-        end
-        if (fhotbar[player.sub_job] ~= nil) then
-            for key, val in pairs(fhotbar[player.sub_job]) do
-                fill_table(fhotbar[player.sub_job][key], key, subjob_actions)
-            end
-        else
-            for key, val in pairs(subjob_actions.environment) do
-                self:remove_action()
-            end
-            subjob_actions = {}
-        end
-    end
-
-    parse_general_binds = function(hotbar)
-        for key, val in pairs(hotbar['Root']) do
-            fill_table(hotbar['Root'][key], key, general_actions)
-        end
-    end
-
     local basepath = windower.addon_path .. 'data/'..player.name..'/'
-    local general_file, file
-    file = loadfile(basepath .. player.main_job .. '.lua')
+    local file = loadfile(basepath .. player.main_job .. '.lua')
+    local general_file = loadfile(basepath .. 'General.lua')
     if file == nil then 
         print("Error, couldn't find %s file!":format(player.main_job))
     else
         setfenv(file, _innerG)
         local root = file()
         if not root then
-            _innerG._xivhotbar_keybinds_job = {}
+            _innerG.xivhotbar_keybinds_job = {}
             _innerG._binds = {}
-            -- error('Malformatted %s Lua file: no return value.':format(path))
             return
         end
-        _innerG._xivhotbar_keybinds_job = {}
-        _innerG._xivhotbar_keybinds_job[root] = _innerG._xivhotbar_keybinds_job[root] or 'Root'
+        _innerG.xivhotbar_keybinds_job = {}
+        _innerG.xivhotbar_keybinds_job[root] = _innerG.xivhotbar_keybinds_job[root] or 'Root'
         parse_binds(root)
 
-        for key in pairs(actions.environment) do 
-            self:add_action(
-                action_manager:build(actions.type[key], actions.action[key], actions.target[key], actions.alias[key], actions.icon[key]),
-                actions.environment[key],
-                actions.hotbar[key],
-                actions.slot[key]
-            )
-        end
+		self:add_actions(actions)
         if (subjob_actions.environment ~= nil) then
-            for key in pairs(subjob_actions.environment) do 
-                self:add_action(
-                    action_manager:build(subjob_actions.type[key], subjob_actions.action[key], subjob_actions.target[key], subjob_actions.alias[key], nil),
-                    subjob_actions.environment[key],
-                    subjob_actions.hotbar[key],
-                    subjob_actions.slot[key]
-                )
-            end
+			self:add_actions(subjob_actions)
         end
     end
 
-    general_file = loadfile(basepath .. 'General.lua')
     if general_file == nil then 
-        print("Error with General.lua")
+        print("Error, couldn't find file 'General.lua'")
     else
-        setfenv(general_file, _innerH)
-        local xroot = general_file()
-        if not xroot then
-            _innerH._xivhotbar_keybinds_general = {}
-            _innerH._binds = {}
+        setfenv(general_file, general_table)
+        local general_root = general_file()
+        if not general_root then
+            general_table.xivhotbar_keybinds_general = {}
+            general_table.binds = {}
             return
         end
-        _innerH._xivhotbar_keybinds_general = {}
-        _innerH._xivhotbar_keybinds_general[xroot] = _innerH._xivhotbar_keybinds_general[xroot] or 'Root'
-        parse_general_binds(xroot)
+        general_table.xivhotbar_keybinds_general = {}
+        general_table.xivhotbar_keybinds_general[general_root] = general_table.xivhotbar_keybinds_general[general_root] or 'Root'
+        parse_general_binds(general_root)
 
-        for key in pairs(general_actions.environment) do 
-            self:add_action(
-                action_manager:build(general_actions.type[key], general_actions.action[key], general_actions.target[key], general_actions.alias[key], general_actions.icon[key]),
-                general_actions.environment[key],
-                general_actions.hotbar[key],
-                general_actions.slot[key]
-            )
-        end
+		self:add_actions(general_actions)
     end
 end
 
 -- create a default hotbar
 function player:create_default_hotbar()
-    windower.console.write('XIVHotbar: no hotbar found. Creating default for ' .. storage.filename)
+    windower.console.write('XIVHotbar: no hotbar found. Creating a default hotbar.')
 
     -- add default actions to the new hotbar
     self:add_action(action_manager:build_custom('attack on', 'Attack', 'attack'), 'field', 1, 1)

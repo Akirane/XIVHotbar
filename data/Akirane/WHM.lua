@@ -45,6 +45,9 @@ xivhotbar_keybinds_job['Base'] = {
   {'battle 4 9', 'ma',  'Addle', 'stnpc', ''},
   {'battle 4 0', 'ma', 'Holy II', 't', 'Holy II'},
 
+  {'battle 5 2', 'ma', 'Protectra V', 'me', ''},
+  {'battle 5 3', 'ma', 'Shellra V', 'me', ''},
+
 
   -- General hotbar
   -- Hotbar #1

@@ -1,5 +1,5 @@
 --[[    BSD License Disclaimer
-        Copyright © 2017, SirEdeonX
+        Copyright © 2020, SirEdeonX, Akirane
         All rights reserved.
 
         Redistribution and use in source and binary forms, with or without
@@ -17,7 +17,7 @@
         THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
         ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
         WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-        DISCLAIMED. IN NO EVENT SHALL SirEdeonX BE LIABLE FOR ANY
+        DISCLAIMED. IN NO EVENT SHALL SirEdeonX OR Akirane BE LIABLE FOR ANY
         DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
         (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
         LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
@@ -28,8 +28,8 @@
 
 -- Addon description --
 _addon.name = 'XIVHotbar'
-_addon.author = 'Akirane, Edeon'
-_addon.version = '0.1'
+_addon.author = 'Edeon, Akirane'
+_addon.version = '0.2'
 _addon.language = 'english'
 _addon.commands = {'xivhotbar', 'htb', 'execute'}
 
@@ -57,7 +57,6 @@ images = require('images')
 tables = require('tables')
 packets = require('packets')
 resources = require('resources')
-xml = require('libs/xml2')   -- TODO: REMOVE --
 
 -- User settings --
 local defaults = require('defaults')
@@ -75,9 +74,10 @@ local player = require('player')
 local ui = require('ui')
 local xiv
 
-----------
--- Main -- --
-----------
+-------
+-- Main
+-------
+
 
 -- initialize addon --
 function initialize()
@@ -87,20 +87,22 @@ function initialize()
 
     if windower_player == nil then return end
 
+    bind_keys()
     player:initialize(windower_player, server, theme_options)
     player:load_hotbar()
     ui:setup(theme_options)
     ui:load_player_hotbar(player.hotbar, player.vitals, player.hotbar_settings.active_environment)
     ui.hotbar.ready = true
     ui.hotbar.initialized = true
-    bind_keys()
 end
+
 
 -- bind keys --
 function bind_keys()
-    for hotbar_index = 1, ui.hotbar.rows do --i, v in ipairs(keyboard.hotbar_table) do
+	keyboard:parse_keybinds()
+    for hotbar_index = 1, ui.hotbar.rows do 
         for skill_index = 1, ui.hotbar.columns do
-            windower.send_command('bind '..keyboard.hotbar_table[hotbar_index][skill_index]..' input //htb execute '..hotbar_index..' '..skill_index)
+			windower.send_command('bind '..keyboard.hotbar_rows[hotbar_index][skill_index]..' input //htb execute '..hotbar_index..' '..skill_index)
         end
     end
 end
@@ -112,6 +114,7 @@ function trigger_action(slot)
     ui:trigger_feedback(player.hotbar_settings.active_hotbar, slot)
 end
 
+
 -- toggle between field and battle hotbars --
 function toggle_environment()
     player:toggle_environment()
@@ -119,17 +122,20 @@ function toggle_environment()
     ui:load_player_hotbar(player.hotbar, player.vitals, player.hotbar_settings.active_environment)
 end
 
+
 -- set battle environment --
 function set_battle_environment(in_battle)
     player:set_battle_environment(in_battle)
     ui:load_player_hotbar(player.hotbar, player.vitals, player.hotbar_settings.active_environment)
 end
 
+
 -- reload hotbar --
 function reload_hotbar()
     player:load_hotbar()
     ui:load_player_hotbar(player.hotbar, player.vitals, player.hotbar_settings.active_environment)
 end
+
 
 -- change active hotbar --
 function change_active_hotbar(new_hotbar)
@@ -326,13 +332,15 @@ function update_icon_command(args)
 end
 
 -----------------
--- Bind Events -- --
+-- Bind Events --
 -----------------
 
--- -- ON LOGOUT --
+
+-- ON LOGOUT --
 windower.register_event('logout', function()
     ui:hide()
 end)
+
 
 -- ON COMMAND --
 windower.register_event('addon command', function(command, ...)
@@ -387,15 +395,13 @@ windower.register_event('addon command', function(command, ...)
                 trigger_action(tonumber(args[2]))
             end
         end
-    elseif command == 'flush' then
-        print("Flushing...")
-        flush_old_keybinds()
     elseif command == 'reload' then
         flush_old_keybinds()
         bind_keys()
         player:load_hotbar()
     end
 end)
+
 
 -- ON KEY --
 windower.register_event('keyboard', function(dik, flags, blocked)
@@ -411,6 +417,7 @@ windower.register_event('keyboard', function(dik, flags, blocked)
         toggle_environment()
     end
 end)
+
 
 -- ON PRERENDER --
 windower.register_event('prerender',function()
@@ -431,17 +438,21 @@ windower.register_event('prerender',function()
         ui:check_recasts(player.hotbar, player.vitals, player.hotbar_settings.active_environment, distance)
     end
 end)
+
+
 -- ON MP CHANGE --
 windower.register_event('mp change', function(new, old)
     player.vitals.mp = new
     ui:check_vitals(player.hotbar, player.vitals, player.hotbar_settings.active_environment)
 end)
 
+
 -- OM TP CHANGE --
 windower.register_event('tp change', function(new, old)
     player.vitals.tp = new
     ui:check_vitals(player.hotbar, player.vitals, player.hotbar_settings.active_environment)
 end)
+
 
 -- ON STATUS CHANGE --
 windower.register_event('status change', function(new_status_id)
@@ -455,21 +466,17 @@ windower.register_event('status change', function(new_status_id)
     end
 end)
 
--- ON LOGIN/LOAD --
 
+-- ON LOGIN/LOAD --
 windower.register_event('login', 'load', function()
     if windower.ffxi.get_player() ~= nil then
         player.id = windower.ffxi.get_player().id
         initialize()
     end
 end)
-windower.register_event('zone change', 'load', function()
 
---     player:update_id(windower.get_player().id) --
-end)
 
 -- ON ACTION USED --
-
 windower.register_event('action', function(act)
     if (act.param == 211 or act.param == 212) then 
         if (act.actor_id == player.id and act.category == 0x06) then
@@ -479,8 +486,8 @@ windower.register_event('action', function(act)
     end
 end)
 
--- ON ZONE  --
 
+-- ON ZONE  --
 windower.register_event('incoming chunk', function(id, data)
     if (id == 0x00A) then 
         ui.hotbar.hide_hotbars = false
@@ -494,6 +501,7 @@ end)
 windower.register_event('add item', 'remove item', function(id, bag, index, count)
     ui:update_inventory_count()
 end)
+
 
 -- ON JOB CHANGE --
 windower.register_event('job change',function(main_job, main_job_level, sub_job, sub_job_level)
