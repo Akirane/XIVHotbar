@@ -38,6 +38,7 @@ Let's say you have the following action:
 ```
 
 | Column | Value        | Description                                                                                     |
+|--------|--------------|-------------------------------------------------------------------------------------------------|
 | 1      | b 1 1        | First row, first column in battle field.                                                        |
 | 2      | ja           | Action Type OR custom command.                                                                  |
 | 3      | Stymie       | Name of the spell/ability/command                                                               |
