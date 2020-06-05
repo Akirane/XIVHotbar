@@ -30,6 +30,21 @@ Create a folder with following structure inside *data* folder:
 
 When you've saved the changes you've made, proceed with reloading using `//htb reload` or `//lua reload xivhotbar`. More in-depth examples are provided, `check data/Akirane` and `data/Waruharu`.
 
+### Breakdown of each value in an action 
+Let's say you have the following action:
+
+```lua 
+	{'b 1 1', 'ja', 'Stymie', 'me', 'Sty.', 'Stymie-image'}
+```
+
+| Column | Value        | Description                                                                                     |
+| 1      | b 1 1        | First row, first column in battle field.                                                        |
+| 2      | ja           | Action Type OR custom command.                                                                  |
+| 3      | Stymie       | Name of the spell/ability/command                                                               |
+| 4      | me           | Target, this field can be empty                                                                 |
+| 5      | Sty.         | Text which will appear on screen                                                                |
+| 6      | Stymie-image | This field is optional, if the field is not nil it will use an image from images/custom folder. |
+
 ## Commands
 
 - `//htb reload`: After you have made changes to the job-file, use this function to apply the new changes.
