@@ -16,7 +16,7 @@ xivhotbar_keybinds_job['Base'] = {
   {'battle 1 0', 'ma', 'Flurry II', 'stal',' '},
   -- Hotbar #2
   {'battle 2 1', 'ja', 'Composure', 'me', 'Comp.'},
-  {'battle 2 2', 'ma', 'Dia III', 't', ''},
+  {'battle 2 2', 'ma', 'Dia III', 'stnpc', ''},
   {'battle 2 3', 'ma', 'Paralyze II', 'stnpc', ''},
   {'battle 2 4', 'ma', 'Enthunder II', 'me', ''},
   {'battle 2 7', 'ma', 'Silence', 'stnpc', 'Siln.'},

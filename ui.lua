@@ -153,6 +153,17 @@ function ui:get_slot_y(h, i)
     return self.pos_y - (((h - 1) * (self.hotbar_spacing-3)))
 end
 
+ui.disabled_icons = {}
+
+function ui:setup_disabled_icons()
+    for h=1, ui.hotbar.rows,1 do
+		self.disabled_icons[#ui.disabled_icons+1] = {}
+        for i=1, ui.hotbar.columns, 1 do
+			self.disabled_icons[h][#ui.disabled_icons[h]+1] = 0
+		end
+	end
+end
+
 --------------
 -- Setup UI --
 --------------
@@ -186,6 +197,7 @@ function ui:setup(theme_options)
     self.theme.green = theme_options.font_color_green
 
     self:setup_metrics(theme_options)
+	self:setup_disabled_icons()
     self:load(theme_options)
 
     self.is_setup = true
@@ -307,7 +319,6 @@ function ui:update_inventory_count()
 end
 
 function ui:get_inventory_count(text_box, bag)
-    -- print(bag.count)
     text_box:text(bag.count..'/'..bag.max)
     if (bag.max - bag.count < 4) then
         text_box:color(240, 0, 0)
@@ -342,8 +353,6 @@ function ui:setup_metrics(theme_options)
     self.active_environment['battle'] = texts.new(environment_text_setup)
     setup_text(self.active_environment['field'], theme_options) 
     setup_text(self.active_environment['battle'], theme_options) 
-
-	print("Setting up environment Numbers...")
 
     self.hotbar_width = (400 + theme_options.slot_spacing * 9)
     self.scale = 1.5
@@ -683,6 +692,9 @@ function ui:check_recasts(player_hotbar, player_vitals, environment, distance)
                     if self.disabled_slots.actions[action.action] == nil then
                         self.disabled_slots.actions[action.action] = true
                         self:toggle_slot(h, i, false)
+						self.disabled_icons[h][i] = 1
+					else
+						self.disabled_icons[h][i] = 1
                     end
 
                     -- show recast animation
@@ -706,6 +718,7 @@ function ui:check_recasts(player_hotbar, player_vitals, environment, distance)
                         end
                     end
                 else
+					self.disabled_icons[h][i] = 0
                     -- clear recast animation
                     self:clear_recast(h, i)
 
@@ -722,6 +735,38 @@ function ui:check_recasts(player_hotbar, player_vitals, environment, distance)
             end
         end
     end
+end
+
+ui.hover_icon = {
+	row = nil,
+	column = nil,
+	previous_row = nil,
+	previous_col = nil
+}
+
+function ui:check_hover()
+	opacity = 200
+	if (ui.hover_icon.row ~= nil and ui.hover_icon.column ~= nil) then
+		if (self.disabled_icons[ui.hover_icon.row][ui.hover_icon.column] == 0) then
+			local previous_col = ui.hover_icon.column
+			local previous_row = ui.hover_icon.row
+			ui.hover_icon.previous_col = previous_col
+			ui.hover_icon.previous_row = previous_row
+			-- print(ui.hover_icon.row)
+			-- print(ui.hover_icon.previous_col .. ui.hover_icon.previous_row)
+			self.hotbars[ui.hover_icon.row].slot_icon[ui.hover_icon.column]:alpha(opacity)
+		end
+	elseif(ui.hover_icon.previous_row ~= nil and ui.hover_icon.previous_col ~= nil) then
+		if (self.disabled_icons[ui.hover_icon.previous_row][ui.hover_icon.previous_col] == 1) then
+			opacity = self.theme.disabled_slot_opacity
+		else
+			opacity = 255
+		end
+		-- print("Updating previous color...")
+		self.hotbars[ui.hover_icon.previous_row].slot_icon[ui.hover_icon.previous_col]:alpha(opacity)
+		ui.hover_icon.previous_col = nil
+		ui.hover_icon.previous_row = nil
+	end
 end
 
 -- clear recast from a slot
@@ -765,6 +810,7 @@ function calc_recast_time(time, in_seconds)
     return recast
 end
 
+
 -- disable slot
 function ui:toggle_slot(hotbar, slot, is_enabled, out_of_range)
     local opacity = self.theme.disabled_slot_opacity
@@ -803,6 +849,35 @@ function ui:show_feedback()
             self.feedback.is_active= false
         end
     end
+end
+
+-- Returns true if the coordinates are over a button
+-- Credit: maverickdfz
+-- https://github.com/maverickdfz/FFXIAddons/blob/master/xivhotbar/ui.lua
+function ui:hovered(x, y)
+
+    for h=1,#self.hotbars,1 do
+        for i=1,10,1 do
+            local pos_x = self:get_slot_x(h, i)
+            local pos_y = self:get_slot_y(h, i)
+            local off_x = 40
+            local off_y = 40
+
+            if (pos_x <= x and x <= pos_x + off_x
+                or pos_x >= x and x >= pos_x + off_x)
+            and (pos_y <= y and y <= pos_y + off_y
+                or pos_y >= y and y >= pos_y + off_y) then
+                return h, i
+            end
+        end
+    end
+
+    return 0, 0
+end
+
+function ui:light_up_action(row, column)
+	ui.hover_icon.row = row
+	ui.hover_icon.column = column
 end
 
 return ui

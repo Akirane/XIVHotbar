@@ -28,13 +28,6 @@
 
 local keyboard = {}
 
--- Legends:
--- %: Keybinding is only registered when the chat window is *not* open
--- ^: CTRL
--- !: Alt
--- ~: Shift
--- For example: "%~1" means "Shift+1" when chat window is not active.
-
 keyboard.parsed_keybinds = {}
 
 -- TODO Delete old binds
@@ -48,6 +41,19 @@ function keyboard:save_current_keybinds()
 	file:close()
 end
 
+--[[ 
+	Parse Keybinds: 
+
+	Description:
+		Converts the keybinds in keyboard.hotbar_rows into an input which can be used for
+		binding keys with Windower.
+	Legends:
+		1. %: Keybinding is only registered when the chat window is *not* open
+		2. ^: CTRL
+		3. !: Alt
+		4. ~: Shift
+		For example: "%~1" means "Shift+1" when chat window is not active.
+--]]
 function keyboard:parse_keybinds()
 	for row_key,row_value in pairs(keyboard.hotbar_rows) do
 		for col_key,col_value in pairs(row_value) do
@@ -75,9 +81,7 @@ function keyboard:parse_keybinds()
 					col_value = "%" .. col_value
 				end
 			end
-			--col_value = "%" .. col_value
 			row_value[col_key] = col_value
-			--print(col_value)
 		end
 		keyboard.hotbar_rows[row_key] = row_value
 	end
@@ -106,7 +110,7 @@ keyboard.hotbar_rows = {
 		'E',          -- Hotbar Row #2 Col #2
 		'ALT + E',    -- Hotbar Row #2 Col #3
 		'Q',          -- Hotbar Row #2 Col #4
-		'ALT + K',    -- Hotbar Row #2 Col #5
+		'ALT + W',    -- Hotbar Row #2 Col #5
 		'T',          -- Hotbar Row #2 Col #6
 		'ALT + U',    -- Hotbar Row #2 Col #7
 		'CTRL + O',   -- Hotbar Row #2 Col #8

@@ -419,6 +419,56 @@ windower.register_event('keyboard', function(dik, flags, blocked)
 end)
 
 
+-- ON MOUSE
+-- Credit for clicking on action: maverickdfz
+-- https://github.com/maverickdfz/FFXIAddons/blob/master/xivhotbar/xivhotbar.lua
+--
+-- TODO: Fix "hover" effect 
+windower.register_event('mouse', function(type, x, y, delta, blocked)
+    if blocked then
+        return false
+    end
+
+    if ui.hotbar.hide_hotbars then
+        return false
+    end
+
+    if type == 1 then -- Mouse left click
+        local hotbar, action = ui:hovered(x, y)
+        if(action ~= 0) then
+            current_hotbar = hotbar
+            current_action = action
+            return true
+        end
+    elseif type == 2 then -- Mouse left release
+        if(current_action ~= -1) then
+            local hotbar, action = ui:hovered(x, y)
+            if(action ~= 0) then
+                if(hotbar == current_hotbar and action == current_action) then
+                    player.hotbar_settings.active_hotbar = hotbar
+                    trigger_action(action % 10)
+                end
+            end
+            current_hotbar = -1
+            current_action = -1
+            return true
+        end
+    elseif type == 0 then -- Mouse move
+	    local hotbar, action = ui:hovered(x, y)
+        if(action ~= 0) then
+			--print("Hotbar: " .. hotbar .. ", action:" .. action)
+			ui:light_up_action(hotbar, action)
+		else
+			ui:light_up_action(nil, nil)
+		end
+        --if(current_action ~= -1) then
+		return false
+    end
+
+    return false
+end)
+
+
 -- ON PRERENDER --
 windower.register_event('prerender',function()
     if ui.hotbar.ready == false then
@@ -436,6 +486,7 @@ windower.register_event('prerender',function()
 
     if ui.is_setup and ui.hotbar.hide_hotbars == false then
         ui:check_recasts(player.hotbar, player.vitals, player.hotbar_settings.active_environment, distance)
+		ui:check_hover()
     end
 end)
 
