@@ -34,8 +34,8 @@
         </Hotbar>
         <Style>
             <HotbarSpacing>56</HotbarSpacing>
-            <OffsetX>-150</OffsetX>
-            <OffsetY>-350</OffsetY>
+            <OffsetX>-90</OffsetX>
+            <OffsetY>-55</OffsetY>
             <SlotAlpha>100</SlotAlpha>
             <SlotSpacing>10</SlotSpacing>
         </Style>

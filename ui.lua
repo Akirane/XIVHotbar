@@ -358,8 +358,8 @@ function ui:setup_metrics(theme_options)
     self.scale = 1.5
     self.scaled_pos_x = windower.get_windower_settings().ui_x_res
     self.scaled_pos_y = windower.get_windower_settings().ui_y_res
-    self.pos_x = math.floor(self.scaled_pos_x/2.0) - 90
-    self.pos_y = self.scaled_pos_y - 55
+    self.pos_x = math.floor(self.scaled_pos_x/2.0) + theme_options.offset_x 
+    self.pos_y = self.scaled_pos_y + theme_options.offset_y
 
     self.inventory_count = texts.new(inventory_count_setup)
     setup_text(self.inventory_count, theme_options) 
