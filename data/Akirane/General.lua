@@ -20,6 +20,7 @@ xivhotbar_keybinds_general['Root'] = {
 	{'f 3 7', 'item', "poison potion",'me', 'Poison.', 'poison'},
     {'f 3 8', 'gs', 'c toggle weapon','','TGWep'},
     {'f 3 9', 'gs', 'c toggle acc','','TGAcc'},
+    {'f 5 0', 'ct', '/refa all',nil,'Ref'},
 }
 
 xivhotbar_keybinds_general['Medicine'] = {

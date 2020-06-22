@@ -1,5 +1,5 @@
 --[[
-        Copyright © 2020, SirEdeonX, Akirane
+        Copyright © 2020, Akirane
         All rights reserved.
 
         Redistribution and use in source and binary forms, with or without
@@ -26,41 +26,4 @@
         SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ]]
 
-local storage = {}
-
-storage.filename = ''
-storage.directory = ''
-storage.file = nil
-
--- setup storage for current player
-function storage:setup(player)
-    self.filename = player.main_job .. '-' .. player.sub_job
-    self.directory = player.server .. '/' .. player.name
-
-    self.file = file.new('data/hotbar/' .. self.directory .. '/' .. self.filename .. '.xml')
-end
-
--- store an hotbar in a new file
-function storage:store_new_hotbar(new_hotbar)
-    self.file:create()
-    self.file:write(table.to_xml(new_hotbar))
-end
-
--- update filename according to jobs
-function storage:update_filename(main, sub)
-    self.filename = main .. '-' .. sub
-    self.file = file.new('data/hotbar/' .. self.directory .. '/' .. self.filename .. '.xml')
-end
-
--- update file with hotbar
-function storage:save_hotbar(new_hotbar)
-    --if not self.file:exists() then
-    --    error('Hotbar file could not be found!')
-    --    return
-    --end
-
-    --self.file:write(table.to_xml(new_hotbar))
-	return
-end
-
-return storage
+-- TODO rewrite the storage.lua class

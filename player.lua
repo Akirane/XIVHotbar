@@ -26,7 +26,7 @@
         SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ]]
 
-local storage = require('storage')
+--local storage = require('storage')
 local action_manager = require('action_manager')
 require('luau')
 str = require('strings')
@@ -153,7 +153,7 @@ function player:initialize(windower_player, server, theme_options)
     self.hotbar_settings.max = theme_options.hotbar_number
     self.vitals.mp = windower_player.vitals.mp
     self.vitals.tp = windower_player.vitals.tp
-    storage:setup(self)
+    --storage:setup(self)
 end
 
 -- update player jobs
@@ -161,7 +161,7 @@ function player:update_jobs(main, sub)
     self.main_job = main
     self.sub_job = sub
 
-    storage:update_filename(main, sub)
+    --storage:update_filename(main, sub)
 end
 
 function player:update_id(new_id)
@@ -428,7 +428,9 @@ function player:execute_action(slot)
     if action.type == 'ct' then
         local command = '/' .. action.action
 
-        if  action.target ~= nil then
+        if  action.target ~= nil and action.target ~= "" then
+			print("Target is not nil.")
+			print(action.target)
             command = command .. ' <' ..  action.target .. '>'
         end
 
@@ -503,7 +505,7 @@ function player:save_hotbar()
     local new_hotbar = {}
     new_hotbar.hotbar = self.hotbar
 
-    storage:save_hotbar(new_hotbar)
+    --storage:save_hotbar(new_hotbar)
 end
 
 return player

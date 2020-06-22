@@ -64,6 +64,8 @@ Let's say you have the following action:
 
 ##### Latest Changes:
 ```
+ 08/06/2020
+ 	- Fixed OffsetX and OffsetY in settings.xml, now they should reposition the hotbar properly.
  07/06/2020
  	- Added clickable icons and first version of hovering.
  05/06/2020

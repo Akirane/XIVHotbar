@@ -26,7 +26,6 @@
         SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ]]
 
--- Addon description --
 _addon.name = 'XIVHotbar'
 _addon.author = 'Edeon, Akirane'
 _addon.version = '0.2'

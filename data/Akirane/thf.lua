@@ -33,6 +33,7 @@
     {'battle 4 0', 'ws', 'Mandalic Stab', 'stnpc', 'MB'},
 
     {'battle 5 9', 'gs', 'equip engaged[\'ERegen\']', '', 'EReg.'},
+    {'battle 5 0', 'ct', '/send @all lua exec get_pt', '', 'exec'},
 
 }
 
