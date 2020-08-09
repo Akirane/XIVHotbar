@@ -3,6 +3,10 @@ This version is further work on SirEdeonX's original addon, you can check his wo
 
 ![XIVHotbar](/images/demo/demo1.png)
 
+## Dependencies
+
+- Shortcuts addon (Can be downloaded from the Windower launcher).
+
 ## Getting started
 
 Create a folder with following structure inside *data* folder:
