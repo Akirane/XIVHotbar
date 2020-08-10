@@ -20,11 +20,11 @@ You can change the following from the settings.xml file:
 
 1. Number of rows and columns. Modify the section **Hotbar/rows** and **Hotbar/columns** for this.
 
-![Less Columns and Rows](/images/demo/demo_columns.png)
+![Less Columns and Rows](/images/demo/demo_columns.PNG)
 
 2. It's now possible to hide the inventory count and which hotbar environment you are currently in. Modify **Hotbar/HideBattleNotice** and **Hotbar/HideInventoryCount** for this.
 
-![No extra labels](/images/demo/no_extra_labels.png)
+![No extra labels](/images/demo/no_extra_labels.PNG)
 
 3. It's now possible to tell this addon to change out weapon skill actions on the fly. Currently only works for club/dagger/sword. Look at the file `data/Akirane/RDM.lua`, at line 113 you have `xivhotbar_keybinds_job['Sword']` and at line 125 you have `xivhotbar_keybinds_job['Dagger']`. The addon can now switch between these two action tables after it has registered you have changed weapon type. Until I have finished this implementation, it will remain disabled for now. You can turn it on by changing the value **Hotbar/EnableWeaponSwitching** from false to true.
 
