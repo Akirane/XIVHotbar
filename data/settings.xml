@@ -24,13 +24,17 @@
             <ToggleBattleMode>43</ToggleBattleMode>
         </Controls>
         <Hotbar>
+            <EnableWeaponSwitching>false</EnableWeaponSwitching>
             <HideActionCost>false</HideActionCost>
             <HideActionElement>true</HideActionElement>
             <HideActionName>false</HideActionName>
             <HideBattleNotice>false</HideBattleNotice>
             <HideEmptySlots>false</HideEmptySlots>
+            <HideInventoryCount>false</HideInventoryCount>
             <HideRecastAnimation>false</HideRecastAnimation>
             <HideRecastText>false</HideRecastText>
+            <columns>10</columns>
+            <rows>3</rows>
         </Hotbar>
         <Style>
             <HotbarSpacing>56</HotbarSpacing>
@@ -49,7 +53,7 @@
             <Font>sans-serif</Font>
             <OffsetX>150</OffsetX>
             <OffsetY>200</OffsetY>
-            <Size>9</Size>
+            <Size>14</Size>
             <Stroke>
                 <Alpha>180</Alpha>
                 <Blue>0</Blue>

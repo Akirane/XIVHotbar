@@ -21,19 +21,17 @@ xivhotbar_keybinds_job['Base'] = {
   {'battle 2 4', 'ma', 'Enthunder II', 'me', ''},
   {'battle 2 7', 'ma', 'Silence', 'stnpc', 'Siln.'},
   {'battle 2 9', 'gs', 'equip engaged[\'Magic Evasion\']', '', 'M.Eva'},
- -- {'battle 2 9', 'ma', 'Sneak', 'stal', 'Snk.'},
-  {'battle 2 0', 'ma', 'Invisible', 'stal', 'Inv.'},
   -- Hotbar #3
   {'battle 3 2', 'ja', 'Convert', 'me', 'Conv.'},
   {'battle 3 3', 'ja', 'Saboteur', 'me', 'Sbtr.'},
   {'battle 3 4', 'ma', 'Dispel', 'stnpc', 'Disp.'},
   {'battle 3 5', 'ma', 'Temper II', 'me', ''},
+  {'battle 3 7', 'ma', 'Sleepga', 'stnpc', ''},
   {'battle 3 0', 'ma', 'Stoneskin', 'me', ''},
   {'battle 3 9', 'ma', 'Blink', 'me', 'Blink'},
 
   -- Hotbar #4
   {'f 3 6', 'ma', 'Gain-STR', 'me', 'STR'},
-  {'f 3 0', 'ja', 'Chainspell', 'me', ' '},
   {'battle 4 1', 'ma', 'Gain-STR', 'me', 'STR'},
   {'battle 4 5', 'ma', 'Cure III', 'stal', ''},
 
@@ -43,11 +41,11 @@ xivhotbar_keybinds_job['Base'] = {
   {'battle 4 0', 'ma', 'Inundation', 'stnpc', 'Inun.'},
   {'battle 5 1', 'ja', 'Spontaneity', 'me', ''},
   {'battle 5 2', 'ma', 'Aquaveil', 'me', ''},
-  {'battle 5 3', 'ma', 'enthunder', 'me', ''},
+  {'battle 5 3', 'ma', 'enaero', 'me', ''},
   {'battle 5 4', 'gs', 'c toggle body', '', 'body'},
   {'battle 5 5', 'ma', 'enblizzard', 'me', ''},
-  {'b 5 7', 'gs', 'c toggle weapon','','TGWep'},
-  {'b 5 8', 'gs', 'c toggle acc','','TGAcc'},
+  {'b 5 7', 'gs', 'equip high_lvl_wep','','Lv99D'},
+  {'b 5 8', 'gs', 'equip low_lvl_daggers','','Lv1D'},
   {'battle 5 9', 'ja',  'Chainspell', 'me', 'CS', 'chainspell'},
   {'battle 5 0', 'ja',  'Stymie', 'me', 'Stym.', 'Stymie'},
 
@@ -84,11 +82,7 @@ xivhotbar_keybinds_job['Base'] = {
   {'f 4 0',  'ma', 'Enstone II', 'me', ''},
   {'f 1 5', 'ma', 'bind', 'stnpc',''},
   {'f 1 6', 'ma', 'gravity ii', 'stnpc',''},
-  {'battle 4 6', 'ws', 'Chant Du Cygne', 't', 'CDC'},
- -- {'battle 4 6', 'ws', 'evisceration', 't', 'Evi.'},
-  {'battle 2 8', 'ws', 'Savage Blade', 't', 'Svg.Bl.'},
-  {'battle 3 6', 'ws', 'Seraph Blade', 't', 'SeraB'},
-  {'battle 3 8', 'ws', 'Sanguine Blade', 't', 'SB'},
+--  {'battle 4 6', 'ws', 'evisceration', 't', 'Evi.'},
 }
 
 xivhotbar_keybinds_job['Light Arts'] = {
@@ -115,17 +109,32 @@ xivhotbar_keybinds_job['Dark Arts'] = {
 
 xivhotbar_keybinds_job['Sword'] = {
   -- Battle
-  {'battle 4 6', 'ws', 'Chant Du Cygne', 't', 'CDC'},
+  {'battle 2 0', 'ws', 'Requiescat', 't', 'Req.'},
   {'battle 2 8', 'ws', 'Savage Blade', 't', 'Svg.Bl.'},
+
   {'battle 3 6', 'ws', 'Seraph Blade', 't', 'SeraB'},
   {'battle 3 8', 'ws', 'Sanguine Blade', 't', 'SB'},
+
+  {'battle 4 6', 'ws', 'Chant Du Cygne', 't', 'CDC'},
+  {'battle 5 8', 'ws', 'Empyreal Arrow', 't', 'EA'},
+}
+
+xivhotbar_keybinds_job['Dagger'] = {
+  -- Battle
+	{'battle 2 8', 'ws', 'evisceration', 't', 'Evi.'},
+	{'battle 4 6', 'ws', 'aeolian edge', 't', 'AE'},
+}
+xivhotbar_keybinds_job['Club'] = {
+  -- Battle
+  --{'battle 4 6', 'ws', 'Chant Du Cygne', 't', 'CDC'},
+  {'b 2 8', 'ws', 'Black Halo', 't', 'BH'},
 }
 
 xivhotbar_keybinds_job['WAR'] = {
   {'battle 1 0', 'ja', 'Provoke', 't', 'Pro.'},
 
-  {'battle 2 5', 'ma', 'Enstone II', 'me', ''},
-  {'battle 2 6', 'ma', 'Poison II', 't', ''},
+  {'battle 2 5', 'ma', 'Poison II', 't', ''},
+  {'battle 2 6', 'ma', 'Bio III', 't', ''},
 
   {'battle 3 1', 'ja', 'Warcry', 'me', 'War.'},
   {'battle 3 6', 'ma', 'Barparalyze', 'me', 'BarPa.'},
@@ -134,18 +143,21 @@ xivhotbar_keybinds_job['WAR'] = {
 
   {'battle 4 1', 'ma', 'Gain-VIT', 'me', 'VIT'},
   {'battle 4 2', 'ma', 'Gain-DEX', 'me', 'DEX'},
-  {'battle 4 3', 'ma', 'Aquaveil', 'me', 'Aq.'},
+  {'battle 4 3', 'ma', 'Gain-STR', 'me', 'STR'},
   {'battle 4 4', 'ma', 'Barthunder', 'me', 'Barth.'}
+}
+xivhotbar_keybinds_job['RUN'] = {
+  {'battle 3 1', 'ja', 'Unda', 'me', ''},
 }
 xivhotbar_keybinds_job['NIN'] = {
   {'battle 4 1', 'ma', 'Gain-MND', 'me', 'MND'},
-  {'battle 4 2', 'ma', 'fire v', 't', ''},
+  {'battle 4 2', 'ma', 'fire v', 'stnpc', ''},
   {'b 4 3', 'ma', 'Break', 'stnpc', 'Break'},
   {'battle 3 7', 'ma', 'utsusemi: ichi', 'me', 'U.Ich.'},
   {'battle 3 1', 'ma', 'utsusemi: ni', 'me', 'U.Ni'},
   {'battle 4 4', 'ma', 'Gain-STR', 'me', 'STR'},
   {'b 2 2', 'ma', 'Dia III', 'stnpc', ''},
-  --{'battle 2 5', 'ma', 'enstone', 'me', ''},
+  {'battle 2 5', 'ma', 'poison ii', 't', ''},
   {'battle 2 6', 'ma', 'Bio III', 't', ''},
 
 
@@ -157,7 +169,9 @@ xivhotbar_keybinds_job['NIN'] = {
   {'f 4 5', 'ma', 'barparalyze', 'me', 'BrPar'},
   {'f 4 9',  'ma', 'Enfire', 'me', ''},
   {'f 4 0',  'ma', 'Enstone', 'me', ''},
-  {'battle 5 6', 'gs', 'equip sets.mdef', '', 'MDef'},
+  {'f 5 9',  'gs', 'equip low_lvl_daggers', 'me', 'Lv1D'},
+  {'f 5 0',  'gs', 'equip high_lvl_wep', 'me', 'Lv99D'},
+  {'battle 5 6', 'gs', 'equip sets.mdef', '', 'MDEF'},
 }
 xivhotbar_keybinds_job['WHM'] = {
   {'battle 1 0', 'ma', 'silena', 'stal', 'Sile.'},
@@ -184,17 +198,18 @@ xivhotbar_keybinds_job['WHM'] = {
   {'f 4 9', 'ma', 'Barstonra', 'me', 'Barston.'},
   {'f 4 0', 'ma', 'Baramnesia', 'me', 'Baramn.'}
 }
-
-xivhotbar_keybinds_job['DNC'] = {
-  {'battle 3 1', 'ja', 'Curing Waltz III', 'stal', 'CW3'},
-  {'battle 3 7', 'ja', 'Healing Waltz', 'stal', 'Ers.'},
-  {'battle 3 8', 'ja', 'Divine Waltz', 'me', 'Di.Wa'}
+xivhotbar_keybinds_job['DRK'] = {
+  {'battle 2 5', 'ma', 'Poison II', 't', ''},
+  {'battle 2 6', 'ma', 'Bio III', 't', ''},
+  {'battle 3 1', 'ma', 'Bio II', 't', ''},
+  {'battle 4 2', 'ma', 'Absorb-TP', 't', ''},
+  {'battle 1 0', 'ma', 'Stun', 't', ''},
 }
 xivhotbar_keybinds_job['BLM'] = {
   {'battle 2 5', 'ja', 'Elemental Seal', 'me', 'Ele.'},
   {'battle 2 6', 'ma', 'Stun', 'bt', ''},
   {'battle 3 1', 'ma', 'Dia III', 'stnpc', ''},
-  {'battle 3 6', 'ja', 'Spontaneity', 'me', 'Spon.'},
+  --{'battle 3 6', 'ja', 'Spontaneity', 'me', 'Spon.'},
   -- General
   {'f 3 1', 'ma', 'Stonega II', 'stnpc', ''},
   {'f 3 2', 'ma', 'Waterga II', 'stnpc', ''},
@@ -217,6 +232,14 @@ xivhotbar_keybinds_job['BLM'] = {
 }
 xivhotbar_keybinds_job['SCH'] = {
   -- General 
+  {'b 4 1', 'ja', 'Penury', 'me', 'MP 1/2'},
+  {'b 4 2', 'ja', 'Celerity', 'me', 'Fast'},
+  {'b 4 3', 'ja', 'Accession', 'me', 'AoE'},
+  {'b 4 4', 'ja', 'Addendum: White', 'me', 'A.Wh.'},
+  {'f 1 7',  'ma', 'Silena', 'stal', 'Silena'},
+  {'f 1 8',  'ma', 'Poisona', 'stal', 'Poisona'},
+  {'battle 2 5', 'ma', 'Paralyna', 'stal', 'Para.'},
+  {'battle 2 6', 'ma', 'Erase', 'stal', 'Era.'},
   {'f 3 1',  'ma', 'Aero V', 'stnpc', ''},
   {'f 3 2',  'ma', 'Blizzard V', 'stnpc', ''},
   {'f 3 3',  'ma', 'Fire V', 'stnpc', ''},

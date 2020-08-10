@@ -26,55 +26,83 @@
         SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ]]
 
+
+--[[ 
+
+    Theme
+
+    Description: Copies content from settings.xml,
+    these settings decide how the UI will draw its 
+    elements.
+--]]
+
 local theme = {}
 
 theme.apply = function (settings)
+
     local options = {}
 
-    options.hotbar_number = 5
-    options.hide_empty_slots = settings.Hotbar.HideEmptySlots
-    options.hide_action_names = settings.Hotbar.HideActionName
-    options.hide_action_cost = settings.Hotbar.HideActionCost
-    options.hide_action_element = settings.Hotbar.HideActionElement
-    options.hide_recast_animation = settings.Hotbar.HideRecastAnimation
-    options.hide_recast_text = settings.Hotbar.HideRecastText
-    options.hide_battle_notice = settings.Hotbar.HideBattleNotice
+    -- Hotbar
+    local sh = settings.Hotbar
+    options.enable_weapon_switching = sh.EnableWeaponSwitching
+    options.hotbar_number           = sh.rows
+    options.rows                    = sh.rows
+    options.columns                 = sh.columns
+    options.hide_empty_slots        = sh.HideEmptySlots
+    options.hide_action_names       = sh.HideActionName
+    options.hide_action_cost        = sh.HideActionCost
+    options.hide_action_element     = sh.HideActionElement
+    options.hide_recast_animation   = sh.HideRecastAnimation
+    options.hide_recast_text        = sh.HideRecastText
+    options.hide_battle_notice      = sh.HideBattleNotice
+    options.hide_inventory_count    = sh.HideInventoryCount
+    settings.Hotbar = sh
 
-    options.battle_notice_theme = settings.Theme.BattleNotice
-    options.slot_theme = settings.Theme.Slot
-    options.frame_theme = settings.Theme.Frame
+    -- Theme
+    local st = settings.Theme
+    options.battle_notice_theme     = st.BattleNotice
+    options.slot_theme              = st.Slot
+    options.frame_theme             = st.Frame
 
-    options.slot_opacity = settings.Style.SlotAlpha
-    options.slot_spacing = settings.Style.SlotSpacing
-    options.hotbar_spacing = settings.Style.HotbarSpacing
-    options.offset_x = settings.Style.OffsetX
-    options.offset_y = settings.Style.OffsetY
+    -- Style
+    local ss = settings.Style
+    options.slot_opacity            = ss.SlotAlpha
+    options.slot_spacing            = ss.SlotSpacing
+    options.hotbar_spacing          = ss.HotbarSpacing
+    options.offset_x                = ss.OffsetX
+    options.offset_y                = ss.OffsetY
 
-    options.feedback_max_opacity = settings.Color.Feedback.Opacity
-    options.feedback_speed = settings.Color.Feedback.Speed
-    options.disabled_slot_opacity = settings.Color.Disabled.Opacity
+    -- Color
+    local sc = settings.Color
+    options.feedback_max_opacity    = sc.Feedback.Opacity
+    options.feedback_speed          = sc.Feedback.Speed
+    options.disabled_slot_opacity   = sc.Disabled.Opacity
+    options.mp_cost_color_red       = sc.MpCost.Red
+    options.mp_cost_color_green     = sc.MpCost.Green
+    options.mp_cost_color_blue      = sc.MpCost.Blue
+    options.tp_cost_color_red       = sc.TpCost.Red
+    options.tp_cost_color_green     = sc.TpCost.Green
+    options.tp_cost_color_blue      = sc.TpCost.Blue
 
-    options.font = settings.Texts.Font
-    options.font_size = settings.Texts.Size
-    options.font_alpha = settings.Texts.Color.Alpha
-    options.font_color_red = settings.Texts.Color.Red
-    options.font_color_green = settings.Texts.Color.Green
-    options.font_color_blue = settings.Texts.Color.Blue
-    options.font_stroke_width = settings.Texts.Stroke.Width
-    options.font_stroke_alpha = settings.Texts.Stroke.Alpha
-    options.font_stroke_color_red = settings.Texts.Stroke.Red
-    options.font_stroke_color_green = settings.Texts.Stroke.Green
-    options.font_stroke_color_blue = settings.Texts.Stroke.Blue
-    options.mp_cost_color_red = settings.Color.MpCost.Red
-    options.mp_cost_color_green = settings.Color.MpCost.Green
-    options.mp_cost_color_blue = settings.Color.MpCost.Blue
-    options.tp_cost_color_red = settings.Color.TpCost.Red
-    options.tp_cost_color_green = settings.Color.TpCost.Green
-    options.tp_cost_color_blue = settings.Color.TpCost.Blue
-    options.text_offset_x = settings.Texts.OffsetX
-    options.text_offset_y = settings.Texts.OffsetY
+    -- Texts
+    local st = settings.Texts
+    options.font                    = st.Font
+    options.font_size               = st.Size
+    options.font_alpha              = st.Color.Alpha
+    options.font_color_red          = st.Color.Red
+    options.font_color_green        = st.Color.Green
+    options.font_color_blue         = st.Color.Blue
+    options.font_stroke_width       = st.Stroke.Width
+    options.font_stroke_alpha       = st.Stroke.Alpha
+    options.font_stroke_color_red   = st.Stroke.Red
+    options.font_stroke_color_green = st.Stroke.Green
+    options.font_stroke_color_blue  = st.Stroke.Blue
+    options.text_offset_x           = st.OffsetX
+    options.text_offset_y           = st.OffsetY
 
-    options.controls_battle_mode = settings.Controls.ToggleBattleMode
+    -- Controls
+    local sco = settings.Controls
+    options.controls_battle_mode = sco.ToggleBattleMode
 
     return options
 end

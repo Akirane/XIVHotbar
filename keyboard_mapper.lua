@@ -159,43 +159,40 @@ keyboard.hotbar_rows = {
 }
 
 keyboard.less_great = -1
-keyboard.esc = 1
-keyboard.key_1 = 2
-keyboard.key_2 = 3
-keyboard.key_3 = 4
-keyboard.key_4 = 5
-keyboard.key_5 = 6
-keyboard.key_6 = 7
-keyboard.key_7 = 8
-keyboard.key_8 = 9
-keyboard.key_9 = 10
-keyboard.key_0 = 11
+keyboard.esc        = 1
+keyboard.key_1      = 2
+keyboard.key_2      = 3
+keyboard.key_3      = 4
+keyboard.key_4      = 5
+keyboard.key_5      = 6
+keyboard.key_6      = 7
+keyboard.key_7      = 8
+keyboard.key_8      = 9
+keyboard.key_9      = 10
+keyboard.key_0      = 11
 keyboard.underscore = 12
 
-keyboard.q = 16
-keyboard.w = 17
-keyboard.e = 18
-keyboard.r = 19
+keyboard.q         = 16
+keyboard.w         = 17
+keyboard.e         = 18
+keyboard.r         = 19
 
-keyboard.o = 24
+keyboard.o         = 24
 
-keyboard.c = 46
+keyboard.c         = 46
 
-keyboard.enter = 28
-keyboard.ctrl = 29
+keyboard.enter     = 28
+keyboard.ctrl      = 29
 
-keyboard.shift = 42
+keyboard.shift     = 42
 keyboard.backslash = 43
-keyboard.comma = 51
-keyboard.period = 52
-keyboard.alt = 56
+keyboard.comma     = 51
+keyboard.period    = 52
+keyboard.alt       = 56
 
-keyboard.up = 200
-keyboard.down = 208
-keyboard.left = 203
-keyboard.right = 205
--- End of unused content
-
-
+keyboard.up        = 200
+keyboard.down      = 208
+keyboard.left      = 203
+keyboard.right     = 205
 
 return keyboard

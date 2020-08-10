@@ -34,7 +34,7 @@ local CUSTOM_TYPE = 'ct'
 function action_manager:build(type, action, target, alias, icon)
     local new_action = {}
 
-    new_action.type = type
+    new_action.type   = type
     new_action.action = action
     new_action.target = target
 

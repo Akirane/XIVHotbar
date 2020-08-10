@@ -61,7 +61,6 @@ resources = require('resources')
 local defaults = require('defaults')
 local settings = config.load(defaults)
 config.save(settings)
-
 -- Load theme options according to settings --
 local theme = require('theme')
 local theme_options = theme.apply(settings)
@@ -72,6 +71,7 @@ local keyboard = require('keyboard_mapper')
 local player = require('player')
 local ui = require('ui')
 local xiv
+local current_zone = 0
 
 -------
 -- Main
@@ -81,15 +81,23 @@ local xiv
 -- initialize addon --
 function initialize()
 
+    keyboard:parse_keybinds()
+    ui:setup(theme_options)
     local windower_player = windower.ffxi.get_player()
     local server = resources.servers[windower.ffxi.get_info().server].en
 
     if windower_player == nil then return end
+	local inventory = windower.ffxi.get_items()
+	local equipment = inventory['equipment']
 
-    bind_keys()
+	weapon_id = windower.ffxi.get_items(equipment['main_bag'], equipment['main']).id
+
+	skill_type = resources.items[weapon_id].skill
+	player:load_weaponskill_actions(skill_type)
+
     player:initialize(windower_player, server, theme_options)
     player:load_hotbar()
-    ui:setup(theme_options)
+    bind_keys()
     ui:load_player_hotbar(player.hotbar, player.vitals, player.hotbar_settings.active_environment)
     ui.hotbar.ready = true
     ui.hotbar.initialized = true
@@ -98,10 +106,11 @@ end
 
 -- bind keys --
 function bind_keys()
-	keyboard:parse_keybinds()
     for hotbar_index = 1, ui.hotbar.rows do 
         for skill_index = 1, ui.hotbar.columns do
-			windower.send_command('bind '..keyboard.hotbar_rows[hotbar_index][skill_index]..' input //htb execute '..hotbar_index..' '..skill_index)
+            if (keyboard.hotbar_rows[hotbar_index] ~= nil and keyboard.hotbar_rows[hotbar_index][skill_index] ~= nil) then 
+    			windower.send_command('bind '..keyboard.hotbar_rows[hotbar_index][skill_index]..' input //htb execute '..hotbar_index..' '..skill_index)
+            end
         end
     end
 end
@@ -387,7 +396,7 @@ windower.register_event('addon command', function(command, ...)
 		sch_skillchain()
     elseif command == 'execute' then
         change_active_hotbar(tonumber(args[1]))
-        if tonumber(args[2]) <= 10 then 
+        if tonumber(args[2]) <= theme_options.columns then 
             if tonumber(args[2]) == 10 then 
                 trigger_action(0)
             else
@@ -455,7 +464,6 @@ windower.register_event('mouse', function(type, x, y, delta, blocked)
     elseif type == 0 then -- Mouse move
 	    local hotbar, action = ui:hovered(x, y)
         if(action ~= 0) then
-			--print("Hotbar: " .. hotbar .. ", action:" .. action)
 			ui:light_up_action(hotbar, action)
 		else
 			ui:light_up_action(nil, nil)
@@ -540,11 +548,22 @@ end)
 -- ON ZONE  --
 windower.register_event('incoming chunk', function(id, data)
     if (id == 0x00A) then 
+		current_zone = packets.parse('incoming', data)['Zone']
+		player:update_zone(current_zone)
         ui.hotbar.hide_hotbars = false
         ui:show(player.hotbar, player.hotbar_settings.active_environment)
     elseif (id == 0x00B) then
         ui.hotbar.hide_hotbars = true
         ui:hide()
+	-- data:byte(6) == 0 means "main" equipment slot 
+    elseif id == 0x50 and data:byte(6) == 0 then
+        if (theme_options.enable_weapon_switching == true) then
+    		skill_type = resources.items[windower.ffxi.get_items(data:byte(7), data:byte(5)).id].skill
+    		if(skill_type  ~= player:get_current_weapontype()) then
+    			player:load_weaponskill_actions(skill_type)
+    			reload_hotbar()
+    		end
+        end
     end
 end)
 

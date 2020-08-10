@@ -2,6 +2,7 @@ xivhotbar_keybinds_job['Base'] = {
   -- Battle hotbar
   -- Hotbar #1
   {'battle 1 1', 'ma', 'Cure IV', 'stal', ' '},
+  {'battle 7 1', 'ma', 'Cure IV', 'stal', ' '},
   {'battle 1 2', 'ma', 'Curaga III', 'me', ' '},
   {'battle 1 3', 'ma', 'Haste', 'stal', ' '},
   {'battle 1 4', 'ma', 'Slow', 'stnpc', ''},
@@ -13,7 +14,7 @@ xivhotbar_keybinds_job['Base'] = {
   {'battle 1 9', 'ja', 'Divine Caress', 'me','Div.Ca.'},
   {'battle 1 0', 'ma', 'Stona', 'stal', 'Stona'},
   -- Hotbar #2
-  {'battle 2 1', 'ma', 'Cure V', 'stal', ''},
+  {'battle 5 1', 'ma', 'Cure V', 'stal', ''},
   {'battle 2 2', 'ma', 'Dia II', 'stnpc', ''},
   {'battle 2 3', 'ma', 'Paralyze', 'stnpc', 'Para.'},
   {'battle 2 4', 'ma', 'Cursna', 'stal', 'Cursna'},
@@ -47,6 +48,7 @@ xivhotbar_keybinds_job['Base'] = {
 
   {'battle 5 2', 'ma', 'Protectra V', 'me', ''},
   {'battle 5 3', 'ma', 'Shellra V', 'me', ''},
+  {'battle 5 4', 'ma', 'Aurorastorm', 'me', ''},
 
 
   -- General hotbar
@@ -68,7 +70,7 @@ xivhotbar_keybinds_job['Base'] = {
   {'f 3 2',  'ma', 'Paralyna', 'stal', 'Par.'},
   {'f 3 3',  'ma', 'Poisona', 'stal', 'Poi.'},
   {'f 3 4',  'ma', 'Blindna', 'stal', 'Bli.'},
-  {'f 3 5',  'ma', 'Silena', 'stnpc', 'Sil.'},
+  {'f 3 5',  'ma', 'Silena', 'stal', 'Sil.'},
 
   -- Hotbar #4
   {'f 4 1',  'ma', 'Protectra V', 'me', ''},
@@ -82,9 +84,7 @@ xivhotbar_keybinds_job['Base'] = {
   {'f 4 9',  'ma', 'Barsleepra', 'me', 'BrSlp'},
   {'f 4 0',  'ws', 'dagan', '', 'Dagan'},
   {'b 3 1', 'ma', 'sacrifice', 'stal', ''},
-  {'b 4 1', 'ma', 'bind', 'stnpc', ''},
-  {'b 4 2', 'ma', 'refresh', 'stal', ''},
-  {'b 4 3', 'ma', 'phalanx', 'me', ''}
+  {'b 2 1', 'ma', 'viruna', 'stal', 'Vir.'},
 }
 
 xivhotbar_keybinds_job['Light Arts'] = {
@@ -156,8 +156,8 @@ xivhotbar_keybinds_job['SCH'] = {
   -- General 
 
   {'b 3 1', 'ja', 'Light Arts', 'me', 'L.A.'},
-  {'b 3 5', 'ja', 'Dark Arts', 'me', 'D.A.'},
-  {'b 3 2', 'ma', 'Sacrifice', 'stal', 'Sac.'},
+  {'b 3 2', 'ja', 'Dark Arts', 'me', 'D.A.'},
+  {'b 3 5', 'ma', 'Sacrifice', 'stal', 'Sac.'},
   {'battle 2 9', 'ja', 'Sublimation', 'me', 'Sub.'},
 
 }

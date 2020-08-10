@@ -4,7 +4,6 @@ xivhotbar_keybinds_job['Base'] = {
   {'battle 1 1', 'ma', 'Regen IV', 'stal', 'R.IV'},
   {'battle 1 3', 'ma', 'Flash', 'stnpc', 'Flash'},
   {'battle 1 4', 'ja', 'Lunge', 't', 'Lunge'},
-  --{'battle 1 5', 'ja', 'Swordplay', 'me', 'Swrd.'},
   {'battle 1 5', 'ma', 'temper', 'me', ''},
   {'battle 1 6', 'ma', 'Protect IV', 'stal', ''},
   {'battle 1 7', 'ma', 'Shell V', 'stal', ''},
@@ -13,9 +12,7 @@ xivhotbar_keybinds_job['Base'] = {
   {'battle 1 0', 'ws', 'Dimidiation', 't', 'Dimi.'},
   -- Hotbar #2
   {'battle 2 1', 'gs', 'equip movement', '', 'Move.'},
-  --{'battle 2 1', 'gs', 'equip lycurgos', '', 'Lyc.'},
   {'battle 2 2', 'ma', 'Crusade', 'me', 'Crus.'},
-  --{'battle 2 2', 'gs', 'equip nandaka', '', 'Nan.'},
   {'battle 2 3', 'ja', 'Ignis', 'me', 'Ignis', 'ignis-icon'},
   {'battle 2 4', 'ja', 'Gelus', 'me', 'Gelus', 'gelus-icon'},
   {'battle 2 5', 'ja', 'Flabra', 'me', 'Flabra', 'flabra-icon'},
@@ -25,7 +22,6 @@ xivhotbar_keybinds_job['Base'] = {
   {'battle 2 9', 'ja', 'Lux', 'me', 'Lux', 'lux-icon'},
   {'battle 2 0','ja', 'Tenebrae', 'me', 'Ten.', 'tenebrae-icon'},
   -- Hotbar #3
-  -- It's now possible to use your own custom images by adding a 6th argument
   {'battle 3 0', 'ma', 'Stoneskin', 'me', 'SS'},
   {'battle 3 1', 'ja', 'Gambit', 't', 'Gamb.', 'gambit-icon'},
   {'battle 3 2', 'ja', 'Pflug', 'me', 'Pflug', 'pflug-icon'},
@@ -33,7 +29,6 @@ xivhotbar_keybinds_job['Base'] = {
   {'battle 3 4', 'ja', 'Liement', 'me', 'Lie.', 'liement-icon'},
   {'battle 3 5', 'ja', 'Battuta', 'me', 'Bat.', 'battuta-icon'},
   {'battle 3 6', 'ma', 'Foil', 'me', 'Foil', 'foil-icon'},
-  --{'battle 3 7', 'gs', 'equip exp;gs disable back', '', 'exp'},
   {'battle 3 7', 'gs', 'equip exp;wait 1;gs disable back', '', 'exp'},
   {'battle 5 1', 'gs', 'enable back', '', 'back'},
   {'battle 3 8', 'ws', 'Resolution', 't', 'Res.'},
@@ -82,20 +77,5 @@ xivhotbar_keybinds_job['BLU'] = {
   {'b 5 3', 'ma', 'sheep song', 'stnpc', 'Sheep'},
   {'b 5 4', 'ma', 'geist wall', 'stnpc', 'Geist'},
 }
-----------------------
--- User defined macros 
-----------------------
---
--- Idea here is you should be able to define your 
--- own macros through functions in job files. Right now an exact copy 
--- of this function is shown at line 36 in xivhotbar.lua called 
--- sch_skillchain(). It only prints out two lines 
--- with a one second delay, but I think this example should be
--- sufficient to create your own macro.
--- function xivhotbar_keybinds_job:sch_skillchain()
--- 	windower.chat.input('/party greetings no. 1')
--- 	coroutine.sleep(1)
--- 	windower.chat.input('/party greetings no. 2')
--- end
 
 return xivhotbar_keybinds_job

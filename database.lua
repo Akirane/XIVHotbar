@@ -26,19 +26,33 @@
         SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ]]
 
+local res      = require('resources')
 local database = {}
 
-local abilities_file = file.new('/resources/abils.xml')
-local spells_file = file.new('/resources/spells.xml')
-local res = require('resources')
-local debug = true
-
-database.spells = {}
-database.abilities = {}
+database.spells        = {}
+database.abilities     = {}
 database.weapon_skills = {}
 
--- import skills from xml files
+local wpn_img_ids = {
+    ['H2H']          = 0,
+    ['Dagger']       = 1,
+    ['Sword']        = 2,
+    ['Great Sword']  = 3,
+    ['Axe']          = 4,
+    ['Great Axe']    = 5,
+    ['Scythe']       = 6,
+    ['Polearm']      = 7,
+    ['Katana']       = 8,
+    ['Great Katana'] = 9,
+    ['Club']         = 10,
+    ['Staff']        = 11,
+    ['Bow']          = 12,
+    ['Marksmanship'] = 13
+}
+
+-- import skills from resources
 function database:import()
+
     self:parse_abilities_lua()
     self:parse_ws_lua()
     self:parse_spells_lua()
@@ -46,47 +60,47 @@ function database:import()
     return true
 end
 
+--[[
+
+    Map weapon skills
+    Description: Each weapon skill has an image representing what type it is. 
+    Returns an ID or nil.
+
+]]--
 function database:map_ws(ws_id) 
-	-- H2H
-	if ws_id > 0 and ws_id < 16 then return 0 
-	-- Dagger
-	elseif ws_id > 16 and ws_id < 32 then return 1 
-	elseif ws_id == 224 then return 1
-	-- Sword
-	elseif ws_id > 32 and ws_id <= 47 then return 2 
-	elseif ws_id > 224 and ws_id <= 255 then return 2
-	-- Great Sword
-	elseif ws_id > 48 and ws_id <= 61 then return 3
-	-- Axe
-	elseif ws_id > 64 and ws_id <= 77 then return 4
-	-- Great Axe
-	elseif ws_id > 79 and ws_id <= 93 then return 5
-	-- Scythe
-	elseif ws_id > 95 and ws_id <= 109 then return 6
-	-- Polearm
-	elseif ws_id > 112 and ws_id <= 125 then return 7
-	-- Katana
-	elseif ws_id > 127 and ws_id <= 141 then return 8
-	-- Great katana
-	elseif ws_id > 144 and ws_id <= 158 then return 9
-	-- Club
-	elseif ws_id > 158 and ws_id <= 176 then return 10
-	-- Staff
-	elseif ws_id > 176 and ws_id <= 191 then return 11
-	--bow
-	elseif ws_id > 191 and ws_id <= 203 then return 12
-	elseif ws_id > 203 and ws_id <= 221 then return 13
-	end
+
+    image_id = 0
+    if     ws_id >  0   and ws_id <  16  then image_id = wpn_img_ids['H2H']
+    elseif ws_id >  16  and ws_id <  32  then image_id = wpn_img_ids['Dagger'] 
+    elseif ws_id >  32  and ws_id <= 47  then image_id = wpn_img_ids['Sword'] 
+    elseif ws_id >  48  and ws_id <= 61  then image_id = wpn_img_ids['Great Sword']
+    elseif ws_id >  64  and ws_id <= 77  then image_id = wpn_img_ids['Axe']
+    elseif ws_id >  79  and ws_id <= 93  then image_id = wpn_img_ids['Great Axe']
+    elseif ws_id >  95  and ws_id <= 109 then image_id = wpn_img_ids['Scythe']
+    elseif ws_id >  112 and ws_id <= 125 then image_id = wpn_img_ids['Polearm']
+    elseif ws_id >  127 and ws_id <= 141 then image_id = wpn_img_ids['Katana']
+    elseif ws_id >  144 and ws_id <= 158 then image_id = wpn_img_ids['Great Katana']
+    elseif ws_id >  158 and ws_id <= 176 then image_id = wpn_img_ids['Club']
+    elseif ws_id >  176 and ws_id <= 191 then image_id = wpn_img_ids['Staff']
+    elseif ws_id >  191 and ws_id <= 203 then image_id = wpn_img_ids['Bow']
+    elseif ws_id >  203 and ws_id <= 221 then image_id = wpn_img_ids['Marksmanship']
+    elseif ws_id == 224                  then image_id = wpn_img_ids['Dagger']
+    elseif ws_id >  224 and ws_id <= 255 then image_id = wpn_img_ids['Sword']
+    end
 	
-	return 0
+	return image_id
 end
 
--- parse abilities xml
+--[[
+    parse weaponskills (lua)
+]]--  
 function database:parse_ws_lua()
+
     local contents = res.weapon_skills
 
 	for key, abil in pairs(contents) do
-		new_weapon_skill             = {}
+
+		local new_weapon_skill       = {}
 		new_weapon_skill.id          = tostring(contents[key].id)
 		new_weapon_skill.icon        = string.format("%02d", database:map_ws(contents[key].id))
 		new_weapon_skill.name        = contents[key].en
@@ -94,107 +108,52 @@ function database:parse_ws_lua()
 		new_weapon_skill.cast        = tostring(0)
 		new_weapon_skill.recast      = new_weapon_skill.cast
 		new_weapon_skill.element     = tostring(contents[key].element)
-		new_weapon_skill.skillChainA = contents[key].skillchain_a
-		new_weapon_skill.skillChainB = contents[key].skillchain_b
-		new_weapon_skill.skillChainC = contents[key].skillchain_c
+
 		self.weapon_skills[(new_weapon_skill.name):lower()] = new_weapon_skill
 	end
 
 end
 
--- parse abilities xml
-function database:parse_abilities()
-    local contents = xml.read(abilities_file)
-
-    for key, abil in ipairs(contents.children) do
-        local new_abil = {}
-
-        for key, attr in ipairs(abil.children) do
-            if attr.name == 'id' then
-                new_abil.id = attr.value
-            elseif attr.name == 'index' then
-                new_abil.icon = attr.value
-            elseif attr.name == 'english' then
-                new_abil.name = attr.value
-            elseif attr.name == 'mpcost' then
-                new_abil.mpcost = attr.value
-            elseif attr.name == 'tpcost' then
-                new_abil.tpcost = attr.value
-            elseif attr.name == 'casttime' then
-                new_abil.cast = attr.value
-            elseif attr.name == 'recast' then
-                new_abil.recast = attr.value
-            elseif attr.name == 'element' then
-                new_abil.element = attr.value
-            elseif attr.name == 'wsA' then
-                new_abil.skillChainA = attr.value
-            elseif attr.name == 'wsB' then
-                new_abil.skillChainB = attr.value
-            elseif attr.name == 'wsC' then
-                new_abil.skillChainC = attr.value
-            end
-        end
-
-        self.abilities[(new_abil.name):lower()] = new_abil
-    end
-end
-
+--[[
+    Parse abilities (lua)
+]]--  
 function database:parse_abilities_lua()
+
     local contents = res.job_abilities
 
     for key, abil in pairs(contents) do
-        local new_abil = {}
-		new_abil.id = tostring(contents[key].recast_id)
-		new_abil.icon = new_abil.id
-		new_abil.name = contents[key].en
-		new_abil.mpcost = tostring(contents[key].mp_cost)
-		new_abil.tpcost = tostring(contents[key].tp_cost)
-		new_abil.cast = tostring(0)
-		new_abil.recast = tostring(0)
+
+        local new_abil   = {}
+		new_abil.id      = tostring(contents[key].recast_id)
+		new_abil.icon    = new_abil.id
+		new_abil.name    = contents[key].en
+		new_abil.mpcost  = tostring(contents[key].mp_cost)
+		new_abil.tpcost  = tostring(contents[key].tp_cost)
+		new_abil.cast    = tostring(0)
+		new_abil.recast  = tostring(0)
 		new_abil.element = tostring(contents[key].element)
+
         self.abilities[(new_abil.name):lower()] = new_abil
     end
 end
 
--- parse spells lua 
+--[[
+    Parse spells (lua)
+]]--  
 function database:parse_spells_lua()
     local contents = res.spells
 
     for key, spell in pairs(contents) do
-        local new_spell = {}
-		new_spell.id = tostring(contents[key].id)
-		new_spell.icon = new_spell.id
-		new_spell.name = contents[key].en
-		new_spell.mpcost = tostring(contents[key].mp_cost)
-		new_spell.cast = contents[key].cast_time
-		new_spell.element = contents[key].element
-		new_spell.recast = contents[key].recast
-        self.spells[(new_spell.name):lower()] = new_spell
-    end
-end
-function database:parse_spells()
-    local contents = xml.read(spells_file)
 
-    for key, spell in ipairs(contents.children) do
-        local new_spell = {}
+        local new_spell   = {}
+        new_spell.id      = tostring(contents[key].id)
+        new_spell.icon    = new_spell.id
+        new_spell.name    = contents[key].en
+        new_spell.mpcost  = tostring(contents[key].mp_cost)
+        new_spell.cast    = contents[key].cast_time
+        new_spell.element = contents[key].element
+        new_spell.recast  = contents[key].recast
 
-        for key, attr in ipairs(spell.children) do
-            if attr.name == 'id' then
-                new_spell.id = attr.value
-            elseif attr.name == 'index' then
-                new_spell.icon = attr.value
-            elseif attr.name == 'english' then
-                new_spell.name = attr.value
-            elseif attr.name == 'mpcost' then
-                new_spell.mpcost = attr.value
-            elseif attr.name == 'casttime' then
-                new_spell.cast = attr.value
-            elseif attr.name == 'element' then
-                new_spell.element = attr.value
-            elseif attr.name == 'recast' then
-                new_spell.recast = attr.value
-            end
-        end
         self.spells[(new_spell.name):lower()] = new_spell
     end
 end

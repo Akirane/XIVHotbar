@@ -32,7 +32,10 @@ require('luau')
 str = require('strings')
 texts = require('texts')
 local player = {}
+local current_zone = 0 
+local job_root = {}
 
+local current_stance = nil
 buff_table = {
     [211] = 'Light Arts',
     [212] = 'Dark Arts',
@@ -56,6 +59,8 @@ buff_table = {
 	[2003] = 'Club',
 }
 
+--job_functions = {}
+
 player.name = ''
 player.main_job = ''
 player.sub_job = ''
@@ -77,6 +82,18 @@ _innerG = {}
 _innerG.xivhotbar_keybinds_job = {}
 general_table = {}
 general_table.xivhotbar_keybinds_general = {}
+
+weaponskill_enum = {
+	dagger = 2,
+	sword = 3,
+	club = 11,
+}
+
+local current_weaponskill = 0
+
+function player:get_current_weapontype()
+	return current_weaponskill
+end
 
 function create_table(_new_table, _table_key)
     setmetatable(_new_table, {
@@ -151,9 +168,13 @@ function player:initialize(windower_player, server, theme_options)
     self.buffs = windower_player.buffs
     self.id = windower_player.id
     self.hotbar_settings.max = theme_options.hotbar_number
+    self.hotbar_rows = theme_options.rows
     self.vitals.mp = windower_player.vitals.mp
     self.vitals.tp = windower_player.vitals.tp
-    --storage:setup(self)
+end
+
+function player:update_zone(zone_id)
+	current_zone = zone_id
 end
 
 -- update player jobs
@@ -175,9 +196,17 @@ function player:load_hotbar()
 end
 
 subjob_actions = {}
+subjob_actions.xivhotbar_keybinds_job = {}
 actions = {}
 general_actions = {}
+stance_actions = {}
 local job_ability_actions = {}
+weaponskill_actions = {}
+weaponskill_actions.xivhotbar_keybinds_job = {}
+weaponskill_actions = {}
+
+local function determine_action_type(type)
+end
 
 local function fill_table(file_table, file_key, actions_table)
 	-- Slot_key is for example 'battle 1 2' in a job file.
@@ -223,6 +252,15 @@ local function parse_binds(fhotbar)
 	for key, val in pairs(fhotbar['Base']) do
 		fill_table(fhotbar['Base'][key], key, actions)
 	end
+
+    if (fhotbar[buff_table[current_stance]] ~= nil) then
+
+        local stance_table = fhotbar[buff_table[current_stance]]
+        for key, val in pairs(stance_table) do
+            fill_table(stance_table[key], key, stance_actions)
+        end
+    end
+
 	if (fhotbar[player.sub_job] ~= nil) then
 		for key, val in pairs(fhotbar[player.sub_job]) do
 			fill_table(fhotbar[player.sub_job][key], key, subjob_actions)
@@ -232,6 +270,26 @@ local function parse_binds(fhotbar)
 			self:remove_action()
 		end
 		subjob_actions = {}
+	end
+
+	if (current_weaponskill == weaponskill_enum.dagger) then
+		if (fhotbar['Dagger'] ~= nil) then
+			for key, val in pairs(fhotbar['Dagger']) do
+				fill_table(fhotbar['Dagger'][key], key, weaponskill_actions)
+			end
+		end
+	elseif (current_weaponskill == weaponskill_enum.sword) then
+		if (fhotbar['Sword'] ~= nil) then
+			for key, val in pairs(fhotbar['Sword']) do
+				fill_table(fhotbar['Sword'][key], key, weaponskill_actions)
+			end
+		end
+	elseif (current_weaponskill == weaponskill_enum.club) then
+		if (fhotbar['Club'] ~= nil) then
+			for key, val in pairs(fhotbar['Club']) do
+				fill_table(fhotbar['Club'][key], key, weaponskill_actions)
+			end
+		end
 	end
 end
 
@@ -252,45 +310,23 @@ function init_action_table(actions_table)
 	actions_table.icon = {}
 end
 
+function player:load_weaponskill_actions(skill_type)
+	current_weaponskill = skill_type
+end
+
 function player:load_job_ability_actions(buff_id)
-
-    if (job_ability_actions.environment ~= nil) then
-        if (table.getn(job_ability_actions.environment) ~= 0) then
-			remove_actions(job_ability_actions.environment)
-        end
-    end
-
-    init_action_table(job_ability_actions)
-
-    local basepath = windower.addon_path .. 'data/'..player.name..'/'
-	local job_file = loadfile(basepath .. player.main_job .. '.lua')
-	local stance_actions = {}
-	stance_actions.xivhotbar_keybinds_job = {}
-	setmetatable(stance_actions, keybinds_job_table)
-    if job_file == nil then 
-        print("Error, couldn't find %s job_file!":format(player.main_job))
-		return
-    else
-        setfenv(job_file, stance_actions)
-        local root = job_file()
-        if not root then
-            stance_actions.xivhotbar_keybinds_job = {}
-            stance_actions.binds = {}
-            return
-        end
-        stance_actions.xivhotbar_keybinds_job = {}
-        stance_actions.xivhotbar_keybinds_job[root] = stance_actions.xivhotbar_keybinds_job[root] or 'Root'
-        parse_binds(root)
-    end
-	self:add_actions(stance_actions)
+    current_stance = buff_id
+    self:load_from_lua()
 end
 
 -- load a hotbar from existing lua file
 function player:load_from_lua()
 
     init_action_table(subjob_actions)
+    init_action_table(weaponskill_actions)
     init_action_table(actions)
     init_action_table(general_actions)
+    init_action_table(stance_actions)
 
     local basepath = windower.addon_path .. 'data/'..player.name..'/'
     local file = loadfile(basepath .. player.main_job .. '.lua')
@@ -300,6 +336,7 @@ function player:load_from_lua()
     else
         setfenv(file, _innerG)
         local root = file()
+        job_root = root
         if not root then
             _innerG.xivhotbar_keybinds_job = {}
             _innerG._binds = {}
@@ -313,6 +350,10 @@ function player:load_from_lua()
         if (subjob_actions.environment ~= nil) then
 			self:add_actions(subjob_actions)
         end
+        if (stance_actions.environment ~= nil) then
+            self:add_actions(stance_actions)
+        end
+		self:add_actions(weaponskill_actions)
     end
 
     if general_file == nil then 
@@ -389,25 +430,29 @@ end
 
 -- add given action to a hotbar
 function player:add_action(action, environment, hotbar, slot)
+    status = true
     if environment == 'b' then environment = 'battle' elseif environment == 'f' then environment = 'field' end
     if slot == 10 then slot = 0 end
-    -- print(environment)
 
     if self.hotbar[environment] == nil then
         windower.console.write('XIVHOTBAR: invalid hotbar (environment)')
-        return
+        status = false
     end
 
-    if self.hotbar[environment]['hotbar_' .. hotbar] == nil then
+    if (tonumber(hotbar) > self.hotbar_rows) then 
+        status = false
+    elseif self.hotbar[environment]['hotbar_' .. hotbar] == nil then
         windower.console.write('XIVHOTBAR: invalid hotbar (hotbar number)')
-        return
+        status = false
     end
+    if status == true then
+        if self.hotbar[environment]['hotbar_' .. hotbar]['slot_' .. slot] == nil then
+            self.hotbar[environment]['hotbar_' .. hotbar]['slot_' .. slot] = {} 
+            status = false
+        end
 
-    if self.hotbar[environment]['hotbar_' .. hotbar]['slot_' .. slot] == nil then
-        self.hotbar[environment]['hotbar_' .. hotbar]['slot_' .. slot] = {}
+        self.hotbar[environment]['hotbar_' .. hotbar]['slot_' .. slot] = action
     end
-
-    self.hotbar[environment]['hotbar_' .. hotbar]['slot_' .. slot] = action
 end
 
 function player:determine_summoner_id(pet_name)
@@ -425,12 +470,10 @@ function player:execute_action(slot)
 
     if action == nil then return end
 
-    if action.type == 'ct' then
+	if action.type == 'ct' then
         local command = '/' .. action.action
 
         if  action.target ~= nil and action.target ~= "" then
-			print("Target is not nil.")
-			print(action.target)
             command = command .. ' <' ..  action.target .. '>'
         end
 
@@ -440,7 +483,6 @@ function player:execute_action(slot)
         windower.chat.input('//'.. action.action)
     elseif action.type == 'ws' then
         windower.chat.input('//'.. action.action .. ' <' .. action.target .. '>')
-
     elseif action.type == 'gs' then
         windower.chat.input('//gs ' .. action.action)
     elseif action.type == 's' then
@@ -505,7 +547,6 @@ function player:save_hotbar()
     local new_hotbar = {}
     new_hotbar.hotbar = self.hotbar
 
-    --storage:save_hotbar(new_hotbar)
 end
 
 return player

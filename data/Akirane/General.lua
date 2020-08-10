@@ -16,11 +16,12 @@ xivhotbar_keybinds_general['Root'] = {
 	{'f 2 6', 'ma', 'Koru-Moru', 'me', 'Koru'},
     {'f 2 7', 'ma', 'Qultada', 'me', 'Qul.'},
 	{'f 2 8', 'ma', 'Yoran-Oran (UC)', 'me', 'Yoran'},
+	{'f 2 9', 'ma', 'August', 'me', 'Aug'},
 
 	{'f 3 7', 'item', "poison potion",'me', 'Poison.', 'poison'},
     {'f 3 8', 'gs', 'c toggle weapon','','TGWep'},
     {'f 3 9', 'gs', 'c toggle acc','','TGAcc'},
-    {'f 5 0', 'ct', '/refa all',nil,'Ref'},
+    --{'f 5 0', 'ct', '/refa all',nil,'Ref'},
 }
 
 xivhotbar_keybinds_general['Medicine'] = {

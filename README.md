@@ -3,9 +3,33 @@ This version is further work on SirEdeonX's original addon, you can check his wo
 
 ![XIVHotbar](/images/demo/demo1.png)
 
-## Dependencies
+## How this version differentiates
 
-- Shortcuts addon (Can be downloaded from the Windower launcher).
+- Job files now use `.lua` instead of `.xml` files. The main difference is everything loads much faster now. This means there's no ingame support for inserting new actions.
+- MP and TP costs have been removed, spells/weaponskills becomes grayed out when you are unable to use them.
+- It's now possible to bind any key! You can bind E for Dia II or CTRL+D for Cure IV if you so desire.
+- The addon now uses ingame scaling, meaning if you use 1920x1080 for the game, but 1280x720 for the menus, the addon will no longer appear outside the screen boundary.
+- The icons are clickable with your mouse now.
+- If you receive sleep/stun/amnesia/silence/etc, the actions will be disabled.
+
+## Customization
+
+Not every setting in **settings.xml** has been re-tested, there's a lot of things that is different now. The following has been tested out:
+
+You can change the following from the settings.xml file:
+
+1. Number of rows and columns. Modify the section **Hotbar/rows** and **Hotbar/columns** for this.
+
+![Less Columns and Rows](/images/demo/demo_columns.png)
+
+2. It's now possible to hide the inventory count and which hotbar environment you are currently in. Modify **Hotbar/HideBattleNotice** and **Hotbar/HideInventoryCount** for this.
+
+![No extra labels](/images/demo/no_extra_labels.png)
+
+3. It's now possible to tell this addon to change out weapon skill actions on the fly. Currently only works for club/dagger/sword. Look at the file `data/Akirane/RDM.lua`, at line 113 you have `xivhotbar_keybinds_job['Sword']` and at line 125 you have `xivhotbar_keybinds_job['Dagger']`. The addon can now switch between these two action tables after it has registered you have changed weapon type. Until I have finished this implementation, it will remain disabled for now. You can turn it on by changing the value **Hotbar/EnableWeaponSwitching** from false to true.
+
+4. This addon recognizes the abilities **light arts** and **dark arts**, when you activate one of them and you have a table called `xivhotbar_keybinds_job['Light Arts']` you can update the hotbars with new actions. Look at `data/Akirane/WHM.lua` for example.
+
 
 ## Getting started
 
@@ -55,19 +79,15 @@ Let's say you have the following action:
 - `//htb reload`: After you have made changes to the job-file, use this function to apply the new changes.
 - `\`: Change between hotbar 1 and 2.
 
-##### How this version differentiates
+## Upgrading from older version
 
-- Job files now use `.lua` instead of `.xml` files. The main difference is everything loads much faster now. This means there's no ingame support for inserting new actions.
-- MP and TP costs have been removed, spells/weaponskills becomes grayed out when you are unable to use them.
-- It's now possible to bind any key! You can bind E for Dia II or CTRL+D for Cure IV if you so desire.
-- The addon now uses ingame scaling, meaning if you use 1920x1080 for the game, but 1280x720 for the menus, the addon will no longer appear outside the screen boundary.
-
-##### What is currently broken
-
-- The settngs.xml file will most likely not work as intended, edit with caution. 
+Make a backup of your previous job-files located under `data/<character>`.
 
 ##### Latest Changes:
 ```
+ 10/08/2020
+ 	- Old .xml-files has been removed.
+ 	- Added further customization.
  08/06/2020
  	- Fixed OffsetX and OffsetY in settings.xml, now they should reposition the hotbar properly.
  07/06/2020

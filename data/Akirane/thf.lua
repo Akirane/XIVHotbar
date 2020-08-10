@@ -15,26 +15,33 @@
     {'battle 2 9', 'gs', 'equip engaged[\'Hybrid\']', '', 'Hybr.'},
     {'battle 2 0', 'gs', 'equip engaged', '', 'Norm.'},
   -- Hotbar #2
-    {'battle 2 1', 'ws', 'Aeolian Edge', 't', 'A.E.'},
     --{'battle 2 2', '/ct', 'Evisceration', 'stnpc', 'Evi.'},
-    {'battle 2 2', 'ws', 'savage blade', 't', 'SB'},
     {'battle 2 3', 'ja', 'Despoil', 't', 'Desp.'},
     {'battle 2 4', 'ja', 'Bully', 'stnpc', 'Bully'},
     {'battle 2 5', 'ja', 'Hide', 'me', 'Hide'},
     {'battle 2 6', 'ra', '', 't', 'RA'},
-    {'battle 2 8', 'ws', 'Evisceration', 'stnpc', 'Evi.'},
-    {'battle 3 0', 'ws', 'Exenterator', 't', 'Ext.'},
   -- Hotbar #3
     {'battle 4 1', 'ja', 'Feint', 'me', 'Feint'},
     {'battle 4 2', 'ja', 'Conspirator', 'me', 'Cons.'},
-    {'battle 4 6', 'ws', 'Rudra\'s Storm', 't', 'RS'},
-    {'battle 4 7', 'ws', 'Empyreal Arrow', 't', 'EA'},
-    {'battle 4 9', 'ws', 'Mandalic Stab', 't', 'MB'},
-    {'battle 4 0', 'ws', 'Mandalic Stab', 'stnpc', 'MB'},
 
     {'battle 5 9', 'gs', 'equip engaged[\'ERegen\']', '', 'EReg.'},
     {'battle 5 0', 'ct', '/send @all lua exec get_pt', '', 'exec'},
 
+}
+
+xivhotbar_keybinds_job['Dagger'] =  {
+    {'battle 2 1', 'ws', 'Aeolian Edge', 't', 'A.E.'},
+    {'battle 2 2', 'ws', 'Rudra\'s Storm', 't', 'RS'},
+    {'battle 2 8', 'ws', 'Evisceration', 'stnpc', 'Evi.'},
+
+    {'battle 3 0', 'ws', 'Exenterator', 't', 'Ext.'},
+
+    {'battle 4 7', 'ws', 'Empyreal Arrow', 't', 'EA'},
+    {'battle 4 9', 'ws', 'Mandalic Stab', 't', 'MB'},
+}
+
+xivhotbar_keybinds_job['Sword'] =  {
+    {'battle 2 8', 'ws', 'Savage Blade', 't', 'SB'},
 }
 
 xivhotbar_keybinds_job['WAR'] = {
