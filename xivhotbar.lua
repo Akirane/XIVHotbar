@@ -28,7 +28,7 @@
 
 _addon.name = 'XIVHotbar'
 _addon.author = 'Edeon, Akirane'
-_addon.version = '0.2'
+_addon.version = '0.3'
 _addon.language = 'english'
 _addon.commands = {'xivhotbar', 'htb', 'execute'}
 
@@ -70,8 +70,13 @@ local action_manager = require('action_manager')
 local keyboard = require('keyboard_mapper')
 local player = require('player')
 local ui = require('ui')
+local box = require('lib/move_box')
 local xiv
 local current_zone = 0
+local state = {
+	ready = false,
+	demo = false,
+}
 
 -------
 -- Main
@@ -83,6 +88,7 @@ function initialize()
 
     keyboard:parse_keybinds()
     ui:setup(theme_options)
+	box:init(theme_options)
     local windower_player = windower.ffxi.get_player()
     local server = resources.servers[windower.ffxi.get_info().server].en
 
@@ -91,6 +97,10 @@ function initialize()
 	local equipment = inventory['equipment']
 
 	weapon_id = windower.ffxi.get_items(equipment['main_bag'], equipment['main']).id
+	current_mp = windower_player.vitals.mp
+	current_tp = windower_player.vitals.tp
+	ui:update_mp(current_mp)
+	ui:update_tp(current_tp)
 
 	skill_type = resources.items[weapon_id].skill
 	player:load_weaponskill_actions(skill_type)
@@ -101,13 +111,15 @@ function initialize()
     ui:load_player_hotbar(player.hotbar, player.vitals, player.hotbar_settings.active_environment)
     ui.hotbar.ready = true
     ui.hotbar.initialized = true
+	state.ready = true
+	print('XIVHOTBAR: Type "//htb help" for more info')
 end
 
 
 -- bind keys --
 function bind_keys()
-    for hotbar_index = 1, ui.hotbar.rows do 
-        for skill_index = 1, ui.hotbar.columns do
+    for hotbar_index = 1, theme_options.rows do 
+        for skill_index = 1, theme_options.columns do
             if (keyboard.hotbar_rows[hotbar_index] ~= nil and keyboard.hotbar_rows[hotbar_index][skill_index] ~= nil) then 
     			windower.send_command('bind '..keyboard.hotbar_rows[hotbar_index][skill_index]..' input //htb execute '..hotbar_index..' '..skill_index)
             end
@@ -349,6 +361,22 @@ windower.register_event('logout', function()
     ui:hide()
 end)
 
+local function save_hotbar(hotbar, index)
+	if index <= theme_options.rows then
+		local x, y = box:get_pos(index)
+		hotbar.OffsetX = x
+		hotbar.OffsetY = y
+	end
+end
+
+
+local function print_help()
+	log("Commands:")
+	log("move: Enables moving the hotbars by dragging them, also writes the changes to settings.xml if used again.")
+	log("reload: Reloads the hotbar, if you have made changes to the hotbar-file, this is faster for loading.")
+	log("Dependencies:")
+	log("shortcuts: Used for weapon skills.")
+end
 
 -- ON COMMAND --
 windower.register_event('addon command', function(command, ...)
@@ -360,16 +388,8 @@ windower.register_event('addon command', function(command, ...)
 
     if command == 'set' then
         set_action_command(args)
-    elseif command == 'del' or command == 'delete' then
-        delete_action_command(args)
-    elseif command == 'cp' or command == 'copy' then
-        copy_action_command(args, false)
-    elseif command == 'mv' or command == 'move' then
-        copy_action_command(args, true)
-    elseif command == 'ic' or command == 'icon' then
-        update_icon_command(args)
-    elseif command == 'al' or command == 'alias' then
-        update_alias_command(args)
+	elseif command == 'help' then
+		print_help()
     elseif command == 'mount' then
         local player_mount = windower.ffxi.get_player()
         for k=1,32 do 
@@ -397,16 +417,29 @@ windower.register_event('addon command', function(command, ...)
     elseif command == 'execute' then
         change_active_hotbar(tonumber(args[1]))
         if tonumber(args[2]) <= theme_options.columns then 
-            if tonumber(args[2]) == 10 then 
-                trigger_action(0)
-            else
-                trigger_action(tonumber(args[2]))
-            end
+			trigger_action(tonumber(args[2]))
         end
     elseif command == 'reload' then
         flush_old_keybinds()
         bind_keys()
         player:load_hotbar()
+	elseif command == 'move' then
+		state.demo = not state.demo
+		if state.demo then
+            print('XIVHOTBAR: Layout mode enabled')
+			box:enable()
+		else
+			save_hotbar(settings.Hotbar.Offsets.First, 1)
+			save_hotbar(settings.Hotbar.Offsets.Second, 2)
+			save_hotbar(settings.Hotbar.Offsets.Third, 3)
+			save_hotbar(settings.Hotbar.Offsets.Fourth, 4)
+			save_hotbar(settings.Hotbar.Offsets.Fifth, 5)
+			save_hotbar(settings.Hotbar.Offsets.Sixth, 6)
+
+			config.save(settings)
+            print('XIVHOTBAR: Layout mode disabled, writing new positions to settings.xml.')
+			box:disable()
+		end
     end
 end)
 
@@ -427,52 +460,63 @@ windower.register_event('keyboard', function(dik, flags, blocked)
 end)
 
 
+
+local function mouse_hotbars(type, x, y, delta, blocked)
+	if ui.hotbar.hide_hotbars then
+		return false
+	end
+
+	if type == 1 then -- Mouse left click
+		local hotbar, action = ui:hovered(x, y)
+		if(action ~= 0) then
+			current_hotbar = hotbar
+			current_action = action
+			return true
+		end
+	elseif type == 2 then -- Mouse left release
+		if(current_action ~= -1) then
+			local hotbar, action = ui:hovered(x, y)
+			if(action ~= 0) then
+				if (action == 100) then
+					toggle_environment()
+				elseif(hotbar == current_hotbar and action == current_action) then
+					player.hotbar_settings.active_hotbar = hotbar
+					trigger_action(action)
+				end
+			end
+			current_hotbar = -1
+			current_action = -1
+			return true
+		end
+	elseif type == 0 then -- Mouse move
+		local hotbar, action = ui:hovered(x, y)
+		if(action ~= 0) then
+			ui:light_up_action(hotbar, action)
+		else
+			ui:light_up_action(nil, nil)
+		end
+		--if(current_action ~= -1) then
+		return false
+	end
+end
+
 -- ON MOUSE
 -- Credit for clicking on action: maverickdfz
 -- https://github.com/maverickdfz/FFXIAddons/blob/master/xivhotbar/xivhotbar.lua
 --
 -- TODO: Fix "hover" effect 
 windower.register_event('mouse', function(type, x, y, delta, blocked)
-    if blocked then
-        return false
-    end
 
-    if ui.hotbar.hide_hotbars then
-        return false
-    end
-
-    if type == 1 then -- Mouse left click
-        local hotbar, action = ui:hovered(x, y)
-        if(action ~= 0) then
-            current_hotbar = hotbar
-            current_action = action
-            return true
-        end
-    elseif type == 2 then -- Mouse left release
-        if(current_action ~= -1) then
-            local hotbar, action = ui:hovered(x, y)
-            if(action ~= 0) then
-                if(hotbar == current_hotbar and action == current_action) then
-                    player.hotbar_settings.active_hotbar = hotbar
-                    trigger_action(action % 10)
-                end
-            end
-            current_hotbar = -1
-            current_action = -1
-            return true
-        end
-    elseif type == 0 then -- Mouse move
-	    local hotbar, action = ui:hovered(x, y)
-        if(action ~= 0) then
-			ui:light_up_action(hotbar, action)
+	return_value = false
+	if state.ready == true and blocked == false then
+		if state.demo == true then
+			return_value = box:move_hotbars(type, x, y, delta, blocked)
 		else
-			ui:light_up_action(nil, nil)
+			return_value = mouse_hotbars(type, x, y, delta, blocked)
 		end
-        --if(current_action ~= -1) then
-		return false
-    end
+	end
 
-    return false
+    return return_value
 end)
 
 
@@ -485,13 +529,12 @@ windower.register_event('prerender',function()
     if ui.feedback.is_active then
         ui:show_feedback()
     end
-    -- local t = windower.ffxi.get_mob_by_index(windower.ffxi.get_player().target_index or 0) --
-    -- local distance = 0 --
-    -- if t ~= nil then  --
-    --     distance = t.distance:sqrt() --
-    -- end --
 
     if ui.is_setup and ui.hotbar.hide_hotbars == false then
+		moved_row_info = box:get_move_box_info()
+		if (moved_row_info.is_active == true) then
+			ui:move_icons(moved_row_info)
+		end
         ui:check_recasts(player.hotbar, player.vitals, player.hotbar_settings.active_environment, distance)
 		ui:check_hover()
     end
@@ -500,15 +543,13 @@ end)
 
 -- ON MP CHANGE --
 windower.register_event('mp change', function(new, old)
-    player.vitals.mp = new
-    ui:check_vitals(player.hotbar, player.vitals, player.hotbar_settings.active_environment)
+	ui:update_mp(new)
 end)
 
 
 -- OM TP CHANGE --
 windower.register_event('tp change', function(new, old)
-    player.vitals.tp = new
-    ui:check_vitals(player.hotbar, player.vitals, player.hotbar_settings.active_environment)
+	ui:update_tp(new)
 end)
 
 
@@ -528,6 +569,14 @@ end)
 -- ON LOGIN/LOAD --
 windower.register_event('login', 'load', function()
     if windower.ffxi.get_player() ~= nil then
+		defaults = require('defaults')
+		settings = config.load(defaults)
+		config.save(settings)
+		-- Load theme options according to settings --
+		theme = require('theme')
+		theme_options = theme.apply(settings)
+		local settings = config.load(defaults)
+		config.save(settings)
         player.id = windower.ffxi.get_player().id
         initialize()
     end
@@ -536,39 +585,45 @@ end)
 
 -- ON ACTION USED --
 windower.register_event('action', function(act)
-    if (act.param == 211 or act.param == 212) then 
-        if (act.actor_id == player.id and act.category == 0x06) then
-            player:load_job_ability_actions(act.param)
-            ui:load_player_hotbar(player.hotbar, player.vitals, player.hotbar_settings.active_environment)
-        end
-    end
+	if state.ready == true then
+		if (act.param == 211 or act.param == 212) then 
+			if (act.actor_id == player.id and act.category == 0x06) then
+				player:load_job_ability_actions(act.param)
+				ui:load_player_hotbar(player.hotbar, player.vitals, player.hotbar_settings.active_environment)
+			end
+		end
+	end
 end)
 
 
 -- ON ZONE  --
 windower.register_event('incoming chunk', function(id, data)
-    if (id == 0x00A) then 
-		current_zone = packets.parse('incoming', data)['Zone']
-		player:update_zone(current_zone)
-        ui.hotbar.hide_hotbars = false
-        ui:show(player.hotbar, player.hotbar_settings.active_environment)
-    elseif (id == 0x00B) then
-        ui.hotbar.hide_hotbars = true
-        ui:hide()
-	-- data:byte(6) == 0 means "main" equipment slot 
-    elseif id == 0x50 and data:byte(6) == 0 then
-        if (theme_options.enable_weapon_switching == true) then
-    		skill_type = resources.items[windower.ffxi.get_items(data:byte(7), data:byte(5)).id].skill
-    		if(skill_type  ~= player:get_current_weapontype()) then
-    			player:load_weaponskill_actions(skill_type)
-    			reload_hotbar()
-    		end
-        end
-    end
+	if state.ready == true then
+		if (id == 0x00A) then current_zone = packets.parse('incoming', data)['Zone']
+			player:update_zone(current_zone)
+			ui.hotbar.hide_hotbars = false
+			ui:show(player.hotbar, player.hotbar_settings.active_environment)
+		elseif (id == 0x00B) then
+			ui.hotbar.hide_hotbars = true
+			ui:hide()
+		-- data:byte(6) == 0 means "main" equipment slot 
+		elseif id == 0x50 and data:byte(6) == 0 then
+			if (theme_options.enable_weapon_switching == true) then
+				skill_type = resources.items[windower.ffxi.get_items(data:byte(7), data:byte(5)).id].skill
+				if(skill_type  ~= player:get_current_weapontype()) then
+					player:load_weaponskill_actions(skill_type)
+					reload_hotbar()
+				end
+			end
+		end
+	end
 end)
 
 windower.register_event('add item', 'remove item', function(id, bag, index, count)
-    ui:update_inventory_count()
+
+	if state.ready == true then
+		ui:update_inventory_count()
+	end
 end)
 
 

@@ -1,164 +1,155 @@
 xivhotbar_keybinds_job['Base'] = {
   -- Battle hotbar
   -- Hotbar #1
-  {'battle 1 1', 'ma', 'Cure IV', 'stal', ' '},
-  {'battle 7 1', 'ma', 'Cure IV', 'stal', ' '},
-  {'battle 1 2', 'ma', 'Curaga III', 'me', ' '},
-  {'battle 1 3', 'ma', 'Haste', 'stal', ' '},
-  {'battle 1 4', 'ma', 'Slow', 'stnpc', ''},
-  {'battle 1 5', 'ma', 'Regen IV', 'stal', ''},
-  {'battle 1 6', 'ma', 'Repose', 'stnpc','Rep.'},
+  {'b 1 1',  'ma', 'Cure IV', 'stal', ' '},
+  {'b 7 1',  'ma', 'Cure IV', 'stal', ' '},
+  {'b 1 2',  'ma', 'Curaga III', 'me', ' '},
+  {'b 1 3',  'ma', 'Haste', 'stal', ' '},
+  {'b 1 4',  'ma', 'Slow', 'stnpc', ''},
+  {'b 1 5',  'ma', 'Regen IV', 'stal', ''},
+  {'b 1 6',  'ma', 'Repose', 'stnpc','Rep.'},
 
-  {'battle 1 7', 'ma', 'Curaga IV', 'stal', ''},
-  {'battle 1 8', 'ma', 'Auspice', 'me',' '},
-  {'battle 1 9', 'ja', 'Divine Caress', 'me','Div.Ca.'},
-  {'battle 1 0', 'ma', 'Stona', 'stal', 'Stona'},
-  -- Hotbar #2
-  {'battle 5 1', 'ma', 'Cure V', 'stal', ''},
-  {'battle 2 2', 'ma', 'Dia II', 'stnpc', ''},
-  {'battle 2 3', 'ma', 'Paralyze', 'stnpc', 'Para.'},
-  {'battle 2 4', 'ma', 'Cursna', 'stal', 'Cursna'},
-  {'battle 2 7', 'ma', 'Silence', 'stnpc', 'Siln.'},
-  {'battle 2 8', 'ws', 'Mystic Boon', 't', 'MB'},
-  {'battle 2 0', 'ma', 'Poisona', 'stal', 'Poi.'},
+  {'b 1 7',  'ma', 'Curaga IV', 'stal', ''},
+  {'b 1 8',  'ma', 'Auspice', 'me',' '},
+  {'b 1 9',  'ja', 'Divine Caress', 'me','Div.Ca.'},
+  {'b 1 11', 'ma', 'Stona', 'stal', 'Stona'},
+  {'b 1 12',  'ma', 'viruna', 'stal', 'Viruna'},
 
+  {'b 2 1',  'ma', 'Aurorastorm', 'me', 'Aurora'},
+  {'b 2 2',  'ma', 'Dia II', 'stnpc', ''},
+  {'b 2 3',  'ma', 'Paralyze', 'stnpc', 'Para.'},
+  {'b 2 4',  'ma', 'Cursna', 'stal', 'Cursna'},
+  {'b 2 5',  'ma',  'Addle', 'stnpc', ''},
+  {'b 2 6',  'ma', 'Erase', 'stal', 'Era.'},
+  {'b 2 7',  'ma', 'Silence', 'stnpc', 'Siln.'},
+  {'b 2 8',  'ws', 'Mystic Boon', 't', 'MysB'},
+  {'b 2 10', 'ma', 'Silena', 'stal', 'Sile.'},
+  {'b 2 11', 'ma', 'Paralyna', 'stal', 'Para.'},
+  {'b 2 12', 'ma', 'Poisona', 'stal', 'Poisona'},
+
+  {'b 3 1',  'ma', 'sacrifice', 'stal', ''},
+  {'b 3 3',  'ma', 'Arise', 'stal', 'Arise'},
+  {'b 3 4',  'ma', 'Esuna', 'me', 'Esuna'},
+  {'b 3 5',  'ma', 'Sacrifice', 'stal', ''},
+  {'b 3 6',  'ma', 'Boost-VIT', 'me', 'VIT'},
+  {'b 3 7',  'ma', 'Boost-STR', 'me', 'STR'},
+  {'b 3 8',  'ws', 'Black Halo', 't', 'BlacH'},
+  {'b 3 9',  'ma', 'Blink', 'me', 'Blink'},
+  {'b 3 10', 'ma', 'Stoneskin', 'me', ''},
+  {'b 3 11',  'ma', 'Aquaveil', 'me', 'Aq.'},
+  {'b 3 12',  'ma', 'Blindna', 'stal', 'Blindna'},
+
+  {'b 4 5',  'ma', 'Cure III', 'stal', ''},
+
+  {'b 4 6',  'ws', 'Realmrazer', 't', 'R.R.'},
+  {'b 4 7',  'ja',  'Afflatus Solace', 'me', ''},
+  {'b 4 8',  'ja',  'Afflatus Misery', 'me', ''},
+  {'b 4 10', 'ma', 'Holy II', 't', 'Holy II'},
+
+  {'b 5 1',  'ma', 'Cure V', 'stal', ''},
+  {'b 5 2',  'ma', 'Protectra V', 'me', ''},
+  {'b 5 3',  'ma', 'Shellra V', 'me', ''},
+
+
+  -- Field
+  {'f 1 3',  'ma',  'Cure III', 'stal', ''},
+  {'f 1 4',  'ma',  'Stoneskin', 'me', ''},
+  {'f 1 5',  'ma',  'Blink', 'me', 'Blink'},
+  {'f 1 6',  'ma',  'Phalanx', 'me', 'Phx.'},
   {'f 1 7',  'ma', 'Silena', 'stal', 'Silena'},
   {'f 1 8',  'ma', 'Poisona', 'stal', 'Poisona'},
-  {'battle 2 5', 'ma', 'Paralyna', 'stal', 'Para.'},
-  {'battle 2 6', 'ma', 'Erase', 'stal', 'Era.'},
-  -- Hotbar #3
-  {'battle 3 3', 'ma', 'Arise', 'stal', 'Arise'},
-  {'battle 3 4', 'ma', 'Esuna', 'me', 'Esuna'},
-  {'battle 3 5', 'ma', 'Sacrifice', 'stal', ''},
-  {'battle 3 8', 'ws', 'Black Halo', 't', 'BH'},
-  {'battle 3 9', 'ma', 'Blink', 'me', 'Blink'},
-  {'battle 3 0', 'ma', 'Stoneskin', 'me', ''},
+  {'f 1 10', 'item',  "Special Gobbiedial Key", 't', 'G.Key'},
 
-  -- Hotbar #4
-  {'battle 3 6', 'ma', 'Boost-VIT', 'me', 'VIT'},
-  {'battle 3 7', 'ma', 'Boost-STR', 'me', 'STR'},
-  {'battle 4 4', 'ma', 'Aquaveil', 'me', 'Aq.'},
-  {'battle 4 5', 'ma', 'Cure III', 'stal', ''},
+  {'f 2 9',  'ma', 'Sneak', 'stal', 'Snk.'},
+  {'f 2 10', 'ma', 'Invisible', 'stal', 'Inv.'},
 
-  {'battle 4 6', 'ws', 'Realmrazer', 't', 'R.R.'},
-  {'battle 4 7', 'ja',  'Afflatus Solace', 'me', ''},
-  {'battle 4 8', 'ja',  'Afflatus Misery', 'me', ''},
-  {'battle 4 9', 'ma',  'Addle', 'stnpc', ''},
-  {'battle 4 0', 'ma', 'Holy II', 't', 'Holy II'},
-
-  {'battle 5 2', 'ma', 'Protectra V', 'me', ''},
-  {'battle 5 3', 'ma', 'Shellra V', 'me', ''},
-  {'battle 5 4', 'ma', 'Aurorastorm', 'me', ''},
-
-
-  -- General hotbar
-  -- Hotbar #1
-  {'f 1 3', 'ma',  'Cure III', 'stal', ''},
-  {'f 1 4', 'ma',  'Stoneskin', 'me', ''},
-  {'f 1 5', 'ma',  'Blink', 'me', 'Blink'},
-  {'f 1 6', 'ma',  'Phalanx', 'me', 'Phx.'},
-  {'f 1 7', 'item',  "Assassin's drink", 'me', 'M.Acc'},
-  {'f 1 8', 'item',  "Braver's drink", 'me', 'Att.Up'},
-
-  {'f 1 0', 'item',  "Special Gobbiedial Key", 't', 'G.Key'},
-  -- Hotbar #2
-  {'f 2 9', 'ma', 'Sneak', 'stal', 'Snk.'},
-  {'f 2 0', 'ma', 'Invisible', 'stal', 'Inv.'},
-
-  -- Hotbar #3
   {'f 3 1',  'ma', 'Viruna', 'stal', 'Vir.'},
   {'f 3 2',  'ma', 'Paralyna', 'stal', 'Par.'},
   {'f 3 3',  'ma', 'Poisona', 'stal', 'Poi.'},
   {'f 3 4',  'ma', 'Blindna', 'stal', 'Bli.'},
   {'f 3 5',  'ma', 'Silena', 'stal', 'Sil.'},
 
-  -- Hotbar #4
   {'f 4 1',  'ma', 'Protectra V', 'me', ''},
   {'f 4 2',  'ma', 'Shellra V', 'me', ''},
-  {'f 4 3', 'ma', 'Barwatera', 'me', 'BrWa'},
-  {'f 4 4', 'ma', 'Barthundra', 'me', 'BrTh'},
-  {'f 4 5', 'ma', 'Barpoisonra', 'me', 'BrPoi'},
-  {'f 4 6', 'ma', 'Barblizzara', 'me', 'BrBli'},
-  {'f 4 7',  'ma', 'Barparalyzra', 'me', 'BrPar'},
-  {'f 4 8',  'ma', 'Baramnesra', 'me', 'BrAmn'},
+  {'f 3 11',  'ma', 'Barwatera', 'me', 'BrWa'},
+  {'f 3 12',  'ma', 'Barthundra', 'me', 'BrTh'},
+  {'f 2 11',  'ma', 'Barpoisonra', 'me', 'BrPoi'},
+  {'f 2 12',  'ma', 'Barblizzara', 'me', 'BrBli'},
+  {'f 1 11',  'ma', 'Barparalyzra', 'me', 'BrPar'},
+  {'f 1 12',  'ma', 'Baramnesra', 'me', 'BrAmn'},
   {'f 4 9',  'ma', 'Barsleepra', 'me', 'BrSlp'},
-  {'f 4 0',  'ws', 'dagan', '', 'Dagan'},
-  {'b 3 1', 'ma', 'sacrifice', 'stal', ''},
-  {'b 2 1', 'ma', 'viruna', 'stal', 'Vir.'},
+  {'b 1 10',  'ws', 'dagan', '', 'Dagan'},
 }
 
 xivhotbar_keybinds_job['Light Arts'] = {
   -- Battle
-  {'b 4 1', 'ja', 'Penury', 'me', 'MP 1/2'},
-  {'b 4 2', 'ja', 'Celerity', 'me', 'Fast'},
-  {'b 4 3', 'ja', 'Accession', 'me', 'AoE'},
-  {'battle 4 4', 'ma', 'Aquaveil', 'me', 'Aq.'},
-  {'battle 2 5', 'ma', 'Paralyna', 'stal', 'Para.'},
-  {'battle 2 6', 'ma', 'Erase', 'stal', 'Era.'},
+  {'b 5 4',  'ja', 'Penury', 'me', 'MP 1/2'},
+  {'b 5 5',  'ja', 'Celerity', 'me', 'Fast'},
+  {'b 5 6',  'ja', 'Accession', 'me', 'AoE'},
 }
 
 xivhotbar_keybinds_job['Dark Arts'] = {
   -- Battle
-  {'b 4 1', 'ja', 'Parsimony', 'me', 'MP 1/2'},
-  {'b 4 2', 'ja', 'Alacrity', 'me', 'Fast'},
-  {'b 4 3', 'ja', 'Manifestation', 'me', 'AoE'},
-  {'b 4 4', 'ma', 'Impact', 'stnpc', 'Imp.'},
-  {'b 2 5', 'ma', 'Poison II', 'stnpc', ''},
+  {'b 4 1',  'ja', 'Parsimony', 'me', 'MP 1/2'},
+  {'b 4 2',  'ja', 'Alacrity', 'me', 'Fast'},
+  {'b 4 3',  'ja', 'Manifestation', 'me', 'AoE'},
+  {'b 4 4',  'ma', 'Impact', 'stnpc', 'Imp.'},
+  {'b 2 5',  'ma', 'Poison II', 'stnpc', ''},
 }
 
 xivhotbar_keybinds_job['WAR'] = {
-  {'b 4 1', 'ma', 'Barparalyzra', 'me', 'BrPar'},
-  {'b 4 2', 'ma', 'Barstonra', 'me', 'BrStn'},
-  {'battle 3 1', 'ma', 'Boost-STR', 'me', 'STR'},
-  {'battle 3 7', 'ja', 'Berserk', 'me', 'Ber.'},
+  {'b 4 1',  'ma', 'Barparalyzra', 'me', 'BrPar'},
+  {'b 4 2',  'ma', 'Barstonra', 'me', 'BrStn'},
+  {'b 3 1',  'ma', 'Boost-STR', 'me', 'STR'},
+  {'b 3 7',  'ja', 'Berserk', 'me', 'Ber.'},
 }
 xivhotbar_keybinds_job['RDM'] = {
-  {'battle 3 2', 'ja', 'Convert', 'me', 'Conv.'}
+  {'b 3 2',  'ja', 'Convert', 'me', 'Conv.'}
 }
 xivhotbar_keybinds_job['NIN'] = {
-  {'battle 4 1', 'ma', 'Gain-MND', 'me', 'MND'},
-  {'battle 4 2', 'ma', 'Gain-STR', 'me', 'STR'},
-  {'battle 4 2', 'ma', 'Aquaveil', 'me', 'Aq.'},
-  {'battle 3 7', 'ma', 'utsusemi: ichi', 'me', 'U.Ich.'},
-  {'battle 3 1', 'ma', 'utsusemi: ni', 'me', 'U.Ni'},
-  {'battle 4 4', 'ma', 'Blizzard V', 't', ''},
-  {'battle 3 6', 'ma', 'Blizzard II', 't', ''},
-  {'battle 2 5', 'ma', 'Thunder II', 't', ''},
-  {'battle 2 6', 'ma', 'Thunder V', 't', ''}
+  {'b 4 1',  'ma', 'Gain-MND', 'me', 'MND'},
+  {'b 4 2',  'ma', 'Gain-STR', 'me', 'STR'},
+  {'b 4 2',  'ma', 'Aquaveil', 'me', 'Aq.'},
+  {'b 3 7',  'ma', 'utsusemi: ichi', 'me', 'U.Ich.'},
+  {'b 3 1',  'ma', 'utsusemi: ni', 'me', 'U.Ni'},
+  {'b 4 4',  'ma', 'Blizzard V', 't', ''},
+  {'b 3 6',  'ma', 'Blizzard II', 't', ''},
+  {'b 2 5',  'ma', 'Thunder II', 't', ''},
+  {'b 2 6',  'ma', 'Thunder V', 't', ''}
 }
 
 xivhotbar_keybinds_job['BLM'] = {
-  {'battle 2 5', 'ja', 'Elemental Seal', 'me', 'Ele.'},
-  {'battle 2 6', 'ma', 'Erase', 'stal', 'Erase'},
-  {'battle 3 1', 'ma', 'Paralyna', 'stal', 'Para'},
-  {'battle 3 2', 'ma', 'Blindna', 'stal', 'Blindna'},
+  {'b 2 5',  'ja', 'Elemental Seal', 'me', 'Ele.'},
+  {'b 2 6',  'ma', 'Erase', 'stal', 'Erase'},
+  {'b 3 1',  'ma', 'Paralyna', 'stal', 'Para'},
+  {'b 3 2',  'ma', 'Blindna', 'stal', 'Blindna'},
   -- General
-  {'f 3 1', 'ma', 'Stonega II', 'stnpc', 'Sga.II'},
-  {'f 3 2', 'ma', 'Waterga II', 'stnpc', 'Wga.II'},
-  {'f 3 3', 'ma', 'Aeroga II', 'stnpc', 'Ae.ga'},
-  {'f 3 4', 'ma', 'Blizzaga', 'stnpc', 'Bli.ga'},
-  {'f 3 5', 'ma', 'Firaga', 'stnpc', 'Firaga'},
-  {'f 3 6', 'ma', 'Thundaga', 'stnpc', 'Th.ga'},
-  {'f 3 7', 'ma', 'Sleepga', 'stnpc', 'Slp.ga'},
+  {'f 3 1',  'ma', 'Stonega II', 'stnpc', 'Sga.II'},
+  {'f 3 2',  'ma', 'Waterga II', 'stnpc', 'Wga.II'},
+  {'f 3 3',  'ma', 'Aeroga II', 'stnpc', 'Ae.ga'},
+  {'f 3 4',  'ma', 'Blizzaga', 'stnpc', 'Bli.ga'},
+  {'f 3 5',  'ma', 'Firaga', 'stnpc', 'Firaga'},
+  {'f 3 6',  'ma', 'Thundaga', 'stnpc', 'Th.ga'},
+  {'f 3 7',  'ma', 'Sleepga', 'stnpc', 'Slp.ga'},
 
-  {'b 4 1', 'ma', 'Aeroga II', 'stnpc', 'Ae.ga'},
-  {'b 4 2', 'ma', 'Blizzaga', 'stnpc', 'Bli.ga'},
-  {'b 4 3', 'ma', 'Firaga', 'stnpc', 'Firaga'},
-  {'b 4 4', 'ma', 'Thundaga', 'stnpc', 'Th.ga'},
-  {'f 4 8', 'ma', 'Sleep', 'stnpc', 'Slp.'}
+  {'b 4 1',  'ma', 'Aeroga II', 'stnpc', 'Ae.ga'},
+  {'b 4 2',  'ma', 'Blizzaga', 'stnpc', 'Bli.ga'},
+  {'b 4 3',  'ma', 'Firaga', 'stnpc', 'Firaga'},
+  {'b 4 4',  'ma', 'Thundaga', 'stnpc', 'Th.ga'},
+  {'f 4 8',  'ma', 'Sleep', 'stnpc', 'Slp.'}
 }
 xivhotbar_keybinds_job['DRK'] = {
-  {'b 3 1', 'ma', 'Absorb-TP', 'stnpc', 'A.Tp.'},
-  {'b 3 5', 'ma', 'Esuna', 'me', 'Esun'},
-  {'b 3 2', 'ma', 'Sacrifice', 'stal', 'Sac.'},
+  {'b 3 1',  'ma', 'Absorb-TP', 'stnpc', 'A.Tp.'},
+  {'b 3 5',  'ma', 'Esuna', 'me', 'Esun'},
+  {'b 3 2',  'ma', 'Sacrifice', 'stal', 'Sac.'},
 }
 xivhotbar_keybinds_job['SCH'] = {
   -- General 
 
-  {'b 3 1', 'ja', 'Light Arts', 'me', 'L.A.'},
-  {'b 3 2', 'ja', 'Dark Arts', 'me', 'D.A.'},
-  {'b 3 5', 'ma', 'Sacrifice', 'stal', 'Sac.'},
-  {'battle 2 9', 'ja', 'Sublimation', 'me', 'Sub.'},
+  {'b 3 1',  'ja', 'Light Arts', 'me', 'L.A.'},
+  {'b 3 2',  'ja', 'Dark Arts', 'me', 'D.A.'},
+  {'b 3 5',  'ma', 'Sacrifice', 'stal', 'Sac.'},
+  {'b 2 9',  'ja', 'Sublimation', 'me', 'Sub.'},
 
 }
 

@@ -432,7 +432,7 @@ end
 function player:add_action(action, environment, hotbar, slot)
     status = true
     if environment == 'b' then environment = 'battle' elseif environment == 'f' then environment = 'field' end
-    if slot == 10 then slot = 0 end
+    --if slot == 10 then slot = 0 end
 
     if self.hotbar[environment] == nil then
         windower.console.write('XIVHOTBAR: invalid hotbar (environment)')
@@ -495,7 +495,7 @@ end
 -- remove action from slot
 function player:remove_action(environment, hotbar, slot)
     if environment == 'b' then environment = 'battle' elseif environment == 'f' then environment = 'field' end
-    if slot == 10 then slot = 0 end
+    --if slot == 10 then slot = 0 end
 
     if self.hotbar[environment] == nil then return end
     if self.hotbar[environment]['hotbar_' .. hotbar] == nil then return end
@@ -507,8 +507,8 @@ end
 function player:copy_action(environment, hotbar, slot, to_environment, to_hotbar, to_slot, is_moving)
     if environment == 'b' then environment = 'battle' elseif environment == 'f' then environment = 'field' end
     if to_environment == 'b' then to_environment = 'battle' elseif to_environment == 'f' then to_environment = 'field' end
-    if slot == 10 then slot = 0 end
-    if to_slot == 10 then to_slot = 0 end
+    --if slot == 10 then slot = 0 end
+    --if to_slot == 10 then to_slot = 0 end
 
     if self.hotbar[environment] == nil or self.hotbar[to_environment] == nil then return end
     if self.hotbar[environment]['hotbar_' .. hotbar] == nil or self.hotbar[to_environment]['hotbar_' .. to_hotbar] == nil then return end
@@ -521,7 +521,7 @@ end
 -- update action alias
 function player:set_action_alias(environment, hotbar, slot, alias)
     if environment == 'b' then environment = 'battle' elseif environment == 'f' then environment = 'field' end
-    if slot == 10 then slot = 0 end
+    --if slot == 10 then slot = 0 end
 
     if self.hotbar[environment] == nil then return end
     if self.hotbar[environment]['hotbar_' .. hotbar] == nil then return end
@@ -533,7 +533,7 @@ end
 -- update action icon
 function player:set_action_icon(environment, hotbar, slot, icon)
     if environment == 'b' then environment = 'battle' elseif environment == 'f' then environment = 'field' end
-    if slot == 10 then slot = 0 end
+    --if slot == 10 then slot = 0 end
 
     if self.hotbar[environment] == nil then return end
     if self.hotbar[environment]['hotbar_' .. hotbar] == nil then return end

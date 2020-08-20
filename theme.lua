@@ -56,6 +56,16 @@ theme.apply = function (settings)
     options.hide_recast_text        = sh.HideRecastText
     options.hide_battle_notice      = sh.HideBattleNotice
     options.hide_inventory_count    = sh.HideInventoryCount
+	options.environment             = sh.Environment
+	options.environment.hook_onto_bar = sh.Environment.HookOntoBar
+	options.offsets = {
+		['1'] = {Vertical = sh.Offsets.First.Vertical, OffsetX = sh.Offsets.First.OffsetX,  OffsetY = sh.Offsets.First.OffsetY},
+		['2'] = {Vertical = sh.Offsets.Second.Vertical, OffsetX = sh.Offsets.Second.OffsetX, OffsetY = sh.Offsets.Second.OffsetY},
+		['3'] = {Vertical = sh.Offsets.Third.Vertical, OffsetX = sh.Offsets.Third.OffsetX,  OffsetY = sh.Offsets.Third.OffsetY},
+		['4'] = {Vertical = sh.Offsets.Fourth.Vertical, OffsetX = sh.Offsets.Fourth.OffsetX, OffsetY = sh.Offsets.Fourth.OffsetY},
+		['5'] = {Vertical = sh.Offsets.Fifth.Vertical, OffsetX = sh.Offsets.Fifth.OffsetX,  OffsetY = sh.Offsets.Fifth.OffsetY},
+		['6'] = {Vertical = sh.Offsets.Sixth.Vertical, OffsetX = sh.Offsets.Sixth.OffsetX,  OffsetY = sh.Offsets.Sixth.OffsetY}
+	}
     settings.Hotbar = sh
 
     -- Theme

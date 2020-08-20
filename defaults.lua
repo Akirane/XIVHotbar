@@ -40,7 +40,16 @@ defaults.Hotbar.HideInventoryCount = false
 defaults.Hotbar.EnableWeaponSwitching = false
 defaults.Hotbar.rows = 3
 defaults.Hotbar.columns = 3
-
+defaults.Hotbar.Offsets = {}
+defaults.Hotbar.Offsets.First  = { Vertical = false, OffsetX = 0, OffsetY = 0 }
+defaults.Hotbar.Offsets.Second = { Vertical = false, OffsetX = 0, OffsetY = 0 }
+defaults.Hotbar.Offsets.Third  = { Vertical = false, OffsetX = 0, OffsetY = 0 }
+defaults.Hotbar.Offsets.Fourth = { Vertical = false, OffsetX = 0, OffsetY = 0 }
+defaults.Hotbar.Offsets.Fifth  = { Vertical = false, OffsetX = 0, OffsetY = 0 }
+defaults.Hotbar.Offsets.Sixth  = { Vertical = false, OffsetX = 0, OffsetY = 0 }
+defaults.Hotbar.Environment = {}
+defaults.Hotbar.Environment.HookOntoBar = 1
+ 
 defaults.Controls = {}
 defaults.Controls.ToggleBattleMode = 43
 

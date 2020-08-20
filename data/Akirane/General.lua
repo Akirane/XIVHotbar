@@ -18,6 +18,16 @@ xivhotbar_keybinds_general['Root'] = {
 	{'f 2 8', 'ma', 'Yoran-Oran (UC)', 'me', 'Yoran'},
 	{'f 2 9', 'ma', 'August', 'me', 'Aug'},
 
+    {'b 6 1', 'ma', 'Joachim', 'me', 'Joa.'},
+	{'b 6 2', 'ma', 'Mihli Aliapoh', 'me', 'MA'},
+	{'b 6 3', 'ma', 'Ulmia', 'me', 'Ulmia'},
+	{'b 6 4', 'ma', 'Kupofried', 'me', 'Kupof.'},
+	{'b 6 5', 'ma', 'Zeid II', 'me', 'Zeid2'},
+	{'b 6 6', 'ma', 'Koru-Moru', 'me', 'Koru'},
+    {'b 6 7', 'ma', 'Qultada', 'me', 'Qul.'},
+	{'b 6 8', 'ma', 'Yoran-Oran (UC)', 'me', 'Yoran'},
+	{'b 6 9', 'ma', 'August', 'me', 'Aug'},
+
 	{'f 3 7', 'item', "poison potion",'me', 'Poison.', 'poison'},
     {'f 3 8', 'gs', 'c toggle weapon','','TGWep'},
     {'f 3 9', 'gs', 'c toggle acc','','TGAcc'},

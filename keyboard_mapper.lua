@@ -102,7 +102,9 @@ keyboard.hotbar_rows = {
 	    '7',          -- Hotbar Row #1 Col #7
 	    '8',          -- Hotbar Row #1 Col #8
 	    '9',          -- Hotbar Row #1 Col #9
-	    'O'           -- Hotbar Row #1 Col #0
+	    'O',           -- Hotbar Row #1 Col #10
+	    'Shift + 5', -- Hotbar Row #4 Col #1
+	    'Shift + 6', -- Hotbar Row #4 Col #1
 	},
 	-- Hotbar Row #2
 	{
@@ -115,7 +117,9 @@ keyboard.hotbar_rows = {
 		'ALT + U',    -- Hotbar Row #2 Col #7
 		'CTRL + O',   -- Hotbar Row #2 Col #8
 		'ALT + M',    -- Hotbar Row #2 Col #9
-		'CTRL + M'    -- Hotbar Row #2 Col #0
+		'CTRL + M',    -- Hotbar Row #2 Col #10
+	    'Shift + 3', -- Hotbar Row #4 Col #1
+	    'Shift + 4', -- Hotbar Row #4 Col #1
 	},
 	-- Hotbar Row #3
 	{
@@ -128,20 +132,22 @@ keyboard.hotbar_rows = {
 	    'CTRL + 7',   -- Hotbar Row #3 Col #7
 	    'CTRL + 8',   -- Hotbar Row #3 Col #8
 	    'CTRL + 9',   -- Hotbar Row #3 Col #9
-	    'CTRL + 0'    -- Hotbar Row #3 Col #0
+	    'CTRL + 0',    -- Hotbar Row #3 Col #10
+	    'Shift + 1', -- Hotbar Row #4 Col #1
+	    'Shift + 2', -- Hotbar Row #4 Col #1
 	},
 	-- Hotbar Row #4
 	{
-	    'Shift + 1', -- Hotbar Row #4 Col #1
-	    'Shift + 2', -- Hotbar Row #4 Col #2
-	    'Shift + 3', -- Hotbar Row #4 Col #3
-	    'Shift + 4', -- Hotbar Row #4 Col #4
+	    '', -- Hotbar Row #4 Col #1
+	    '', -- Hotbar Row #4 Col #2
+	    '', -- Hotbar Row #4 Col #3
+	    '', -- Hotbar Row #4 Col #4
 	    'Shift + Q', -- Hotbar Row #4 Col #5
 	    'Shift + E', -- Hotbar Row #4 Col #6
 	    'Shift + R', -- Hotbar Row #4 Col #7
 	    'Shift + T', -- Hotbar Row #4 Col #8
 	    'Shift + C', -- Hotbar Row #4 Col #9
-	    'Shift + F'  -- Hotbar Row #4 Col #0
+	    'Shift + F'  -- Hotbar Row #4 Col #10
 	},
 	-- Hotbar Row #5
 	{
@@ -154,7 +160,20 @@ keyboard.hotbar_rows = {
 	    'ALT + 7',    -- Hotbar Row #5 Col #7
 	    'ALT + 8',    -- Hotbar Row #5 Col #8
 	    'ALT + 9',    -- Hotbar Row #5 Col #9
-	    'ALT + 0'     -- Hotbar Row #5 Col #0
+	    'ALT + 0'     -- Hotbar Row #5 Col #10
+	},
+	-- Hotbar Row #6
+	{
+	    '',    -- Hotbar Row #6 Col #1
+	    '',    -- Hotbar Row #6 Col #2
+	    '',    -- Hotbar Row #6 Col #3
+	    '',    -- Hotbar Row #6 Col #4
+	    '',    -- Hotbar Row #6 Col #5
+	    '',    -- Hotbar Row #6 Col #6
+	    '',    -- Hotbar Row #6 Col #7
+	    '',    -- Hotbar Row #6 Col #8
+	    '',    -- Hotbar Row #6 Col #9
+	    ''     -- Hotbar Row #6 Col #10
 	}
 }
 

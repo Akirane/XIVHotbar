@@ -25,6 +25,10 @@
         </Controls>
         <Hotbar>
             <EnableWeaponSwitching>false</EnableWeaponSwitching>
+            <Environment>
+                <HookOntoBar>4</HookOntoBar>
+                <hook_onto_bar>4</hook_onto_bar>
+            </Environment>
             <HideActionCost>false</HideActionCost>
             <HideActionElement>true</HideActionElement>
             <HideActionName>false</HideActionName>
@@ -33,8 +37,40 @@
             <HideInventoryCount>false</HideInventoryCount>
             <HideRecastAnimation>false</HideRecastAnimation>
             <HideRecastText>false</HideRecastText>
-            <columns>10</columns>
-            <rows>3</rows>
+            <Offsets>
+                <Fifth>
+                    <OffsetX>530</OffsetX>
+                    <OffsetY>270</OffsetY>
+                    <Vertical>true</Vertical>
+                </Fifth>
+                <First>
+                    <OffsetX>530</OffsetX>
+                    <OffsetY>200</OffsetY>
+                    <Vertical>false</Vertical>
+                </First>
+                <Fourth>
+                    <OffsetX>530</OffsetX>
+                    <OffsetY>50</OffsetY>
+                    <Vertical>false</Vertical>
+                </Fourth>
+                <Second>
+                    <OffsetX>530</OffsetX>
+                    <OffsetY>150</OffsetY>
+                    <Vertical>false</Vertical>
+                </Second>
+                <Sixth>
+                    <OffsetX>630</OffsetX>
+                    <OffsetY>270</OffsetY>
+                    <Vertical>true</Vertical>
+                </Sixth>
+                <Third>
+                    <OffsetX>530</OffsetX>
+                    <OffsetY>100</OffsetY>
+                    <Vertical>false</Vertical>
+                </Third>
+            </Offsets>
+            <columns>12</columns>
+            <rows>4</rows>
         </Hotbar>
         <Style>
             <HotbarSpacing>56</HotbarSpacing>

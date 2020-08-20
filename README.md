@@ -150,7 +150,7 @@ Make a backup of your previous job-files located under `data/<character>`.
 
 If you have done everything correctly, you'll end up with the following:
 
-![Stymie](/images/demo/demo2.PNG)
+![Stymie](/images/demo/demo2.png)
 
 
 

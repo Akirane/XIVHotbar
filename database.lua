@@ -127,7 +127,7 @@ function database:parse_abilities_lua()
 		new_abil.id      = tostring(contents[key].recast_id)
 		new_abil.icon    = new_abil.id
 		new_abil.name    = contents[key].en
-		new_abil.mpcost  = tostring(contents[key].mp_cost)
+		new_abil.mpcost  = tonumber(contents[key].mp_cost)
 		new_abil.tpcost  = tostring(contents[key].tp_cost)
 		new_abil.cast    = tostring(0)
 		new_abil.recast  = tostring(0)
@@ -149,7 +149,7 @@ function database:parse_spells_lua()
         new_spell.id      = tostring(contents[key].id)
         new_spell.icon    = new_spell.id
         new_spell.name    = contents[key].en
-        new_spell.mpcost  = tostring(contents[key].mp_cost)
+        new_spell.mpcost  = contents[key].mp_cost
         new_spell.cast    = contents[key].cast_time
         new_spell.element = contents[key].element
         new_spell.recast  = contents[key].recast
