@@ -355,10 +355,20 @@ end
 -- Bind Events --
 -----------------
 
+local function unbind_keys()
+    for hotbar_index = 1, theme_options.rows do 
+        for skill_index = 1, theme_options.columns do
+            if (keyboard.hotbar_rows[hotbar_index] ~= nil and keyboard.hotbar_rows[hotbar_index][skill_index] ~= nil) then 
+    			windower.send_command('unbind '..keyboard.hotbar_rows[hotbar_index][skill_index])
+            end
+        end
+    end
+end
 
 -- ON LOGOUT --
-windower.register_event('logout', function()
+windower.register_event('logout', 'unload', function()
     ui:hide()
+	unbind_keys()
 end)
 
 local function save_hotbar(hotbar, index)
