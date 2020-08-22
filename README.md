@@ -27,7 +27,12 @@ You can change the following from the settings.xml file:
 
 ![Less Columns and Rows](/images/demo/demo_columns.PNG)
 
-2. It's now possible to hide the inventory count and which hotbar environment you are currently in. Modify **Hotbar/HideBattleNotice** and **Hotbar/HideInventoryCount** for this.
+2. It's possible to change a row to be vertical or horizontal, if you want a specific hotbar to be vertical set `Vertical` to true whic you can find under the `hotbar` section in the settings.xml file. Below is showing the fifth row as an example.
+
+![Less Columns and Rows](/images/demo/horizontal.PNG)
+![Less Columns and Rows](/images/demo/vertical.PNG)
+
+4. It's now possible to hide the inventory count and which hotbar environment you are currently in. Modify **Hotbar/HideBattleNotice** and **Hotbar/HideInventoryCount** for this.
 
 ![No extra labels](/images/demo/no_extra_labels.PNG)
 

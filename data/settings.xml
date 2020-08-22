@@ -70,7 +70,7 @@
                 </Third>
             </Offsets>
             <columns>12</columns>
-            <rows>4</rows>
+            <rows>5</rows>
         </Hotbar>
         <Style>
             <HotbarSpacing>56</HotbarSpacing>
@@ -104,4 +104,14 @@
             <Slot>ffxiv</Slot>
         </Theme>
     </global>
+    <akirane>
+        <Hotbar>
+            <Offsets>
+                <Fifth>
+                    <OffsetX>1450</OffsetX>
+                    <OffsetY>380</OffsetY>
+                </Fifth>
+            </Offsets>
+        </Hotbar>
+    </akirane>
 </settings>
