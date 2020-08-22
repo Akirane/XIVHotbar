@@ -226,7 +226,7 @@ function ui:init_hotbar(theme_options, number)
     hotbar.slot_icon        = {}
     hotbar.slot_recast      = {}
     hotbar.slot_frame       = {}
-    hotbar.slot_element     = {}
+--    hotbar.slot_element     = {}
     hotbar.slot_text        = {}
     hotbar.slot_cost        = {}
     hotbar.slot_recast_text = {}
@@ -254,7 +254,7 @@ function ui:init_slot(hotbar, row, column, theme_options)
     hotbar.slot_icon[column] = images.new(table.copy(images_setup, true))
     hotbar.slot_recast[column] = images.new(table.copy(images_setup, true))
     hotbar.slot_frame[column] = images.new(table.copy(images_setup, true))
-    hotbar.slot_element[column] = images.new(table.copy(images_setup, true))
+--    hotbar.slot_element[column] = images.new(table.copy(images_setup, true))
 
     hotbar.slot_text[column] = texts.new(table.copy(text_setup), true)
     hotbar.slot_cost[column] = texts.new(table.copy(text_setup), true)
@@ -264,7 +264,7 @@ function ui:init_slot(hotbar, row, column, theme_options)
     setup_image(hotbar.slot_background[column], windower.addon_path..'/themes/' .. (theme_options.slot_theme:lower()) .. '/slot.png')
     setup_image(hotbar.slot_icon[column], windower.addon_path..'/images/other/blank.png')
     setup_image(hotbar.slot_frame[column], windower.addon_path..'/themes/' .. (theme_options.frame_theme:lower()) .. '/frame.png')
-    setup_image(hotbar.slot_element[column], windower.addon_path..'/images/other/blank.png')
+--    setup_image(hotbar.slot_element[column], windower.addon_path..'/images/other/blank.png')
 
     setup_text(hotbar.slot_text[column], theme_options)
     setup_text(hotbar.slot_cost[column], theme_options)
@@ -273,9 +273,12 @@ function ui:init_slot(hotbar, row, column, theme_options)
 
     hotbar.slot_background[column]:alpha(theme_options.slot_opacity)
     hotbar.slot_background[column]:pos(slot_pos_x, slot_pos_y)
+    hotbar.slot_recast[column]:pos(slot_pos_x, slot_pos_y)
+
+	hotbar.slot_recast[column]:alpha(5)
     hotbar.slot_icon[column]:pos(slot_pos_x, slot_pos_y)
     hotbar.slot_frame[column]:pos(slot_pos_x, slot_pos_y)
-    hotbar.slot_element[column]:pos(slot_pos_x + 28, slot_pos_y - 4)
+--    hotbar.slot_element[column]:pos(slot_pos_x + 28, slot_pos_y - 4)
 
     hotbar.slot_text[column]:pos(slot_pos_x, slot_pos_y + ui.image_height -12)
 
@@ -408,17 +411,13 @@ function ui:setup_environment_numbers()
         self.active_environment['field']:text('')
         self.active_environment['battle']:text('')
     end
-    --self.active_1_pos_y = self.pos_y - (ui.hotbar.rows-1)*(self.hotbar_spacing)+10 -- self.hotbar_spacing
-    --self.active_2_pos_y = self.pos_y - (ui.hotbar.rows-2)*(self.hotbar_spacing)+10 --(ui.image_height + self.hotbar_spacing-3)+5
 	local env_pos_x = ui:get_slot_x(self.theme.environment.hook_onto_bar, self.theme.columns+1) - 10
 	local env_pos_y = ui:get_slot_y(self.theme.environment.hook_onto_bar, 0)
-    --self.active_environment['field']:pos(self.pos_x+self.hotbar_width+ 10, self.active_1_pos_y)
     self.active_environment['field']:pos(env_pos_x, env_pos_y)
     self.active_environment['field']:size(22)
     self.active_environment['field']:show()
     self.active_environment['field']:italic(false)
     self.active_environment['battle']:pos(env_pos_x, env_pos_y + 50)
-    --self.active_environment['battle']:pos(self.pos_x+self.hotbar_width+ 10, self.active_2_pos_y)
     self.active_environment['battle']:italic(false)
     self.active_environment['battle']:size(22)
     self.active_environment['battle']:show()
@@ -479,7 +478,7 @@ function ui:hide()
             self.hotbars[h].slot_icon[i]:hide()
             self.hotbars[h].slot_frame[i]:hide()
             self.hotbars[h].slot_recast[i]:hide()
-            self.hotbars[h].slot_element[i]:hide()
+--            self.hotbars[h].slot_element[i]:hide()
             self.hotbars[h].slot_text[i]:hide()
             self.hotbars[h].slot_cost[i]:hide()
             self.hotbars[h].slot_recast_text[i]:hide()
@@ -500,7 +499,14 @@ function ui:show(player_hotbar, environment)
     for h=1,self.theme.rows,1 do
         for i=1, self.theme.columns, 1 do
             local slot = i
-            --if slot == 10 then slot = 0 end
+			local pos_x, pos_y = self.hotbars[h].slot_icon[i]:pos()
+			if (pos_x == 0 and pos_y == 0) then
+				print("h: " .. h .. ", i: " .. i)
+			end
+			pos_x, pos_y = self.hotbars[h].slot_recast[i]:pos()
+			if (pos_x == 0 and pos_y == 0) then
+				print("h: " .. h .. ", i: " .. i)
+			end
 
             local action = player_hotbar[environment]['hotbar_' .. h]['slot_' .. slot]
 
@@ -508,7 +514,7 @@ function ui:show(player_hotbar, environment)
             self.hotbars[h].slot_icon[i]:show()
             if action ~= nil then self.hotbars[h].slot_frame[i]:show() end
             if self.theme.hide_recast_animation == false then self.hotbars[h].slot_recast[i]:show() end
-            if self.theme.hide_action_element == false then self.hotbars[h].slot_element[i]:show() end
+--            if self.theme.hide_action_element == false then self.hotbars[h].slot_element[i]:show() end
             if self.theme.hide_action_names == false then self.hotbars[h].slot_text[i]:show() end
             if self.theme.hide_recast_text == false then self.hotbars[h].slot_recast_text[i]:show() end
             if self.theme.hide_empty_slots == false then self.hotbars[h].slot_key[i]:show() end
@@ -662,9 +668,9 @@ function ui:clear_slot(hotbar, slot)
     self.hotbars[hotbar].slot_icon[slot]:hide()
     self.hotbars[hotbar].slot_icon[slot]:alpha(255)
     self.hotbars[hotbar].slot_icon[slot]:color(255, 255, 255)
-    self.hotbars[hotbar].slot_element[slot]:path(windower.addon_path .. '/images/other/blank.png')
-    self.hotbars[hotbar].slot_element[slot]:alpha(255)
-    self.hotbars[hotbar].slot_element[slot]:hide()
+--    self.hotbars[hotbar].slot_element[slot]:path(windower.addon_path .. '/images/other/blank.png')
+--    self.hotbars[hotbar].slot_element[slot]:alpha(255)
+--    self.hotbars[hotbar].slot_element[slot]:hide()
     self.hotbars[hotbar].slot_text[slot]:text('')
     self.hotbars[hotbar].slot_cost[slot]:alpha(255)
     self.hotbars[hotbar].slot_cost[slot]:text('')
@@ -693,9 +699,6 @@ function ui:disable_slot(hotbar_index, index, action)
         self.disabled_slots.actions[action.action] = true
         self:toggle_slot(hotbar_index, index, false)
     end
-    --self.hotbars[hotbar_index].slot_recast_text[index]:text("")
-    --self.hotbars[hotbar_index].slot_recast_text[index]:show()
-    --self.hotbars[hotbar_index].slot_key[index]:hide()
 end
 
 -- check action recasts
@@ -783,9 +786,9 @@ function ui:check_recasts(player_hotbar, player_vitals, environment, distance)
                     in_cooldown = true
 
                     -- show recast if settings allow it
-                    self.hotbars[h].slot_recast[i]:alpha(5)
-                    self.hotbars[h].slot_recast[i]:size(ui.image_width, ui.image_height)
-                    self.hotbars[h].slot_recast[i]:pos(self:get_slot_x(h, i), self:get_slot_y(h, i))
+                    --self.hotbars[h].slot_recast[i]:alpha(5)
+                    --self.hotbars[h].slot_recast[i]:size(ui.image_width, ui.image_height)
+                    --self.hotbars[h].slot_recast[i]:pos(self:get_slot_x(h, i), self:get_slot_y(h, i))
                     self.hotbars[h].slot_recast[i]:show()
 
                     self.hotbars[h].slot_recast_text[i]:text(recast_time)
@@ -899,7 +902,7 @@ function ui:toggle_slot(hotbar, slot, is_enabled, out_of_range)
         opacity = 255
     end
 
-    self.hotbars[hotbar].slot_element[slot]:alpha(opacity)
+--    self.hotbars[hotbar].slot_element[slot]:alpha(opacity)
     self.hotbars[hotbar].slot_cost[slot]:alpha(opacity)
     self.hotbars[hotbar].slot_icon[slot]:alpha(opacity)
 end
@@ -999,6 +1002,7 @@ function ui:move_icons(moved_row_info)
 		self.hotbars[r].slot_frame[i]:pos(x, y)
 		self.hotbars[r].slot_recast[i]:pos(x, y)
 		self.hotbars[r].slot_background[i]:pos(x, y)
+		self.hotbars[r].slot_recast_text[i]:pos(x, y)
 		self.hotbars[r].slot_text[i]:pos(x, y + ui.image_height -12)
 		self.hotbars[r].slot_key[i]:pos(x, y)
 	end

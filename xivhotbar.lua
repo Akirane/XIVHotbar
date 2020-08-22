@@ -199,9 +199,10 @@ function set_action_command(args)
 
     if target ~= nil then target = target:lower() end
 
+
     local new_action = action_manager:build(action_type, action, target, alias, icon)
-    player:add_action(new_action, environment, hotbar, slot)
-    player:save_hotbar()
+    --player:add_action(new_action, environment, hotbar, slot)
+    --player:save_hotbar()
     reload_hotbar()
 end
 
@@ -429,6 +430,10 @@ windower.register_event('addon command', function(command, ...)
         if tonumber(args[2]) <= theme_options.columns then 
 			trigger_action(tonumber(args[2]))
         end
+	elseif command == 'debug' then
+
+		player:debug(args)
+		reload_hotbar()
     elseif command == 'reload' then
         flush_old_keybinds()
         bind_keys()
@@ -589,6 +594,7 @@ windower.register_event('login', 'load', function()
 		config.save(settings)
         player.id = windower.ffxi.get_player().id
         initialize()
+		--windower.send_command('htb debug battle 1 2 ws "Raging Rush" t')
     end
 end)
 

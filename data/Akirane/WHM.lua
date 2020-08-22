@@ -3,7 +3,7 @@ xivhotbar_keybinds_job['Base'] = {
   -- Hotbar #1
   {'b 1 1',  'ma', 'Cure IV', 'stal', ' '},
   {'b 7 1',  'ma', 'Cure IV', 'stal', ' '},
-  {'b 1 2',  'ma', 'Curaga III', 'me', ' '},
+  {'b 1 2',  'ma', 'cura iii', 'me' ,'' },
   {'b 1 3',  'ma', 'Haste', 'stal', ' '},
   {'b 1 4',  'ma', 'Slow', 'stnpc', ''},
   {'b 1 5',  'ma', 'Regen IV', 'stal', ''},
@@ -15,7 +15,7 @@ xivhotbar_keybinds_job['Base'] = {
   {'b 1 11', 'ma', 'Stona', 'stal', 'Stona'},
   {'b 1 12',  'ma', 'viruna', 'stal', 'Viruna'},
 
-  {'b 2 1',  'ma', 'Aurorastorm', 'me', 'Aurora'},
+  {'b 2 1',  'ja', 'divine seal', 'me' ,'DS'},
   {'b 2 2',  'ma', 'Dia II', 'stnpc', ''},
   {'b 2 3',  'ma', 'Paralyze', 'stnpc', 'Para.'},
   {'b 2 4',  'ma', 'Cursna', 'stal', 'Cursna'},
@@ -44,7 +44,7 @@ xivhotbar_keybinds_job['Base'] = {
   {'b 4 6',  'ws', 'Realmrazer', 't', 'R.R.'},
   {'b 4 7',  'ja',  'Afflatus Solace', 'me', ''},
   {'b 4 8',  'ja',  'Afflatus Misery', 'me', ''},
-  {'b 4 10', 'ma', 'Holy II', 't', 'Holy II'},
+  {'b 4 1',  'ma', 'selh\'teus', 'me' ,'Esuna'},
 
   {'b 5 1',  'ma', 'Cure V', 'stal', ''},
   {'b 5 2',  'ma', 'Protectra V', 'me', ''},

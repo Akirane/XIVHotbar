@@ -83,6 +83,8 @@ _innerG.xivhotbar_keybinds_job = {}
 general_table = {}
 general_table.xivhotbar_keybinds_general = {}
 
+local debug = false
+
 weaponskill_enum = {
 	dagger = 2,
 	sword = 3,
@@ -462,6 +464,65 @@ function player:determine_summoner_id(pet_name)
 		end
 	end
 	return 0
+end
+
+function player:debug(args)
+
+	if args[1]:contains('battle') then args[1] = 'b' 
+	elseif args[1]:contains('field') then args[1] = 'f' 
+	end
+	local environment = args[1]:lower() 
+	local hotbar      = tonumber(args[2]) or 0
+	local slot        = tonumber(args[3]) or 0
+
+	local environment = environment .. " " .. hotbar .. " " .. slot
+
+	local action_type = args[4]
+	local action      = args[5] or nil
+	local target      = args[6] or nil
+	local alias       = args[7] or nil
+	local icon        = args[8] or nil
+
+	print(environment)
+	print(action_type)
+	print(action)     
+	print(target)     
+	print(alias)      
+	print(icon)       
+
+
+	if (debug == true) then
+		print("Not false")
+		local basepath = windower.addon_path .. 'data/'..player.name..'/'
+		local job_name = player.main_job
+		job_name = job_name:lower()
+		file_location = basepath .. job_name .. '.lua'
+		print(basepath .. job_name .. '.lua')
+		local file = io.open(file_location , 'r')
+		--local file = io.open(file_location, 'r')
+		local fileContent = {}
+		for line in file:lines() do
+			table.insert (fileContent, line)
+		end
+		for key, val in pairs(fileContent) do
+			--print(val)
+			if string.find(val, environment) then
+				if (alias == nil) then
+					fileContent[key] = "  {'" .. environment .. "',  '" .. action_type .. "', '" .. action .. "', '" .. target .. "' ,'' },"
+				else
+					fileContent[key] = "  {'" .. environment .. "',  '" .. action_type .. "', '" .. action .. "', '" .. target .. "' ,'" .. alias .. "'},"
+				end
+				break
+			end
+		end
+		io.close(file)
+
+		file = io.open(file_location, 'w')
+		for index, value in ipairs(fileContent) do
+			file:write(value..'\n')
+		end
+		io.close(file)
+	end
 end
 
 -- execute action from given slot

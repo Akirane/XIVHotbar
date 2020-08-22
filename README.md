@@ -1,15 +1,20 @@
-# xivhotbar - [WIP]
+# XIVHotbar - [Version 0.3]
 This version is further work on SirEdeonX's original addon, you can check his work from here: https://github.com/SirEdeonX/FFXIAddons/tree/master/xivhotbar. 
 
 ![XIVHotbar](/images/demo/demo1.png)
 
 ## How this version differentiates
 
+- You can now move the hotbars around by typing in `//htb move`, the movement has a "snapping" feature, meaning it's easier to align the rows.
+
+![XIVHotbar](/images/demo/movement1.gif)
+
+- The number of rows is customizable. Currently I support up to 6 hotbars.  
 - Job files now use `.lua` instead of `.xml` files. The main difference is everything loads much faster now. This means there's no ingame support for inserting new actions.
 - MP and TP costs have been removed, spells/weaponskills becomes grayed out when you are unable to use them.
-- It's now possible to bind any key! You can bind E for Dia II or CTRL+D for Cure IV if you so desire.
+- It's now possible to bind any key! You can bind E for Dia II or CTRL+D for Cure IV if you so desire. The keys the application binds during loading gets unbound when you unload the application.
 - The addon now uses ingame scaling, meaning if you use 1920x1080 for the game, but 1280x720 for the menus, the addon will no longer appear outside the screen boundary.
-- The icons are clickable with your mouse now.
+- The icons are clickable with your mouse now. By clicking on "1" or "2" you can change between battle and field environments.
 - If you receive sleep/stun/amnesia/silence/etc, the actions will be disabled.
 
 ## Customization
@@ -18,7 +23,7 @@ Not every setting in **settings.xml** has been re-tested, there's a lot of thing
 
 You can change the following from the settings.xml file:
 
-1. Number of rows and columns. Modify the section **Hotbar/rows** and **Hotbar/columns** for this.
+1. Number of rows and columns. Modify the section **Hotbar/rows** and **Hotbar/columns** for this. For now I recommend leaving the columns on 12.
 
 ![Less Columns and Rows](/images/demo/demo_columns.PNG)
 
@@ -30,6 +35,13 @@ You can change the following from the settings.xml file:
 
 4. This addon recognizes the abilities **light arts** and **dark arts**, when you activate one of them and you have a table called `xivhotbar_keybinds_job['Light Arts']` you can update the hotbars with new actions. Look at `data/Akirane/WHM.lua` for example.
 
+## Known issues
+
+If the spells are spelled incorrectly, the ui.lua file will spam an error in the console. If you get this error, check if the spells in your .lua are spelled out correctly. For spells with the character `'` in them you need to add a backslash to escape the character like this: `\'`.
+
+## What's next
+
+- Reimplementating the add/move/remove action feature, but this time for lua files instead. At the moment the player.lua file has a function called `debug(args)` this function is a prototype of the reimplementation, but is very limited right now. If you want to play around with it you can do so by changing the local variable `debug` from false to true. 
 
 ## Getting started
 
@@ -85,6 +97,10 @@ Make a backup of your previous job-files located under `data/<character>`.
 
 ##### Latest Changes:
 ```
+ 22/08/2020
+ 	- Fixed a bug with the show() function for ui.
+ 20/08/2020
+ 	- It's now possible to move the hotbars by using the command `//htb move`
  10/08/2020
  	- Old .xml-files has been removed.
  	- Added further customization.
@@ -135,8 +151,7 @@ Make a backup of your previous job-files located under `data/<character>`.
 - keyboard_mapper.lua have a table called keyboard.hotbar_table, there you can bind keys.
 
 ## Limitations:
-1. This addon binds keys, these keybinds will remain even after the addon is unloaded. Therefore take care with what you bind. 
-2. Due to how all SP share the same recast timer, it's currently not possible to show an icon for SP-abilities automatically, I recommend referencing to an image like this:
+1. Due to how all SP share the same recast timer, it's currently not possible to show an icon for SP-abilities automatically, I recommend referencing to an image like this:
 
 ### Adding an image to SP-abilities
 
