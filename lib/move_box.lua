@@ -41,14 +41,14 @@ local private_boxes = {
 local function compute_size(box, sub_conf, theme_options, is_vertical)
 
 	if (is_vertical == true) then
-		local t_width  = 2 * (icon_width + theme_options.slot_spacing) - theme_options.slot_spacing
-		local t_height = (icon_height + theme_options.slot_spacing) * ( theme_options.columns / 2) - theme_options.slot_spacing
+		local t_width  = 2 * ((icon_width * theme_options.slot_icon_scale) + theme_options.slot_spacing) - theme_options.slot_spacing
+		local t_height = ((icon_height * theme_options.slot_icon_scale)+ theme_options.slot_spacing) * ( theme_options.columns / 2) - theme_options.slot_spacing
 		sub_conf.width = t_width
 		sub_conf.height = t_height
 		box:size(t_width, t_height)
 	else
-		local t_height = (icon_width + theme_options.slot_spacing) - theme_options.slot_spacing
-		local t_width  = (icon_height + theme_options.slot_spacing) * theme_options.columns  - theme_options.slot_spacing
+		local t_height = ((icon_width * theme_options.slot_icon_scale) + theme_options.slot_spacing) - theme_options.slot_spacing
+		local t_width  = ((icon_height * theme_options.slot_icon_scale) + theme_options.slot_spacing) * theme_options.columns  - theme_options.slot_spacing
 		sub_conf.width = t_width
 		sub_conf.height = t_height
 		box:size(t_width, t_height)

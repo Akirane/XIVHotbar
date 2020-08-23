@@ -38,6 +38,7 @@ defaults.Hotbar.HideRecastText = false
 defaults.Hotbar.HideBattleNotice = false
 defaults.Hotbar.HideInventoryCount = false
 defaults.Hotbar.EnableWeaponSwitching = false
+defaults.Hotbar.SlotIconScale = 1.0
 defaults.Hotbar.rows = 3
 defaults.Hotbar.columns = 3
 defaults.Hotbar.Offsets = {}

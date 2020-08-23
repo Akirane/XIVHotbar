@@ -112,7 +112,8 @@ function initialize()
     ui.hotbar.ready = true
     ui.hotbar.initialized = true
 	state.ready = true
-	print('XIVHOTBAR: Type "//htb help" for more info')
+	print('[20/08/2020] XIVHOTBAR: Type "//htb help" for more info')
+	print('[23/08/2020] XIVHOTBAR: Keybinds have been moved to data/keybinds.lua.')
 end
 
 

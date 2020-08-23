@@ -17,7 +17,13 @@ This version is further work on SirEdeonX's original addon, you can check his wo
 - The icons are clickable with your mouse now. By clicking on "1" or "2" you can change between battle and field environments.
 - If you receive sleep/stun/amnesia/silence/etc, the actions will be disabled.
 
+
+## Note about 23/08/2020 update
+
+Keybinds have been moved to `data/keybinds.lua`. Make a backup of your old `keyboard_mapper.lua` file, then copy the table keyboard.hotbar_rows and paste its contents into the table in `keybinds.lua`
+
 ## Customization
+
 
 Not every setting in **settings.xml** has been re-tested, there's a lot of things that is different now. The following has been tested out:
 
@@ -36,13 +42,20 @@ You can change the following from the settings.xml file:
 
 ![No extra labels](/images/demo/no_extra_labels.PNG)
 
-3. It's now possible to tell this addon to change out weapon skill actions on the fly. Currently only works for club/dagger/sword. Look at the file `data/Akirane/RDM.lua`, at line 113 you have `xivhotbar_keybinds_job['Sword']` and at line 125 you have `xivhotbar_keybinds_job['Dagger']`. The addon can now switch between these two action tables after it has registered you have changed weapon type. Until I have finished this implementation, it will remain disabled for now. You can turn it on by changing the value **Hotbar/EnableWeaponSwitching** from false to true.
+5. The slot icons are now scalable. Check the *Hotbar/SlotIconScale* option.
+6. It's now possible to change the textsize. Check the *Texts/Size* option.
 
-4. This addon recognizes the abilities **light arts** and **dark arts**, when you activate one of them and you have a table called `xivhotbar_keybinds_job['Light Arts']` you can update the hotbars with new actions. Look at `data/Akirane/WHM.lua` for example.
+![UI Scaling](/images/demo/ui_scaling.png)
+
+7. It's now possible to tell this addon to change out weapon skill actions on the fly. Currently only works for club/dagger/sword. Look at the file `data/Akirane/RDM.lua`, at line 113 you have `xivhotbar_keybinds_job['Sword']` and at line 125 you have `xivhotbar_keybinds_job['Dagger']`. The addon can now switch between these two action tables after it has registered you have changed weapon type. Until I have finished this implementation, it will remain disabled for now. You can turn it on by changing the value **Hotbar/EnableWeaponSwitching** from false to true.
+
+8. This addon recognizes the abilities **light arts** and **dark arts**, when you activate one of them and you have a table called `xivhotbar_keybinds_job['Light Arts']` you can update the hotbars with new actions. Look at `data/Akirane/WHM.lua` for example.
 
 ## Known issues
 
 If the spells are spelled incorrectly, the ui.lua file will spam an error in the console. If you get this error, check if the spells in your .lua are spelled out correctly. For spells with the character `'` in them you need to add a backslash to escape the character like this: `\'`.
+
+Slots with no actions show feedback if you click on them.
 
 ## What's next
 

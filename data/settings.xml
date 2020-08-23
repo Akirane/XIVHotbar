@@ -33,10 +33,10 @@
             <HideActionElement>true</HideActionElement>
             <HideActionName>false</HideActionName>
             <HideBattleNotice>false</HideBattleNotice>
-            <HideEmptySlots>false</HideEmptySlots>
+            <HideEmptySlots>true</HideEmptySlots>
             <HideInventoryCount>false</HideInventoryCount>
             <HideRecastAnimation>false</HideRecastAnimation>
-            <HideRecastText>false</HideRecastText>
+            <HideRecastText>true</HideRecastText>
             <Offsets>
                 <Fifth>
                     <OffsetX>530</OffsetX>
@@ -69,13 +69,14 @@
                     <Vertical>false</Vertical>
                 </Third>
             </Offsets>
-            <columns>12</columns>
-            <rows>5</rows>
+            <SlotIconScale>1</SlotIconScale>
+            <columns>10</columns>
+            <rows>6</rows>
         </Hotbar>
         <Style>
             <HotbarSpacing>56</HotbarSpacing>
-            <OffsetX>-90</OffsetX>
-            <OffsetY>-55</OffsetY>
+            <OffsetX>0</OffsetX>
+            <OffsetY>0</OffsetY>
             <SlotAlpha>100</SlotAlpha>
             <SlotSpacing>10</SlotSpacing>
         </Style>
@@ -87,9 +88,9 @@
                 <Red>255</Red>
             </Color>
             <Font>sans-serif</Font>
-            <OffsetX>150</OffsetX>
-            <OffsetY>200</OffsetY>
-            <Size>14</Size>
+            <OffsetX>-100</OffsetX>
+            <OffsetY>0</OffsetY>
+            <Size>9</Size>
             <Stroke>
                 <Alpha>180</Alpha>
                 <Blue>0</Blue>
@@ -108,9 +109,29 @@
         <Hotbar>
             <Offsets>
                 <Fifth>
-                    <OffsetX>1450</OffsetX>
-                    <OffsetY>380</OffsetY>
+                    <OffsetX>1870</OffsetX>
+                    <OffsetY>370</OffsetY>
                 </Fifth>
+                <First>
+                    <OffsetX>990</OffsetX>
+                    <OffsetY>1130</OffsetY>
+                </First>
+                <Fourth>
+                    <OffsetX>990</OffsetX>
+                    <OffsetY>950</OffsetY>
+                </Fourth>
+                <Second>
+                    <OffsetX>990</OffsetX>
+                    <OffsetY>1070</OffsetY>
+                </Second>
+                <Sixth>
+                    <OffsetX>2000</OffsetX>
+                    <OffsetY>370</OffsetY>
+                </Sixth>
+                <Third>
+                    <OffsetX>990</OffsetX>
+                    <OffsetY>1010</OffsetY>
+                </Third>
             </Offsets>
         </Hotbar>
     </akirane>

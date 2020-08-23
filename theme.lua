@@ -48,6 +48,7 @@ theme.apply = function (settings)
     options.hotbar_number           = sh.rows
     options.rows                    = sh.rows
     options.columns                 = sh.columns
+
     options.hide_empty_slots        = sh.HideEmptySlots
     options.hide_action_names       = sh.HideActionName
     options.hide_action_cost        = sh.HideActionCost
@@ -57,6 +58,7 @@ theme.apply = function (settings)
     options.hide_battle_notice      = sh.HideBattleNotice
     options.hide_inventory_count    = sh.HideInventoryCount
 	options.environment             = sh.Environment
+	options.slot_icon_scale         = sh.SlotIconScale
 	options.environment.hook_onto_bar = sh.Environment.HookOntoBar
 	options.offsets = {
 		['1'] = {Vertical = sh.Offsets.First.Vertical, OffsetX = sh.Offsets.First.OffsetX,  OffsetY = sh.Offsets.First.OffsetY},
@@ -98,6 +100,7 @@ theme.apply = function (settings)
     local st = settings.Texts
     options.font                    = st.Font
     options.font_size               = st.Size
+	options.slot_text_size          = st.Size
     options.font_alpha              = st.Color.Alpha
     options.font_color_red          = st.Color.Red
     options.font_color_green        = st.Color.Green
