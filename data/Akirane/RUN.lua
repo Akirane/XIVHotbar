@@ -30,7 +30,7 @@ xivhotbar_keybinds_job['Base'] = {
   {'b 3 5',  'ja', 'Battuta', 'me', 'Bat.', 'battuta-icon'},
   {'b 3 6',  'ma', 'Foil', 'me', 'Foil', 'foil-icon'},
   {'b 3 7',  'gs', 'equip exp;wait 1;gs disable back', '', 'exp'},
-  {'b 5 1',  'gs', 'enable back', '', 'back'},
+  {'b 1 11',  'gs', 'enable back', '', 'back'},
   {'b 3 8',  'ws', 'Resolution', 't', 'Res.'},
   {'b 4 5',  'ma', 'stun', 'stnpc', 'Stun.'},
   {'b 3 9',  'ma', 'Blink', 'me', ''},
@@ -43,10 +43,9 @@ xivhotbar_keybinds_job['Base'] = {
   {'b 4 8',  'gs', 'equip engaged', '', 'DPS'},
   {'b 4 9',  'ja', 'vivacious pulse', 'me', 'Pulse', 'pulse-icon'},
   {'b 4 10', 'ja', 'One for All', 'me', 'OFA', 'shellra'},
-  {'b 5 5',  'ws', 'fell cleave', 'stnpc', 'FC'},
-  {'b 5 8',  'gs', 'equip idle', '', 'MDef'},
-  {'b 5 9',  'gs', 'equip magic_def', '', 'MDef'},
-  {'b 5 10', 'item',  "Dusty Wing", 'me', 'Wing'},
+  {'b 4 12',  'ws', 'fell cleave', 'stnpc', 'FC'},
+  {'b 1 12',  'gs', 'equip idle', '', 'Idle'},
+  {'b 4 11',  'gs', 'equip magic_def', '', 'MDef'},
   {'f 1 5',  'ma', 'Protect V', 'stal', 'Pro.V'},
   {'f 1 6',  'ma', 'Shell V', 'stal', 'She.V'},
 }
@@ -73,9 +72,9 @@ xivhotbar_keybinds_job['SAM'] = {
 xivhotbar_keybinds_job['BLU'] = {
   {'b 1 2',  'ma', 'Blank Gaze', 't', 'Blank'},
   {'b 2 1',  'ma', 'Cocoon', 'me', 'Coc.'},
-  {'b 5 2',  'ma', 'jettatura', 'stnpc', 'Jet.'},
-  {'b 5 3',  'ma', 'sheep song', 'stnpc', 'Sheep'},
-  {'b 5 4',  'ma', 'geist wall', 'stnpc', 'Geist'},
+  {'b 3 11',  'ma', 'jettatura', 'stnpc', 'Jet.'},
+  {'b 3 12',  'ma', 'sheep song', 'stnpc', 'Sheep'},
+  {'b 2 11',  'ma', 'geist wall', 'stnpc', 'Geist'},
 }
 
 return xivhotbar_keybinds_job

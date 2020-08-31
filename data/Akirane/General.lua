@@ -9,7 +9,6 @@ xivhotbar_keybinds_general['Root'] = {
 
     -- #2 Hotbar
     {'f 2 1', 'ma', 'Joachim', 'me', 'Joa.'},
-	{'f 2 2', 'ma', 'Mihli Aliapoh', 'me', 'MA'},
 	{'f 2 3', 'ma', 'Ulmia', 'me', 'Ulmia'},
 	{'f 2 4', 'ma', 'Kupofried', 'me', 'Kupof.'},
 	{'f 2 5', 'ma', 'Zeid II', 'me', 'Zeid2'},
@@ -29,8 +28,7 @@ xivhotbar_keybinds_general['Root'] = {
 	{'b 6 9', 'ma', 'August', 'me', 'Aug'},
 	{'b 6 10', 'ma', 'Selh\'teus', 'me', 'Sel'},
 
-	{'f 3 7', 'item', "poison potion",'me', 'Poison.', 'poison'},
-    {'f 3 8', 'gs', 'c toggle weapon','','TGWep'},
+    {'f 3 10', 'gs', 'c toggle weapon','','TGWep'},
     {'f 3 9', 'gs', 'c toggle acc','','TGAcc'},
     --{'f 5 0', 'ct', '/refa all',nil,'Ref'},
 }

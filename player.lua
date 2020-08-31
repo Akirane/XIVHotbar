@@ -197,6 +197,91 @@ function player:load_hotbar()
     self:load_from_lua() 
 end
 
+function player:swap_icons(swap_table)
+	local s_row = swap_table.source.row
+	local s_slot = swap_table.source.slot
+	local d_row = swap_table.dest.row
+	local d_slot = swap_table.dest.slot
+
+	if (debug == true) then
+		print(string.format("DEBUG [Source]: Row: %d, Slot: %d, [Dest]: Row: %d, Col: %d", s_row, s_slot, d_row, d_slot))
+	end
+
+    if self.hotbar_settings.active_environment == 'battle' then
+		if (debug == true) then
+			print("DEBUG Dropping at battle")
+		end
+
+		if (self.hotbar['battle']['hotbar_' .. s_row]['slot_' .. s_slot] ~= nil) then
+			if(self.hotbar['battle']['hotbar_' .. d_row]['slot_' .. d_slot] == nil) then
+				self.hotbar['battle']['hotbar_' .. d_row]['slot_' .. d_slot] = table.copy(self.hotbar['battle']['hotbar_' .. s_row]['slot_' .. s_slot] , true)
+				self.hotbar['battle']['hotbar_' .. s_row]['slot_' .. s_slot] = nil
+
+				-- Write the changes after swapping the actions
+				local dest_action = self.hotbar['battle']['hotbar_' .. d_row]['slot_' .. d_slot] 
+				player:write_changes(dest_action, d_row, d_slot, s_row, s_slot, 'b')
+			else
+				temp_slot = table.copy(self.hotbar['battle']['hotbar_' .. s_row]['slot_' .. s_slot], true)
+				self.hotbar['battle']['hotbar_' .. s_row]['slot_' .. s_slot] = table.copy(self.hotbar['battle']['hotbar_' .. d_row]['slot_' .. d_slot], true)
+				self.hotbar['battle']['hotbar_' .. d_row]['slot_' .. d_slot] = temp_slot
+
+				-- Write the changes after swapping the actions
+				local dest_action = self.hotbar['battle']['hotbar_' .. d_row]['slot_' .. d_slot] 
+				local source_action = self.hotbar['battle']['hotbar_' .. s_row]['slot_' .. s_slot] 
+				player:write_changes(source_action, s_row, s_slot, d_row, d_slot, 'b')
+				player:write_changes(dest_action, d_row, d_slot, s_row, s_slot, 'b')
+			end
+		else
+			print("XIVHOTBAR: Cannot swap icons if the dragged icon is empty!")
+		end
+    else -- field
+		if (debug == true) then
+			print("DEBUG Dropping at field")
+		end
+
+		if (self.hotbar['field']['hotbar_' .. s_row]['slot_' .. s_slot] ~= nil) then
+			if(self.hotbar['field']['hotbar_' .. d_row]['slot_' .. d_slot] == nil) then
+				self.hotbar['field']['hotbar_' .. d_row]['slot_' .. d_slot] = table.copy(self.hotbar['field']['hotbar_' .. s_row]['slot_' .. s_slot] , true)
+				self.hotbar['field']['hotbar_' .. s_row]['slot_' .. s_slot] = nil
+
+				-- Write the changes after swapping the actions
+				local dest_action = self.hotbar['field']['hotbar_' .. d_row]['slot_' .. d_slot] 
+				player:write_changes(dest_action, d_row, d_slot, s_row, s_slot, 'f')
+			else
+				temp_slot = table.copy(self.hotbar['field']['hotbar_' .. s_row]['slot_' .. s_slot], true)
+				self.hotbar['field']['hotbar_' .. s_row]['slot_' .. s_slot] = table.copy(self.hotbar['field']['hotbar_' .. d_row]['slot_' .. d_slot], true)
+				self.hotbar['field']['hotbar_' .. d_row]['slot_' .. d_slot] = temp_slot
+
+				-- Write the changes after swapping the actions
+				local dest_action = self.hotbar['field']['hotbar_' .. d_row]['slot_' .. d_slot] 
+				local source_action = self.hotbar['field']['hotbar_' .. s_row]['slot_' .. s_slot] 
+				player:write_changes(source_action, s_row, s_slot, d_row, d_slot, 'f')
+				player:write_changes(dest_action, d_row, d_slot, s_row, s_slot, 'f')
+			end
+		else
+			print("XIVHOTBAR: Cannot swap icons if the dragged icon is empty!")
+		end
+    end
+end
+
+function player:remove_icon(remove_table)
+
+	local row = remove_table.source.row
+	local slot = remove_table.source.slot
+
+    if self.hotbar_settings.active_environment == 'battle' then
+		if (self.hotbar['battle']['hotbar_' .. row]['slot_' .. slot] ~= nil) then
+			player:write_remove(self.hotbar['battle']['hotbar_' .. row]['slot_' .. slot], row, slot, 'b')
+			self.hotbar['battle']['hotbar_' .. row]['slot_' .. slot] = nil
+		end
+	else
+		if (self.hotbar['battle']['hotbar_' .. row]['slot_' .. slot] ~= nil) then
+			player:write_remove(self.hotbar['field']['hotbar_' .. row]['slot_' .. slot], row, slot, 'f')
+			self.hotbar['field']['hotbar_' .. row]['slot_' .. slot] = nil
+		end
+	end
+end
+
 subjob_actions = {}
 subjob_actions.xivhotbar_keybinds_job = {}
 actions = {}
@@ -334,7 +419,7 @@ function player:load_from_lua()
     local file = loadfile(basepath .. player.main_job .. '.lua')
     local general_file = loadfile(basepath .. 'General.lua')
     if file == nil then 
-        print("Error, couldn't find %s file!":format(player.main_job))
+        print(string.format("XIVHOTBAR: Couldn't find the job file %s.lua!", player.main_job))
     else
         setfenv(file, _innerG)
         local root = file()
@@ -466,63 +551,150 @@ function player:determine_summoner_id(pet_name)
 	return 0
 end
 
-function player:debug(args)
-
-	if args[1]:contains('battle') then args[1] = 'b' 
-	elseif args[1]:contains('field') then args[1] = 'f' 
-	end
-	local environment = args[1]:lower() 
-	local hotbar      = tonumber(args[2]) or 0
-	local slot        = tonumber(args[3]) or 0
-
-	local environment = environment .. " " .. hotbar .. " " .. slot
-
-	local action_type = args[4]
-	local action      = args[5] or nil
-	local target      = args[6] or nil
-	local alias       = args[7] or nil
-	local icon        = args[8] or nil
-
-	print(environment)
-	print(action_type)
-	print(action)     
-	print(target)     
-	print(alias)      
-	print(icon)       
-
-
+function player:write_remove(action, row, slot, environment)
 	if (debug == true) then
-		print("Not false")
-		local basepath = windower.addon_path .. 'data/'..player.name..'/'
-		local job_name = player.main_job
-		job_name = job_name:lower()
-		file_location = basepath .. job_name .. '.lua'
-		print(basepath .. job_name .. '.lua')
-		local file = io.open(file_location , 'r')
-		--local file = io.open(file_location, 'r')
-		local fileContent = {}
+		print("player:write_remove was called")
+	end
+
+	local basepath = windower.addon_path .. 'data/'..player.name..'/'
+	local job_name = player.main_job
+	local job_file_location = basepath .. job_name .. '.lua'
+	local found_row = player:find_in_file_remove(job_file_location, action, row, slot, environment)
+
+	if (found_row == false) then
+		general_file_location = windower.addon_path .. 'data/'..player.name..'/General.lua'
+		player:find_in_file_remove(general_file_location, action, row, slot, environment)
+	end
+end
+
+function player:find_in_file_remove(file_location, action, row, slot, environment)
+
+	local testAc = action.action:lower()
+	local row_to_find = string.format('%s %d %d', environment, row, slot)
+	local found_row = false
+	local fileContent = {}
+	local file = io.open(file_location , 'r')
+
+	if (file ~= nil) then
 		for line in file:lines() do
 			table.insert (fileContent, line)
 		end
 		for key, val in pairs(fileContent) do
-			--print(val)
-			if string.find(val, environment) then
-				if (alias == nil) then
-					fileContent[key] = "  {'" .. environment .. "',  '" .. action_type .. "', '" .. action .. "', '" .. target .. "' ,'' },"
-				else
-					fileContent[key] = "  {'" .. environment .. "',  '" .. action_type .. "', '" .. action .. "', '" .. target .. "' ,'" .. alias .. "'},"
+			if (val:contains(row_to_find)) then
+				if (val:lower():contains(testAc)) then
+					found_row = true
+					if (debug == true) then
+						print("[player:find_in_file_remove] val:lower():contains(testAc) succeeded")
+						print(val)
+					end
+					fileContent[key] = '0'
+					break
+				elseif (val:contains("'gs'")) then
+					local stripped_row = val:lower()
+					i, j = string.find(stripped_row, '%[.*%]')
+					k, l = string.find(testAc, '%[.*%]')
+					local sub_row = string.sub(stripped_row, i+3, j-3)
+					local sub_ac = string.sub(testAc, k+2, l-2)
+					if sub_row == sub_ac then
+						if (debug == true) then
+							print("[player:find_in_file_remove] sub_row == sub_ac succeeded")
+							print(val)
+						end
+						found_row = true
+						fileContent[key] = '0'
+						break
+					end
 				end
-				break
 			end
 		end
-		io.close(file)
-
-		file = io.open(file_location, 'w')
-		for index, value in ipairs(fileContent) do
-			file:write(value..'\n')
+		if(found_row == true) then
+			file = io.open(file_location, 'w')
+			for index, value in ipairs(fileContent) do
+				if (value ~= '0') then
+					file:write(value..'\n')
+				end
+			end
+			io.close(file)
 		end
-		io.close(file)
 	end
+	return found_row
+end
+
+function player:write_changes(action, d_row, d_slot, s_row, s_slot, environment)
+
+
+	if (debug == true) then
+		print("player:write_changes was called")
+	end
+
+	local basepath = windower.addon_path .. 'data/'..player.name..'/'
+	local job_name = player.main_job
+	local job_file_location = basepath .. job_name .. '.lua'
+	local found_row = player:find_in_file(job_file_location, action, d_row, d_slot, s_row, s_slot, environment)
+
+	if (found_row == false) then
+		general_file_location = windower.addon_path .. 'data/'..player.name..'/General.lua'
+		player:find_in_file(general_file_location, action, d_row, d_slot, s_row, s_slot, environment)
+	end
+end
+
+function player:find_in_file(file_location, action, d_row, d_slot, s_row, s_slot, environment)
+
+	local testAc = action.action:lower()
+	local row_to_find = string.format('%s %d %d', environment, s_row, s_slot)
+	local new_row = string.format('%s %d %d', environment, d_row, d_slot)
+	local found_row = false
+	local fileContent = {}
+	local file = io.open(file_location , 'r')
+
+	if (file ~= nil) then
+		for line in file:lines() do
+			table.insert (fileContent, line)
+		end
+		for key, val in pairs(fileContent) do
+			if (val:contains(row_to_find)) then
+				if (debug == true) then
+					print("Found the row")
+				end
+				if (val:lower():contains(testAc)) then
+					found_row = true
+					val = string.gsub(val, "%w %d %d+", new_row)
+					if (debug == true) then
+						print("val:lower():contains(testAc) succeeded")
+						print(val)
+					end
+					fileContent[key] = val
+					break
+				elseif string.find(val, "'%f[%a]gs%f[%A]'") and string.find(val, 'equip') then
+					local stripped_row = val:lower()
+					print("This is a gearswap row.")
+					print(val)
+					i, j = string.find(stripped_row, '%[.*%]')
+					k, l = string.find(testAc, '%[.*%]')
+					local sub_row = string.sub(stripped_row, i+3, j-3)
+					local sub_ac = string.sub(testAc, k+2, l-2)
+					if sub_row == sub_ac then
+						found_row = true
+						val = string.gsub(val, "%w %d %d+", new_row)
+						if (debug == true) then
+							print("sub_row == sub_ac succeeded")
+							print(val)
+						end
+						fileContent[key] = val
+						break
+					end
+				end
+			end
+		end
+		if(found_row == true) then
+			file = io.open(file_location, 'w')
+			for index, value in ipairs(fileContent) do
+				file:write(value..'\n')
+			end
+			io.close(file)
+		end
+	end
+	return found_row
 end
 
 -- execute action from given slot

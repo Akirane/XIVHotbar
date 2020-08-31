@@ -431,10 +431,6 @@ windower.register_event('addon command', function(command, ...)
         if tonumber(args[2]) <= theme_options.columns then 
 			trigger_action(tonumber(args[2]))
         end
-	elseif command == 'debug' then
-
-		player:debug(args)
-		reload_hotbar()
     elseif command == 'reload' then
         flush_old_keybinds()
         bind_keys()
@@ -442,6 +438,10 @@ windower.register_event('addon command', function(command, ...)
 	elseif command == 'move' then
 		state.demo = not state.demo
 		if state.demo then
+			log("Layout mode enabled!") 
+			log("Click, then drag an action onto another slot to change its location.")
+			log("Click between the rows, then drag to move the hotbars.")
+			log("To save the changes, type '//htb move' then hit enter.")
             print('XIVHOTBAR: Layout mode enabled')
 			box:enable()
 		else
@@ -476,44 +476,53 @@ windower.register_event('keyboard', function(dik, flags, blocked)
 end)
 
 
+local current_hotbar = -1
+local current_action = -1
 
 local function mouse_hotbars(type, x, y, delta, blocked)
-	if ui.hotbar.hide_hotbars then
-		return false
+
+	return_value = false
+
+	if not ui.hotbar.hide_hotbars then
+		if type == 1 then -- Mouse left click
+			local hotbar, action = ui:hovered(x, y)
+			if(action ~= nil) then
+				current_hotbar = hotbar
+				current_action = action
+				return_value = true
+			else
+				return_value = false
+			end
+		elseif type == 2 then -- Mouse left release
+			if(current_action ~= -1) then
+				local hotbar, action = ui:hovered(x, y)
+				if(action ~= nil) then
+					if (action == 100) then
+						toggle_environment()
+					elseif(hotbar == current_hotbar and action == current_action) then
+						player.hotbar_settings.active_hotbar = hotbar
+						trigger_action(action)
+					end
+				end
+				current_hotbar = -1
+				current_action = -1
+				return_value = true
+			else
+				return_value = false
+			end
+		elseif type == 0 then -- Mouse move
+			local hotbar, action = ui:hovered(x, y)
+			if(action ~= nil and hotbar ~= nil) then
+				ui:light_up_action(hotbar, action)
+				return_value = true
+			else
+				ui:hide_hover()
+				return_value = false
+			end
+		end
 	end
 
-	if type == 1 then -- Mouse left click
-		local hotbar, action = ui:hovered(x, y)
-		if(action ~= 0) then
-			current_hotbar = hotbar
-			current_action = action
-			return true
-		end
-	elseif type == 2 then -- Mouse left release
-		if(current_action ~= -1) then
-			local hotbar, action = ui:hovered(x, y)
-			if(action ~= 0) then
-				if (action == 100) then
-					toggle_environment()
-				elseif(hotbar == current_hotbar and action == current_action) then
-					player.hotbar_settings.active_hotbar = hotbar
-					trigger_action(action)
-				end
-			end
-			current_hotbar = -1
-			current_action = -1
-			return true
-		end
-	elseif type == 0 then -- Mouse move
-		local hotbar, action = ui:hovered(x, y)
-		if(action ~= 0) then
-			ui:light_up_action(hotbar, action)
-		else
-			ui:light_up_action(nil, nil)
-		end
-		--if(current_action ~= -1) then
-		return false
-	end
+	return return_value
 end
 
 -- ON MOUSE
@@ -523,7 +532,7 @@ end
 -- TODO: Fix "hover" effect 
 windower.register_event('mouse', function(type, x, y, delta, blocked)
 
-	return_value = false
+	return_value = nil
 	if state.ready == true and blocked == false then
 		if state.demo == true then
 			return_value = box:move_hotbars(type, x, y, delta, blocked)
@@ -548,9 +557,19 @@ windower.register_event('prerender',function()
 
     if ui.is_setup and ui.hotbar.hide_hotbars == false then
 		moved_row_info = box:get_move_box_info()
-		if (moved_row_info.is_active == true) then
+		if (moved_row_info.swapped_slots.active == true) then
+			player:swap_icons(moved_row_info.swapped_slots)
+			ui:swap_icons(moved_row_info.swapped_slots)
+			moved_row_info.swapped_slots.active = false
+			ui:load_player_hotbar(player.hotbar, player.vitals, player.hotbar_settings.active_environment)
+		elseif (moved_row_info.row_active == true) then
 			ui:move_icons(moved_row_info)
+		elseif (moved_row_info.removed_slot.active == true) then
+			player:remove_icon(moved_row_info.removed_slot)
+			moved_row_info.removed_slot.active = false
+			ui:load_player_hotbar(player.hotbar, player.vitals, player.hotbar_settings.active_environment)
 		end
+
         ui:check_recasts(player.hotbar, player.vitals, player.hotbar_settings.active_environment, distance)
 		ui:check_hover()
     end

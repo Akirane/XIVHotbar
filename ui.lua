@@ -26,6 +26,7 @@
         SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ]]
 
+local hover_icon = {}
 local database = require('database')  -- TODO: IMPORT FROM RES
 
 local ui = {}
@@ -215,6 +216,10 @@ function ui:setup(theme_options)
     self.hotbar.rows    = self.theme.rows
 	self.image_width = math.floor(self.image_width * self.theme.slot_icon_scale)
 	self.image_height = math.floor(self.image_height * self.theme.slot_icon_scale)
+	hover_icon = images.new(table.copy(images_setup, true))
+    setup_image(hover_icon, windower.addon_path..'/images/other/square.png')
+	hover_icon:hide()
+	hover_icon:size(self.image_width+2, self.image_height+2)
     self:setup_metrics(self.theme)
     self:setup_disabled_icons()
     self:load(self.theme)
@@ -458,6 +463,22 @@ function ui:setup_metrics(theme_options)
 
     self.hotbar_spacing = theme_options.hotbar_spacing 
     ui:setup_environment_numbers()
+end
+
+function ui:swap_icons(swap_table)
+	local source_row  = swap_table.source.row
+	local source_slot = swap_table.source.slot
+	local dest_row    = swap_table.dest.row
+	local dest_slot   = swap_table.dest.slot
+	local tempPathSource = self.hotbars[source_row].slot_icon[source_slot]:path()
+	local tempTextSource = self.hotbars[source_row].slot_text[source_slot]:text()
+	local tempPathDest   = self.hotbars[dest_row].slot_icon[dest_slot]:path()
+	local tempTextDest   = self.hotbars[dest_row].slot_text[dest_slot]:text()
+
+	self.hotbars[dest_row].slot_text[dest_slot]:text(tempTextSource)
+	self.hotbars[dest_row].slot_icon[dest_slot]:path(tempPathSource)
+	self.hotbars[source_row].slot_text[source_slot]:text(tempTextDest)
+	self.hotbars[source_row].slot_icon[source_slot]:path(tempPathDest)
 end
 
 -- hide all ui components
@@ -944,8 +965,8 @@ end
 -- https://github.com/maverickdfz/FFXIAddons/blob/master/xivhotbar/ui.lua
 function ui:hovered(x, y)
 
-    local hotbar = 0
-    local slot   = 0
+    local hotbar = nil
+    local slot   = nil
     local found  = false
 
 	local pos_x
@@ -968,8 +989,8 @@ function ui:hovered(x, y)
 			for i=1,self.theme.columns,1 do
 				pos_x = self:get_slot_x(h, i)
 				pos_y = self:get_slot_y(h, i)
-				off_x = pos_x + 40
-				off_y = pos_y + 40
+				off_x = pos_x + self.image_width
+				off_y = pos_y + self.image_height
 
 				if  ((pos_x <= x and x <= off_x) or (pos_x >= x and x >= off_x))
 				and ((pos_y <= y and y <= off_y) or (pos_y >= y and y >= off_y)) 
@@ -989,8 +1010,15 @@ function ui:hovered(x, y)
 end
 
 function ui:light_up_action(row, column)
-    ui.hover_icon.row = row
-    ui.hover_icon.column = column
+	local x = ui:get_slot_x(row, column)
+	local y = ui:get_slot_y(row, column)
+	hover_icon:pos(x-1, y-1)
+	hover_icon:alpha(255)
+	hover_icon:show()
+end
+
+function ui:hide_hover()
+	hover_icon:hide()
 end
 
 function ui:move_icons(moved_row_info)
