@@ -1,4 +1,3 @@
-	  
 xivhotbar_keybinds_job['Base'] = {
 
 	-- Battle
@@ -16,7 +15,6 @@ xivhotbar_keybinds_job['Base'] = {
 	{'b 2 1', 'ja', 'Composure', 'me', 'Comp.'},
 	{'b 2 2', 'ma', 'Dia III', 'stnpc', ''},
 	{'b 2 3', 'ma', 'Paralyze II', 'stnpc', ''},
-	{'b 2 4', 'ma', 'Enthunder II', 'me', ''},
 	{'b 2 7', 'ma', 'Silence', 'stnpc', 'Siln.'},
 	{'b 2 10', 'gs', 'equip engaged[\'Magic Evasion\']', '', 'M.Eva'},
 
@@ -37,13 +35,13 @@ xivhotbar_keybinds_job['Base'] = {
 	{'b 4 10', 'ma', 'Inundation', 'stnpc', 'Inun.'},
 	{'b 4 11', 'ja',  'Chainspell', 'me', 'CS', 'chainspell'},
 	{'b 4 12', 'ja',  'Stymie', 'me', 'Stym.', 'Stymie'},
+	{'b 5 1', 'ma', 'enstone ii', 'me', ''},
+	{'b 5 2', 'ma', 'enthunder ii', 'me', ''},
+	{'b 5 3', 'ma', 'enwater ii', 'me', ''},
+	{'b 5 4',  'ma', 'enfire ii', 'me' ,'' },
+	{'b 5 5', 'ma', 'enblizzard ii', 'me', ''},
+	{'b 5 6', 'ma', 'enaero ii', 'me', ''},
 
-	{'b 5 1',  'ma', 'enstone', 'me', ''},
-	{'b 5 2',  'ma', 'enthunder', 'me', ''},
-	{'b 5 3',  'ma', 'enwater', 'me', ''},
-	{'b 5 4',  'ma', 'enfire', 'me', ''},
-	{'b 5 5',  'ma', 'enblizzard', 'me', ''},
-	{'b 5 6',  'ma', 'enaero', 'me', ''},
 	{'b 5 7', 'ja', 'composure', 'me', ''},
 	{'b 5 8',  'ma', 'haste ii', 'me', ''},
 	{'b 5 12',  'ma', 'temper ii', 'me', ''},
@@ -54,11 +52,8 @@ xivhotbar_keybinds_job['Base'] = {
 	-- Field 
 	{'f 1 3', 'ma', 'bind', 'stnpc',''},
 	{'f 1 2',  'ma', 'gravity ii', 'stnpc' ,''},
-	{'f 1 11', 'ma', 'barparalyze', 'me', 'BrPar'},
 
-	{'f 2 10', 'ma', 'enthunder', 'me', 'Enth.'},
 	{'f 2 11',  'ma', 'Impact', 'stnpc', 'Imp.'},
-	{'f 2 12', 'ma', 'barthunder', 'me', 'BrTh'},
 
 	{'f 3 1',  'ma', 'Aero V', 'stnpc', ''},
 	{'f 3 2',  'ma', 'Blizzard V', 'stnpc', ''},
@@ -70,15 +65,35 @@ xivhotbar_keybinds_job['Base'] = {
 	{'f 3 11',  'ma', 'Protect V', 'stal', ''},
 	{'f 3 12',  'ma', 'Shell V', 'stal', ''},
 
-	{'f 4 8',  'ma', 'Poison II', 't', ''},
 	{'f 1 4',  'ma', 'Sleep II', 'stnpc', ''},
 	{'f 1 5',  'ma', 'Sleep', 'stnpc', ''},
-	{'f 4 10',  'ma', 'Enstone II', 'me', ''},
 	{'b 2 11', 'ma', 'Gain-VIT', 'me', 'VIT'},
 	{'b 2 12', 'ma', 'Gain-INT', 'me', 'INT'},
 	{'b 3 11', 'ma', 'Gain-MND', 'me', 'MND'},
 	{'b 3 12', 'ma', 'Gain-STR', 'me', 'STR'},
 	{'b 4 4', 'ma', 'Aquaveil', 'me', ''},
+	{'f 5 1',  'ma', 'enstone', 'me', ''},
+	{'f 5 2',  'ma', 'enthunder', 'me', ''},
+	{'f 5 3',  'ma', 'enwater', 'me', ''},
+	{'f 5 4',  'ma', 'enfire', 'me', ''},
+	{'f 5 5',  'ma', 'enblizzard', 'me', ''},
+	{'f 5 6',  'ma', 'enaero', 'me', ''},
+	{'f 5 7', 'ma', 'barfire', 'me', 'Fire'},
+	{'f 5 8', 'ma', 'barthunder', 'me', 'Thunder'},
+	{'f 5 9', 'ma', 'barstone', 'me', 'Stone'},
+	{'f 5 10', 'ma', 'barblizzard', 'me', 'Blizzard'},
+	{'f 5 11', 'ma', 'baraero', 'me', 'Aero'},
+	{'f 5 12', 'ma', 'barwater', 'me', 'Water'},
+	{'b 4 3', 'ma', 'impact', 'stnpc', ' '},
+	{'f 4 10', 'ma', 'barsleep', 'me', 'Sleep'},
+	{'f 4 11', 'ma', 'barparalyze', 'me', 'Paralyze'},
+	{'f 4 12', 'ma', 'barsilence', 'me', 'Silence'},
+	{'f 4 7', 'ma', 'barpetrify', 'me', 'Petrify'},
+	{'f 4 8', 'ma', 'barvirus', 'me', 'Virus'},
+	{'f 4 9', 'ma', 'barpoison', 'me', 'Poison'},
+	{'f 2 12', 'ma', 'ice spikes', 'me', ' '},
+	{'f 1 11', 'ma', 'shock spikes', 'me', ' '},
+	{'f 1 12', 'ma', 'blaze spikes', 'me', ' '},
 }
 
 xivhotbar_keybinds_job['Light Arts'] = {
@@ -88,7 +103,6 @@ xivhotbar_keybinds_job['Light Arts'] = {
 
 	{'b 4 1', 'ja', 'Penury', 'me', 'MP 1/2'},
 	{'b 4 2',  'ma', 'Break', 'stnpc' ,'' },
-	{'b 4 3',  'ma', 'fire v', 'stnpc' ,'' },
 	{'b 4 4', 'ja', 'Addendum: White', 'me', 'A.Wh.'},
 
 	-- Field
@@ -104,7 +118,6 @@ xivhotbar_keybinds_job['Dark Arts'] = {
 
 	{'b 4 1', 'ja', 'Parsimony', 'me', 'MP 1/2'},
 	{'b 4 2',  'ma', 'Break', 'stnpc' ,'' },
-	{'b 4 3',  'ma', 'fire v', 'stnpc' ,'' },
 	{'b 4 4', 'ma', 'Impact', 'stnpc', 'Imp.'},
 }
 
@@ -147,21 +160,26 @@ xivhotbar_keybinds_job['WAR'] = {
 
 	{'b 4 1', 'ma', 'Gain-VIT', 'me', 'VIT'},
 	{'b 4 2',  'ma', 'Break', 'stnpc' ,'' },
-	{'b 4 3',  'ma', 'fire v', 'stnpc' ,'' },
-	{'b 4 4', 'ma', 'Barthunder', 'me', 'Barth.'}
+	{'b 4 4', 'ma', 'Barthunder', 'me', 'Barth.'},
+	{'b 4 3', 'ma', 'impact', 't', ' '},
 }
 xivhotbar_keybinds_job['RUN'] = {
 	{'b 3 1', 'ja', 'Unda', 'me', ''},
 }
 xivhotbar_keybinds_job['NIN'] = {
 
+	{'b 5 1',  'ma', 'enstone', 'me', ''},
+	{'b 5 2',  'ma', 'enthunder', 'me', ''},
+	{'b 5 3',  'ma', 'enwater', 'me', ''},
+	{'b 5 4',  'ma', 'enfire', 'me', ''},
+	{'b 5 5',  'ma', 'enblizzard', 'me', ''},
+	{'b 5 6',  'ma', 'enaero', 'me', ''},
 	-- Battle
 	{'b 1 11', 'ma', 'Break', 'stnpc', 'Break'},
 	{'b 1 12', 'ma', 'Impact', 'stnpc', 'Impact'},
 
 
 	{'b 4 2',  'ma', 'Break', 'stnpc' ,'' },
-	{'b 4 3',  'ma', 'fire v', 'stnpc' ,'' },
 	{'b 3 1', 'ma', 'utsusemi: ichi', 'me', 'U.Ich.'},
 	{'b 3 7', 'ma', 'utsusemi: ni', 'me', 'U.Ni'},
 	{'b 2 2', 'ma', 'Dia III', 'stnpc', ''},
@@ -170,6 +188,12 @@ xivhotbar_keybinds_job['NIN'] = {
 
 	-- Field
 	{'f 3 9',  'ma', 'Enaero', 'me', ''},
+	{'f 5 1', 'ma', 'enstone ii', 'me', ''},
+	{'f 5 2', 'ma', 'enthunder ii', 'me', ''},
+	{'f 5 3', 'ma', 'enwater ii', 'me', ''},
+	{'f 5 4',  'ma', 'enfire ii', 'me' ,'' },
+	{'f 5 5', 'ma', 'enblizzard ii', 'me', ''},
+	{'f 5 6', 'ma', 'enaero ii', 'me', ''},
 
 	{'f 4 1', 'ma', 'enstone', 'me', ''},
 	{'f 4 2', 'ma', 'enthunder', 'me', ''},
@@ -178,16 +202,12 @@ xivhotbar_keybinds_job['NIN'] = {
 	{'f 4 5', 'ma', 'enblizzard', 'me', ''},
 	{'f 4 6', 'ma', 'enaero', 'me', ''},
 
-	{'f 5 1', 'ma', 'enstone ii', 'me', ''},
-	{'f 5 2', 'ma', 'enthunder ii', 'me', ''},
-	{'f 5 3', 'ma', 'enwater ii', 'me', ''},
-	{'f 5 4',  'ma', 'enfire ii', 'me' ,'' },
-	{'f 5 5', 'ma', 'enblizzard ii', 'me', ''},
-	{'f 5 6', 'ma', 'enaero ii', 'me', ''},
 
 	{'f 4 11',  'gs', 'equip low_lvl_daggers', 'me', 'Lv1D'},
 	{'f 4 10',  'gs', 'equip high_lvl_wep', 'me', 'Lv99D'},
 	--{'b 5 6', 'gs', 'equip sets.mdef', '', 'MDEF'},
+	{'f 5 7', 'ma', 'barfire', 'me', 'Fire'},
+	{'f 5 8', 'ma', 'barwater', 'me', 'Fire'},
 }
 xivhotbar_keybinds_job['WHM'] = {
 
@@ -203,7 +223,6 @@ xivhotbar_keybinds_job['WHM'] = {
 
 	{'b 4 1', 'ma', 'Gain-MND', 'me', 'MND'},
 	{'b 4 2',  'ma', 'Break', 'stnpc' ,'' },
-	{'b 4 3',  'ma', 'fire v', 'stnpc' ,'' },
 
 	-- Field
 	{'f 4 4', 'ma', 'Barsleepra', 'me', 'Barsl.'},
@@ -232,26 +251,23 @@ xivhotbar_keybinds_job['BLM'] = {
 	{'b 2 5', 'ja', 'Elemental Seal', 'me', 'Ele.'},
 	{'b 2 6', 'ma', 'Stun', 'bt', ''},
 
-	{'b 3 1', 'ma', 'Dia III', 'stnpc', ''},
 
 	{'b 4 2',  'ma', 'Break', 'stnpc' ,'' },
-	{'b 4 3',  'ma', 'fire v', 'stnpc' ,'' },
 
 	-- Field
-	{'f 3 1', 'ma', 'Stonega II', 'stnpc', ''},
-	{'f 3 2', 'ma', 'Waterga II', 'stnpc', ''},
-	{'f 3 3', 'ma', 'Aeroga II', 'stnpc', ''},
-	{'f 3 4', 'ma', 'Blizzaga', 'stnpc', ''},
-	{'f 3 5', 'ma', 'Firaga', 'stnpc', ''},
-	{'f 3 6', 'ma', 'Thundaga', 'stnpc', ''},
+	{'f 4 1', 'ma', 'Stonega II', 'stnpc', ''},
+	{'f 4 2', 'ma', 'Waterga II', 'stnpc', ''},
+	{'f 4 3', 'ma', 'Aeroga II', 'stnpc', ''},
+	{'f 4 4', 'ma', 'Blizzaga', 'stnpc', ''},
+	{'f 4 5', 'ma', 'Firaga', 'stnpc', ''},
+	{'f 4 6', 'ma', 'Thundaga', 'stnpc', ''},
 
-	{'f 4 3', 'ma', 'Aero V', 'stnpc', ''},
-	{'f 4 4', 'ma', 'Blizzard V', 'stnpc', ''},
-	{'f 4 5', 'ma', 'Fire V', 'stnpc', ''},
-	{'f 4 6', 'ma', 'Thunder V', 'stnpc', ''},
-	{'f 4 7', 'ma', 'Sleep II', 'stnpc', ''},
-	{'f 4 8', 'ma', 'Sleep', 'stnpc', ''},
-	{'f 4 9', 'ma', 'Sleepga', 'stnpc', ''}
+	{'f 3 3', 'ma', 'Aero V', 'stnpc', ''},
+	{'f 3 4', 'ma', 'Blizzard V', 'stnpc', ''},
+	{'f 3 5', 'ma', 'Fire V', 'stnpc', ''},
+	{'f 3 6', 'ma', 'Thunder V', 'stnpc', ''},
+	{'b 1 11', 'item', 'assassin\'s drink', 'me', 'MagiAcc'},
+	{'b 1 12', 'ct', 'lockstyleset 4', '', 'lockstyle', },
 }
 xivhotbar_keybinds_job['SCH'] = {
 

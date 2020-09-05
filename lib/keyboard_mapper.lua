@@ -1,5 +1,5 @@
 --[[
-        Copyright © 2020, SirEdeonX, Akirane
+        Copyright © 2020, Akirane
         All rights reserved.
 
         Redistribution and use in source and binary forms, with or without
@@ -28,14 +28,14 @@
 
 local keyboard = {}
 
-keyboard.hotbar_rows = require('data/keybinds')
+keyboard.hotbar_rows = require('../data/keybinds')
 keyboard.parsed_keybinds = {}
 
 --[[ 
 	Parse Keybinds: 
 
 	Description:
-		Converts the keybinds in keyboard.hotbar_rows into an input which can be used for
+		Converts the keybinds in data/keybinds.lua into an input which can be used for
 		binding keys with Windower.
 	Legends:
 		1. %: Keybinding is only registered when the chat window is *not* open
@@ -44,6 +44,9 @@ keyboard.parsed_keybinds = {}
 		4. ~: Shift
 		For example: "%~1" means "Shift+1" when chat window is not active.
 --]]
+--
+
+
 function keyboard:parse_keybinds()
 	for row_key,row_value in pairs(keyboard.hotbar_rows) do
 		for col_key,col_value in pairs(row_value) do
@@ -77,41 +80,25 @@ function keyboard:parse_keybinds()
 	end
 end
 
-keyboard.less_great = -1
-keyboard.esc        = 1
-keyboard.key_1      = 2
-keyboard.key_2      = 3
-keyboard.key_3      = 4
-keyboard.key_4      = 5
-keyboard.key_5      = 6
-keyboard.key_6      = 7
-keyboard.key_7      = 8
-keyboard.key_8      = 9
-keyboard.key_9      = 10
-keyboard.key_0      = 11
-keyboard.underscore = 12
+-- bind keys --
+function keyboard:bind_keys(rows, columns)
+    for r = 1, rows do 
+        for s = 1, columns do
+            if (self.hotbar_rows[r] ~= nil and self.hotbar_rows[r][s] ~= nil) then 
+    			windower.send_command('bind '..keyboard.hotbar_rows[r][s]..' htb execute '..r..' '..s)
+            end
+        end
+    end
+end
 
-keyboard.q         = 16
-keyboard.w         = 17
-keyboard.e         = 18
-keyboard.r         = 19
-
-keyboard.o         = 24
-
-keyboard.c         = 46
-
-keyboard.enter     = 28
-keyboard.ctrl      = 29
-
-keyboard.shift     = 42
-keyboard.backslash = 43
-keyboard.comma     = 51
-keyboard.period    = 52
-keyboard.alt       = 56
-
-keyboard.up        = 200
-keyboard.down      = 208
-keyboard.left      = 203
-keyboard.right     = 205
+function keyboard:unbind_keys(rows, columns)
+    for r = 1, rows do 
+        for s = 1, columns do
+            if (keyboard.hotbar_rows[r] ~= nil and keyboard.hotbar_rows[r][s] ~= nil) then 
+    			windower.send_command('unbind '..keyboard.hotbar_rows[r][s])
+            end
+        end
+    end
+end
 
 return keyboard

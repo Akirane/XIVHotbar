@@ -26,7 +26,6 @@
         SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ]]
 
-local hover_icon = {}
 local database = require('database')  -- TODO: IMPORT FROM RES
 
 local ui = {}
@@ -37,6 +36,13 @@ local text_setup = {
     flags = {
         draggable = false
     }
+}
+
+ui.hover_icon = {
+    row = nil,
+    col = nil,
+    prev_row = nil,
+    prev_col = nil
 }
 
 local environment_text_setup = {
@@ -63,6 +69,8 @@ local right_text_setup = {
     }
 }
 
+
+
 local playerinv = {}
 local is_silenced = false
 local is_amnesiad = false
@@ -70,10 +78,11 @@ local is_neutralized = false
 local can_ws = false
 local current_mp = 0
 
-local keyboard = require('keyboard_mapper')
+local keyboard = require('lib/keyboard_mapper')
+
 -- ui metrics
 ui.hotbar_width = 0
-ui.hotbar = require('variables')
+ui.hotbar = require('hotbar_variables')
 ui.hotbar_spacing = 0
 ui.slot_spacing = 0
 ui.pos_x = 0
@@ -116,243 +125,11 @@ ui.disabled_slots.no_vitals = {}
 ui.disabled_slots.on_cooldown = {}
 
 ui.is_setup = false
-----------------------------------
--- Text/Image related functions --
-----------------------------------
-
-function setup_image(image, path)
-    image:path(path)
-    image:repeat_xy(1, 1)
-    image:draggable(false)
-    image:fit(false)
-    image:alpha(255)
-    image:size(ui.image_width, ui.image_height)
-    image:show()
-end
-
-function setup_slot(image, path)
-    image:path(path)
-    image:repeat_xy(1, 1)
-    image:draggable(false)
-    image:fit(false)
-    image:alpha(255)
-    image:size(ui.image_width, ui.image_height)
-    image:show()
-end
-
-function setup_text(text, theme_options)
-    text:bg_alpha(0)
-    text:bg_visible(false)
-    text:font(theme_options.font)
-    text:size(theme_options.font_size)
-    text:color(theme_options.font_color_red, theme_options.font_color_green, theme_options.font_color_blue)
-    text:stroke_transparency(theme_options.font_stroke_alpha)
-    text:stroke_color(theme_options.font_stroke_color_red, theme_options.font_stroke_color_green, theme_options.font_stroke_color_blue)
-    text:stroke_width(theme_options.font_stroke_width)
-    text:show()
-end
-
--- get x position for a given hotbar and slot
-function ui:get_slot_x(h, i)
-	local x
-	if (self.theme.offsets[tostring(h)] ~= nil) then
-		if (self.theme.offsets[tostring(h)].Vertical == true) then
-			if (i < math.floor(self.theme.columns / 2)+1) then
-				x = self.theme.offsets[tostring(h)].OffsetX 	
-			else
-				x = self.theme.offsets[tostring(h)].OffsetX + (ui.image_width + self.slot_spacing) 	
-			end
-		else
-			x =  self.pos_x + self.theme.offsets[tostring(h)].OffsetX + ((ui.image_width + self.slot_spacing) * (i - 1))
-		end
-	else
-		x =  self.pos_x + ((ui.image_width + self.slot_spacing) * (i - 1))
-	end
-	return x
-end
-
--- get y position for a given hotbar and slot
-function ui:get_slot_y(h, i)
-	local y
-	if (self.theme.offsets[tostring(h)] ~= nil) then
-		if (self.theme.offsets[tostring(h)].Vertical == true) then
-			if (i < math.floor(self.theme.columns / 2)+1) then
-				y =  self.theme.offsets[tostring(h)].OffsetY + ((ui.image_width + self.slot_spacing) * (i - 1))
-			else
-				y =  self.theme.offsets[tostring(h)].OffsetY + ((ui.image_width + self.slot_spacing) * (i - math.floor(self.theme.columns / 2) - 1))
-			end
-		else
-			y = self.theme.offsets[tostring(h)].OffsetY 	
-		end
-	else
-		y = self.pos_y - (((h - 1) * (self.hotbar_spacing-3)))
-	end
-    return y 
-end
-
 ui.disabled_icons = {}
 
-function ui:setup_disabled_icons()
-    for h=1, ui.hotbar.rows,1 do
-        self.disabled_icons[#ui.disabled_icons+1] = {}
-        for i=1, ui.hotbar.columns, 1 do
-            self.disabled_icons[h][#ui.disabled_icons[h]+1] = 0
-        end
-    end
-end
-
---------------
--- Setup UI --
---------------
-
-function ui:change_image(environment, hotbar, slot)
-end
-
-function ui:setup(theme_options)
-    database:import()
-
-    self.theme = theme_options
-    self.hotbar.columns = self.theme.columns
-    self.hotbar.rows    = self.theme.rows
-	self.image_width = math.floor(self.image_width * self.theme.slot_icon_scale)
-	self.image_height = math.floor(self.image_height * self.theme.slot_icon_scale)
-	hover_icon = images.new(table.copy(images_setup, true))
-    setup_image(hover_icon, windower.addon_path..'/images/other/square.png')
-	hover_icon:hide()
-	hover_icon:size(self.image_width+2, self.image_height+2)
-    self:setup_metrics(self.theme)
-    self:setup_disabled_icons()
-    self:load(self.theme)
-
-    self.is_setup = true
-end
-
-function ui:init_hotbar(theme_options, number)
-    local hotbar            = {}
-    hotbar.slot_background  = {}
-    hotbar.slot_icon        = {}
-    hotbar.slot_recast      = {}
-    hotbar.slot_frame       = {}
-    hotbar.slot_text        = {}
-    hotbar.slot_cost        = {}
-    hotbar.slot_recast_text = {}
-    hotbar.slot_key         = {}
-	hotbar.number           = texts.new(table.copy(text_setup), true)
-	setup_text(hotbar.number, theme_options)
-	hotbar.number:text(tostring(number))
-	if (theme_options.offsets[tostring(number)].Vertical == true) then
-		hotbar.number:pos(ui:get_slot_x(number, 0)+30, ui:get_slot_y(number, 0)+25)
-	else
-		hotbar.number:pos(ui:get_slot_x(number, 0)+30, ui:get_slot_y(number, 0))
-	end
-	hotbar.number:size(theme_options.font_size + 5)
-	hotbar.number:font('agave Nerd Font')
-	return hotbar
-end
-
-function ui:init_slot(hotbar, row, column, theme_options)
-
-    local slot_pos_x = self:get_slot_x(row, column)
-    local slot_pos_y = self:get_slot_y(row, column)
-    local right_slot_pos_x = slot_pos_x - windower.get_windower_settings().x_res + 16
-
-    hotbar.slot_background[column] = images.new(table.copy(images_setup, true))
-    hotbar.slot_icon[column] = images.new(table.copy(images_setup, true))
-    hotbar.slot_recast[column] = images.new(table.copy(images_setup, true))
-    hotbar.slot_frame[column] = images.new(table.copy(images_setup, true))
---    hotbar.slot_element[column] = images.new(table.copy(images_setup, true))
-
-    hotbar.slot_text[column] = texts.new(table.copy(text_setup), true)
-    hotbar.slot_cost[column] = texts.new(table.copy(text_setup), true)
-    hotbar.slot_recast_text[column] = texts.new(table.copy(text_setup), true)
-    hotbar.slot_key[column] = texts.new(table.copy(text_setup), true)
-
-    setup_image(hotbar.slot_background[column], windower.addon_path..'/themes/' .. (theme_options.slot_theme:lower()) .. '/slot.png')
-    setup_image(hotbar.slot_icon[column], windower.addon_path..'/images/other/blank.png')
-    setup_image(hotbar.slot_frame[column], windower.addon_path..'/themes/' .. (theme_options.frame_theme:lower()) .. '/frame.png')
-
-    setup_text(hotbar.slot_text[column], theme_options)
-    setup_text(hotbar.slot_cost[column], theme_options)
-    setup_text(hotbar.slot_recast_text[column], theme_options)
-    setup_text(hotbar.slot_key[column], theme_options)
-
-    hotbar.slot_background[column]:alpha(theme_options.slot_opacity)
-    hotbar.slot_background[column]:pos(slot_pos_x, slot_pos_y)
-    hotbar.slot_recast[column]:pos(slot_pos_x, slot_pos_y)
-
-	hotbar.slot_recast[column]:alpha(5)
-    hotbar.slot_icon[column]:pos(slot_pos_x, slot_pos_y)
-    hotbar.slot_frame[column]:pos(slot_pos_x, slot_pos_y)
-
-    hotbar.slot_text[column]:pos(slot_pos_x, slot_pos_y + ui.image_height -12)
-
-    hotbar.slot_cost[column]:stroke_transparency(220)
-    hotbar.slot_cost[column]:pos(slot_pos_x - 1, slot_pos_y - 4)
-    hotbar.slot_cost[column]:size(theme_options.font_size)
-    hotbar.slot_cost[column]:hide()
-
-    hotbar.slot_key[column]:alpha(255)
-    hotbar.slot_key[column]:stroke_width(2)
-    hotbar.slot_key[column]:pos(slot_pos_x - 1, slot_pos_y - 4)
-    hotbar.slot_key[column]:size(theme_options.font_size)
-    hotbar.slot_key[column]:alpha(255)
-
-    hotbar.slot_recast_text[column]:pos(slot_pos_x - 1, slot_pos_y - 4)
-    hotbar.slot_recast_text[column]:alpha(255)
-    hotbar.slot_recast_text[column]:color(100, 200, 255)
-    hotbar.slot_recast_text[column]:size(theme_options.font_size)
-    hotbar.slot_recast_text[column]:hide()
-
-    if keyboard.hotbar_rows[row] == nil or keyboard.hotbar_rows[row][column] == nil then 
-        hotbar.slot_key[column]:text("")
-    else
-        hotbar.slot_key[column]:text(convert_string(keyboard.hotbar_rows[row][column]))
-    end
-end
-
-function ui:setup_feedback(theme_options)
-    self.feedback_icon = images.new(table.copy(images_setup, true))
-    setup_image(self.feedback_icon, windower.addon_path .. '/images/other/feedback.png')
-    self.feedback.max_opacity = theme_options.feedback_max_opacity
-    self.feedback.speed = theme_options.feedback_speed
-    self.feedback.current_opacity = self.feedback.max_opacity
-    self.feedback_icon:hide()
-end
-
--- load the images and text
-function ui:load(theme_options)
-    -- create ui elements for hotbars
-    for h=1,theme_options.hotbar_number,1 do
-        self.hotbars[h] = ui:init_hotbar(theme_options, h)
-        for i=1, theme_options.columns,1 do
-            ui:init_slot(self.hotbars[h], h, i, theme_options)
-        end
-    end
-
-    -- load feedback icon last so it stays above everything else
-    ui:setup_feedback(theme_options)
-end
-
-function convert_string(text)
-    msg = ''
-    for i = 1, #text do
-        local v = text:sub(i,i)
-        if v == '^' then
-          msg = msg .. 'C-'
-        elseif v == '%' then 
-          msg = msg .. ''
-        elseif v == '!' then
-          msg = msg .. 'A-'
-        elseif v == '@' then
-          msg = msg .. 'Win-'
-        elseif v == '~' then
-          msg = msg .. 'S-'
-        else
-          msg = msg .. string.upper(v)
-        end
-    end
-    return msg 
-end
+-----------------------
+-- Private functions --
+-----------------------
 
 --[[ Update buffs 
 
@@ -366,7 +143,7 @@ end
       2. Silence/Amnesia: If both are active, interrupt the for loop
 
 ]]--
-function update_buffs(id, data)
+local function update_buffs(id, data)
     if id == 0x063 then
         if data:byte(0x05) == 0x09 then
             local silenced = false
@@ -387,506 +164,51 @@ function update_buffs(id, data)
     end
 end
 
+----------------------------------
+-- Text/Image related functions --
+----------------------------------
 
-function ui:update_inventory_count()
-    if (self.is_setup == true) then
-        if (self.theme.hide_inventory_count == false) then
-            self.playerinv = windower.ffxi.get_items()
-            ui:get_inventory_count(self.inventory_count, self.playerinv.inventory)
-        end
-    end
-end
 
-function ui:get_inventory_count(text_box, bag)
-    text_box:text(bag.count..'/'..bag.max)
-    if (bag.max - bag.count < 4) then
-        text_box:color(240, 0, 0)
-    else
-        text_box:color(self.theme.red, self.theme.green, self.theme.blue)
-    end
-end
-
-function ui:setup_environment_numbers()
-    if self.theme.hide_battle_notice == false then
-        self.active_environment['field']:text('  1  ')
-        self.active_environment['battle']:text('  2  ')
-    else
-        self.active_environment['field']:text('')
-        self.active_environment['battle']:text('')
-    end
-	local env_pos_x = ui:get_slot_x(self.theme.environment.hook_onto_bar, self.theme.columns+1) - 10
-	local env_pos_y = ui:get_slot_y(self.theme.environment.hook_onto_bar, 0)
-    self.active_environment['field']:pos(env_pos_x, env_pos_y)
-    self.active_environment['field']:size(self.theme.font_size + 13)
-    self.active_environment['field']:show()
-    self.active_environment['field']:italic(false)
-    self.active_environment['battle']:pos(env_pos_x, env_pos_y + self.theme.font_size + 41)
-    self.active_environment['battle']:italic(false)
-    self.active_environment['battle']:size(self.theme.font_size + 13)
-    self.active_environment['battle']:show()
-
-    self.inventory_count = texts.new(inventory_count_setup)
-    setup_text(self.inventory_count, self.theme) 
-    self.active_inv_pos_y = self.pos_y + ui.image_height/2 +5
-
-    if (self.theme.hide_inventory_count == false) then
-        self.inventory_count:pos(env_pos_x + 10, env_pos_y + self.theme.font_size + 91)
-        self.inventory_count:size(self.theme.font_size+1)
-        ui:get_inventory_count(self.inventory_count, self.playerinv.inventory)
-        self.inventory_count:show()
-    end
-end
-
--- setup positions and dimensions for ui
-function ui:setup_metrics(theme_options)
-    self.playerinv = windower.ffxi.get_items()
-    self.active_environment = {}
-    self.active_environment['field'] = {}
-    self.active_environment['battle'] = {}
-    self.active_environment['field'] = texts.new(table.copy(environment_text_setup), true)
-    self.active_environment['battle'] = texts.new(table.copy(environment_text_setup), true)
-    setup_text(self.active_environment['field'], theme_options) 
-    setup_text(self.active_environment['battle'], theme_options) 
-
-    self.hotbar_width = ((40*self.hotbar.columns) + theme_options.slot_spacing * (self.hotbar.columns-1))
-    self.scaled_pos_x = windower.get_windower_settings().ui_x_res
-    self.scaled_pos_y = windower.get_windower_settings().ui_y_res
-    self.pos_x = 0 --math.floor(self.scaled_pos_x/2.0) + theme_options.offset_x 
-    self.pos_y = 0 --self.scaled_pos_y + theme_options.offset_y
-
-    self.slot_spacing = theme_options.slot_spacing 
-
-    if theme_options.hide_action_names == true then
-        theme_options.hotbar_spacing = theme_options.hotbar_spacing - 10
-        self.pos_y = self.pos_y + 10
-    end
-
-    self.hotbar_spacing = theme_options.hotbar_spacing 
-    ui:setup_environment_numbers()
-end
-
-function ui:swap_icons(swap_table)
-	local source_row  = swap_table.source.row
-	local source_slot = swap_table.source.slot
-	local dest_row    = swap_table.dest.row
-	local dest_slot   = swap_table.dest.slot
-	local tempPathSource = self.hotbars[source_row].slot_icon[source_slot]:path()
-	local tempTextSource = self.hotbars[source_row].slot_text[source_slot]:text()
-	local tempPathDest   = self.hotbars[dest_row].slot_icon[dest_slot]:path()
-	local tempTextDest   = self.hotbars[dest_row].slot_text[dest_slot]:text()
-
-	self.hotbars[dest_row].slot_text[dest_slot]:text(tempTextSource)
-	self.hotbars[dest_row].slot_icon[dest_slot]:path(tempPathSource)
-	self.hotbars[source_row].slot_text[source_slot]:text(tempTextDest)
-	self.hotbars[source_row].slot_icon[source_slot]:path(tempPathDest)
-end
-
--- hide all ui components
-function ui:hide()
-    self.battle_notice:hide()
-    self.feedback_icon:hide()
-    if (self.active_environment ~= nil) then
-        self.active_environment['battle']:hide()
-        self.active_environment['field']:hide()
-    end
-    self.inventory_count:hide()
-
-    for h=1,self.theme.hotbar_number,1 do
-
-		self.hotbars[h].number:hide()
-        for i=1, ui.hotbar.columns, 1 do
-            self.hotbars[h].slot_background[i]:hide()
-            self.hotbars[h].slot_icon[i]:hide()
-            self.hotbars[h].slot_frame[i]:hide()
-            self.hotbars[h].slot_recast[i]:hide()
-            self.hotbars[h].slot_text[i]:hide()
-            self.hotbars[h].slot_cost[i]:hide()
-            self.hotbars[h].slot_recast_text[i]:hide()
-            self.hotbars[h].slot_key[i]:hide()
-        end
-    end
-end
-
--- show ui components
-function ui:show(player_hotbar, environment)
-    if (self.active_environment ~= nil) then
-        self.active_environment['battle']:show()
-        self.active_environment['field']:show()
-    end
-    self.inventory_count:show()
-    if self.theme.hide_battle_notice == false and environment == 'battle' then self.battle_notice:show() end
-
-    for h=1,self.theme.rows,1 do
-        for i=1, self.theme.columns, 1 do
-            local slot = i
-			local pos_x, pos_y = self.hotbars[h].slot_icon[i]:pos()
-			if (pos_x == 0 and pos_y == 0) then
-				print("h: " .. h .. ", i: " .. i)
+-- get x position for a given hotbar and slot
+local function get_slot_x(ui, h, i)
+	local x
+	if (ui.theme.offsets[tostring(h)] ~= nil) then
+		if (ui.theme.offsets[tostring(h)].Vertical == true) then
+			if (i < math.floor(ui.theme.columns / 2)+1) then
+				x = ui.theme.offsets[tostring(h)].OffsetX 	
+			else
+				x = ui.theme.offsets[tostring(h)].OffsetX + (ui.image_width + ui.slot_spacing) 	
 			end
-			pos_x, pos_y = self.hotbars[h].slot_recast[i]:pos()
-			if (pos_x == 0 and pos_y == 0) then
-				print("h: " .. h .. ", i: " .. i)
+		else
+			x =  ui.pos_x + ui.theme.offsets[tostring(h)].OffsetX + ((ui.image_width + ui.slot_spacing) * (i - 1))
+		end
+	else
+		x =  ui.pos_x + ((ui.image_width + ui.slot_spacing) * (i - 1))
+	end
+	return x
+end
+
+-- get y position for a given hotbar and slot
+local function get_slot_y(ui, h, i)
+	local y
+	if (ui.theme.offsets[tostring(h)] ~= nil) then
+		if (ui.theme.offsets[tostring(h)].Vertical == true) then
+			if (i < math.floor(ui.theme.columns / 2)+1) then
+				y =  ui.theme.offsets[tostring(h)].OffsetY + ((ui.image_width + ui.slot_spacing) * (i - 1))
+			else
+				y =  ui.theme.offsets[tostring(h)].OffsetY + ((ui.image_width + ui.slot_spacing) * (i - math.floor(ui.theme.columns / 2) - 1))
 			end
-
-            local action = player_hotbar[environment]['hotbar_' .. h]['slot_' .. slot]
-
-            if self.theme.hide_empty_slots == false then self.hotbars[h].slot_background[i]:show() end
-            self.hotbars[h].slot_icon[i]:show()
-            if action ~= nil then self.hotbars[h].slot_frame[i]:show() end
-			self.hotbars[h].number:show()
-            if self.theme.hide_recast_animation == false then self.hotbars[h].slot_recast[i]:show() end
-            if self.theme.hide_action_names == false then self.hotbars[h].slot_text[i]:show() end
-            if self.theme.hide_recast_text == false then self.hotbars[h].slot_recast_text[i]:show() end
-            if self.theme.hide_empty_slots == false then self.hotbars[h].slot_key[i]:show() end
-        end
-    end
-end
-
-----------------
--- Actions UI --
-----------------
-
--- load player hotbar
-function ui:load_player_hotbar(player_hotbar, player_vitals, environment)
-    if environment == 'battle' and self.theme.hide_battle_notice == false then
-        self.active_environment['field']:color(255, 255, 255)
-        self.active_environment['battle']:color(100, 100, 100)
-    else
-        self.active_environment['field']:color(100, 100, 100)
-        self.active_environment['battle']:color(255, 255, 255)
-    end
-
-    -- reset disabled slots
-    self.disabled_slots.actions = {}
-    self.disabled_slots.no_vitals = {}
-    self.disabled_slots.on_cooldown = {}
-
-    for h=1,self.theme.hotbar_number,1 do
-        for i=1, self.theme.columns, 1 do
-			self:load_action(h, i, player_hotbar[environment]['hotbar_' .. h]['slot_' .. i], player_vitals)
-        end
-    end
-end
-
--- load action into a hotbar slot
-function ui:load_action(hotbar, slot, action, player_vitals)
-
-    local is_disabled = false
-
-    self:clear_slot(hotbar, slot)
-
-    -- if slot is empty, leave it cleared
-    if action == nil then
-        if self.theme.hide_empty_slots == true then
-            self.hotbars[hotbar].slot_background[slot]:hide()
-            self.hotbars[hotbar].slot_key[slot]:hide()
-        else
-            self.hotbars[hotbar].slot_background[slot]:show()
-            self.hotbars[hotbar].slot_key[slot]:show()
-        end
-
-        return
-    end
-
-    -- if slot has a skill (ma, ja or ws)
-    if action.type == 'ma' or action.type == 'ja' then
-        -- self.hotbars[hotbar].slot_icon[slot]:pos(self:get_slot_x(hotbar, slot) + 4, self:get_slot_y(hotbar, slot) + 4) -- temporary fix for 32 x 32 icons
-        self.hotbars[hotbar].slot_icon[slot]:fit(false) 
-        local skill = nil
-        local slot_image = nil
-
-        -- if its magic, look for it in spells
-        if action.type == 'ma' and database.spells[(action.action):lower()] ~= nil then
-            skill = database.spells[(action.action):lower()]
-            self.hotbars[hotbar].slot_icon[slot]:path(windower.addon_path .. '/images/icons/spells/' .. (string.format("%05d", skill.icon)) .. '.png')
-        elseif (action.type == 'ja' or action.type == 'ws') and database.abilities[(action.action):lower()] ~= nil then
-            skill = database.abilities[(action.action):lower()]
-            if action.type == 'ja' then
-                    self.hotbars[hotbar].slot_icon[slot]:path(windower.addon_path .. '/images/icons/abilities/' .. string.format("%05d", skill.icon) .. '.png')
-            else
-                skill.tpcost = '1000'
-            end
-        end
-
-        self.hotbars[hotbar].slot_background[slot]:alpha(200)
-        self.hotbars[hotbar].slot_icon[slot]:show()
-
-        if skill ~= nil then
-            -- display mp cost
-            if skill.mpcost ~= nil and skill.mpcost ~= 0 then
-                self.hotbars[hotbar].slot_cost[slot]:color(self.theme.mp_cost_color_red, self.theme.mp_cost_color_green, self.theme.mp_cost_color_blue)
-                self.hotbars[hotbar].slot_cost[slot]:text(tostring(skill.mpcost))
-
-                if player_vitals.mp < tonumber(skill.mpcost) then
-                    self.disabled_slots.no_vitals[action.action] = true
-                    is_disabled = true
-                end
-            -- display tp cost
-            elseif skill.tpcost ~= nil and skill.tpcost ~= '0' then
-                self.hotbars[hotbar].slot_cost[slot]:color(self.theme.tp_cost_color_red, self.theme.tp_cost_color_green, self.theme.tp_cost_color_blue)
-                self.hotbars[hotbar].slot_cost[slot]:text(' ')
-
-                if player_vitals.tp < tonumber(skill.tpcost) then
-                    self.disabled_slots.no_vitals[action.action] = true
-                    is_disabled = true
-                end
-            end
-        end
-    elseif action.type == 'ws' then
-        ws = database.weapon_skills[(action.action):lower()]
-        --windower.add_to_chat(7, "WS: "..ws.name..", ID: "..ws.id.." Icon: "..ws.icon)
-        self.hotbars[hotbar].slot_icon[slot]:pos(self:get_slot_x(hotbar, slot), self:get_slot_y(hotbar, slot))
-        self.hotbars[hotbar].slot_icon[slot]:path(windower.addon_path .. '/images/icons/weapons/' .. string.format("%02d", ws.icon) .. '.jpg')
-        self.hotbars[hotbar].slot_icon[slot]:show()
-    
-    -- if action is an item
-    elseif action.type == 'item' then
-        self.hotbars[hotbar].slot_icon[slot]:pos(self:get_slot_x(hotbar, slot), self:get_slot_y(hotbar, slot))
-        self.hotbars[hotbar].slot_icon[slot]:path(windower.addon_path .. '/images/icons/custom/item.png')
-        self.hotbars[hotbar].slot_icon[slot]:show()
-    -- If action is a gearswap type
-    elseif action.type == 'gs' then
-        self.hotbars[hotbar].slot_icon[slot]:pos(self:get_slot_x(hotbar, slot), self:get_slot_y(hotbar, slot))
-        self.hotbars[hotbar].slot_icon[slot]:path(windower.addon_path .. '/images/icons/custom/gear.png')
-        self.hotbars[hotbar].slot_icon[slot]:show()
-    -- If no custom icon is defined, just put on a gear.
-    else
-        self.hotbars[hotbar].slot_icon[slot]:pos(self:get_slot_x(hotbar, slot), self:get_slot_y(hotbar, slot))
-        self.hotbars[hotbar].slot_icon[slot]:path(windower.addon_path .. '/images/icons/custom/cog.png')
-        self.hotbars[hotbar].slot_icon[slot]:show()
-    end
-
-    -- if action is custom
-    if action.icon ~= nil then
-        self.hotbars[hotbar].slot_background[slot]:alpha(200)
-        self.hotbars[hotbar].slot_icon[slot]:pos(self:get_slot_x(hotbar, slot), self:get_slot_y(hotbar, slot))
-        self.hotbars[hotbar].slot_icon[slot]:path(windower.addon_path .. '/images/icons/custom/' .. action.icon .. '.png')
-        self.hotbars[hotbar].slot_icon[slot]:show()
-    end
-
-    -- check if action is on cooldown
-    if self.disabled_slots.on_cooldown[action.action] ~= nil then is_disabled = true end
-
-    self.hotbars[hotbar].slot_frame[slot]:show()
-    self.hotbars[hotbar].slot_text[slot]:text(action.alias)
-
-    -- hide elements according to settings
-    if self.theme.hide_action_names == true then self.hotbars[hotbar].slot_text[slot]:hide() else self.hotbars[hotbar].slot_text[slot]:show() end
-
-    -- if slot is disabled, disable it
-    if is_disabled == true then
-        self:toggle_slot(hotbar, slot, false)
-        self.disabled_slots.actions[action.action] = true
-    end
-end
-
--- clear slot
-function ui:clear_slot(hotbar, slot)
-    self.hotbars[hotbar].slot_background[slot]:alpha(self.theme.slot_opacity)
-    self.hotbars[hotbar].slot_frame[slot]:hide()
-    self.hotbars[hotbar].slot_icon[slot]:path(windower.addon_path .. '/images/other/blank.png')
-    self.hotbars[hotbar].slot_icon[slot]:hide()
-    self.hotbars[hotbar].slot_icon[slot]:alpha(255)
-    self.hotbars[hotbar].slot_icon[slot]:color(255, 255, 255)
-    self.hotbars[hotbar].slot_text[slot]:text('')
-    self.hotbars[hotbar].slot_cost[slot]:alpha(255)
-    self.hotbars[hotbar].slot_cost[slot]:text('')
-end
-
---------------------
--- Disabled Slots --
---------------------
-
-function ui:update_mp(new_mp)
-	current_mp = new_mp
-end
-
-function ui:update_tp(current_tp)
-	if (current_tp < 1000) then can_ws = false else can_ws = true end
-end
-
--- check player vitals
-function ui:check_vitals(player_hotbar, player_vitals, environment)
-end
-
-function ui:disable_slot(hotbar_index, index, action)
-
-    -- disable slot if it's not disabled
-    if self.disabled_slots.actions[action.action] == nil then
-        self.disabled_slots.actions[action.action] = true
-        self:toggle_slot(hotbar_index, index, false)
-    end
-end
-
--- check action recasts
-function ui:check_recasts(player_hotbar, player_vitals, environment, distance)
-    local ability_recasts = windower.ffxi.get_ability_recasts()
-    local spell_recasts = windower.ffxi.get_spell_recasts()
-    for h=1, self.theme.rows, 1 do
-        for i=1, self.theme.columns, 1 do
-            local is_action = false
-            local is_disabled = false
-            local slot = i
-            --if slot == 10 then slot = 0 end
-            local action = player_hotbar[environment]['hotbar_' .. h]['slot_' .. slot]
-            if (action ~= nil) then 
-                is_action = true 
-            end
-
-            if (is_neutralized == true) then 
-                is_disabled = true
-            elseif (is_action == true) then
-				if (action.type == 'ma' and current_mp < database.spells[(action.action):lower()].mpcost) then
-					is_silenced = true 
-				else 
-					is_silenced = false 
-				end
-                if (is_silenced == true and action.type == 'ma') then 
-                    is_disabled = true 
-                elseif (is_amnesiad == true and (action.type == 'ja' or action.type == 'ws')) then 
-                    is_disabled = true 
-				elseif (action.type == 'ws' and can_ws == false) then
-					is_disabled = true
-                end
-            end
-
-            if (is_action == true and is_disabled == true) then 
-                self:disable_slot(h, i, action)
-            elseif action == nil  then
-				if (self.theme.hide_empty_slots == true) then
-					self:hide_recast(h, i)
-				else
-					self:clear_recast(h, i)
-				end
-			elseif (action.type ~= 'ma' and action.type ~= 'ja' and action.type ~= 'ws') then
-                self:clear_recast(h, i)
-
-            -- if skill is in cooldown
-            else
-                local skill = nil
-                local action_recasts = nil
-                local in_cooldown = false
-                local is_in_seconds = false
-
-                -- if its magic, look for it in spells
-                if action.type == 'ma' and database.spells[(action.action):lower()] ~= nil then
-                    skill = database.spells[(action.action):lower()]
-                    action_recasts = spell_recasts
-                    is_in_seconds = false
-                elseif action.type == 'ja' and database.abilities[(action.action):lower()] ~= nil then
-                    skill = database.abilities[(action.action):lower()]
-                    action_recasts = ability_recasts
-                    is_in_seconds = true
-                end
-
-                -- check if skill is in cooldown
-                if skill ~= nil and action_recasts[tonumber(skill.icon)] ~= nil and action_recasts[tonumber(skill.icon)] > 0 then
-                    -- register first cooldown to calculate percentage
-                    if self.disabled_slots.on_cooldown[action.action] == nil then
-                        self.disabled_slots.on_cooldown[action.action] = action_recasts[tonumber(skill.icon)]
-
-                        -- setup recast elements
-                        self.hotbars[h].slot_recast[i]:path(windower.addon_path..'/images/other/black-square.png')
-                    end
-
-                    in_cooldown = true
-                end
-
-
-                if in_cooldown == true then
-                    -- disable slot if it's not disabled
-                    if self.disabled_slots.actions[action.action] == nil then
-                        self.disabled_slots.actions[action.action] = true
-                        self:toggle_slot(h, i, false)
-                        self.disabled_icons[h][i] = 1
-                    else
-                        self.disabled_icons[h][i] = 1
-                    end
-
-                    -- show recast animation
-                    local recast_time = calc_recast_time(action_recasts[tonumber(skill.icon)], is_in_seconds)
-
-                    in_cooldown = true
-
-                    self.hotbars[h].slot_recast[i]:show()
-                    self.hotbars[h].slot_recast_text[i]:text(recast_time)
-                    self.hotbars[h].slot_recast_text[i]:show()
-                    self.hotbars[h].slot_key[i]:hide()
-                else
-                    self.disabled_icons[h][i] = 0
-                    self:clear_recast(h, i)
-
-                    if self.disabled_slots.on_cooldown[action.action] == true then
-                        self.disabled_slots.on_cooldown[action.action] = nil
-                    end
-
-                    -- if it's not disabled by vitals nor cooldown, enable slot
-                    if self.disabled_slots.actions[action.action] == true and self.disabled_slots.no_vitals[action.action] == nil then
-                        self.disabled_slots.actions[action.action] = nil
-                        self:toggle_slot(h, i, true)
-                    end
-                end
-            end
-        end
-    end
-end
-
-ui.hover_icon = {
-    row = nil,
-    col = nil,
-    prev_row = nil,
-    prev_col = nil
-}
-
-function ui:check_hover()
-
-    local disabled_opacity = self.theme.disabled_slot_opacity
-    local enabled_opacity  = 200
-    local row              = ui.hover_icon.row
-    local col              = ui.hover_icon.col
-    local prev_col         = ui.hover_icon.col
-    local prev_row         = ui.hover_icon.row
-
-    if (row ~= nil and col ~= nil) then
-        if (self.disabled_icons[row][col] == 0) then
-            self.hotbars[row].slot_icon[col]:alpha(disabled_opacity)
-            prev_row, prev_col = row, col
-        end
-    elseif(prev_row ~= nil and prev_col ~= nil) then
-        if (self.disabled_icons[prev_row][prev_col] == 1) then
-            opacity = disabled_opacity
-        else
-            opacity = enabled_opacity
-        end
-        self.hotbars[prev_row].slot_icon[prev_col]:alpha(opacity)
-        prev_col = nil
-        prev_row = nil
-    end
-
-    ui.prev_col       = prev_col
-    ui.prev_row       = prev_row
-    ui.hover_icon.row = row
-    ui.hover_icon.col = col
-end
-
--- clear recast from a slot
-function ui:clear_recast(hotbar, slot)
-    self.hotbars[hotbar].slot_recast[slot]:hide()
-    self.hotbars[hotbar].slot_key[slot]:show()
-    self.hotbars[hotbar].slot_recast_text[slot]:text('')
-    self:toggle_slot(hotbar, slot, true)
-end
-
--- clear recast from a slot
-function ui:hide_recast(hotbar, slot)
-    self.hotbars[hotbar].slot_recast[slot]:hide()
-    self.hotbars[hotbar].slot_key[slot]:hide()
-    self.hotbars[hotbar].slot_recast_text[slot]:text('')
-    self:toggle_slot(hotbar, slot, true)
+		else
+			y = ui.theme.offsets[tostring(h)].OffsetY 	
+		end
+	else
+		y = ui.pos_y - (((h - 1) * (ui.hotbar_spacing-3)))
+	end
+    return y 
 end
 
 -- calculate recast time
-function calc_recast_time(time, in_seconds)
+local function calc_recast_time(time, in_seconds)
 
     local recast = time / 60
     local minutes = math.floor(recast)
@@ -920,29 +242,708 @@ function calc_recast_time(time, in_seconds)
 end
 
 
--- disable slot
-function ui:toggle_slot(hotbar, slot, is_enabled, out_of_range)
-    local opacity = self.theme.disabled_slot_opacity
+-- convert_string
+local function convert_string(text)
+    msg = ''
+    for i = 1, #text do
+        local v = text:sub(i,i)
+        if v == '^' then
+          msg = msg .. 'C-'
+        elseif v == '%' then 
+          msg = msg .. ''
+        elseif v == '!' then
+          msg = msg .. 'A-'
+        elseif v == '@' then
+          msg = msg .. 'Win-'
+        elseif v == '~' then
+          msg = msg .. 'S-'
+        else
+          msg = msg .. string.upper(v)
+        end
+    end
+    return msg 
+end
+
+local function setup_image(image, path)
+    image:path(path)
+    image:repeat_xy(1, 1)
+    image:draggable(false)
+    image:fit(false)
+    image:alpha(255)
+    image:size(ui.image_width, ui.image_height)
+    image:show()
+end
+
+local function setup_slot(image, path)
+    image:path(path)
+    image:repeat_xy(1, 1)
+    image:draggable(false)
+    image:fit(false)
+    image:alpha(255)
+    image:size(ui.image_width, ui.image_height)
+    image:show()
+end
+
+local function setup_feedback(ui)
+    ui.feedback_icon = images.new(table.copy(images_setup, true))
+    setup_image(ui.feedback_icon, windower.addon_path .. '/images/other/feedback.png')
+    ui.feedback.max_opacity = ui.theme.feedback_max_opacity
+    ui.feedback.speed = ui.theme.feedback_speed
+    ui.feedback.current_opacity = ui.feedback.max_opacity
+    ui.feedback_icon:hide()
+end
+
+local function setup_text(text, theme_options)
+    text:bg_alpha(0)
+    text:bg_visible(false)
+    text:font(theme_options.font)
+    text:size(theme_options.font_size)
+    text:color(theme_options.font_color_red, theme_options.font_color_green, theme_options.font_color_blue)
+    text:stroke_transparency(theme_options.font_stroke_alpha)
+    text:stroke_color(theme_options.font_stroke_color_red, theme_options.font_stroke_color_green, theme_options.font_stroke_color_blue)
+    text:stroke_width(theme_options.font_stroke_width)
+    text:show()
+end
+
+-- toggle slot
+local function toggle_slot(ui, hotbar, slot, is_enabled)
+    local opacity = ui.theme.disabled_slot_opacity
 
     if is_enabled == true then
         opacity = 255
     end
 
---    self.hotbars[hotbar].slot_element[slot]:alpha(opacity)
-    self.hotbars[hotbar].slot_cost[slot]:alpha(opacity)
-    self.hotbars[hotbar].slot_icon[slot]:alpha(opacity)
+    ui.hotbars[hotbar].slot_cost[slot]:alpha(opacity)
+    ui.hotbars[hotbar].slot_icons[slot]:alpha(opacity)
 end
 
+local function disable_slot(ui, hotbar_index, index, action)
+
+    -- disable slot if it's not disabled
+    if ui.disabled_slots.actions[action.action] == nil then
+        ui.disabled_slots.actions[action.action] = true
+        toggle_slot(ui, hotbar_index, index, false)
+    end
+end
+
+-- clear slot
+local function clear_slot(ui, hotbar, slot)
+    ui.hotbars[hotbar].slot_backgrounds[slot]:alpha(ui.theme.slot_opacity)
+    ui.hotbars[hotbar].slot_frames[slot]:hide()
+    ui.hotbars[hotbar].slot_icons[slot]:path(windower.addon_path .. '/images/other/blank.png')
+    ui.hotbars[hotbar].slot_icons[slot]:hide()
+    ui.hotbars[hotbar].slot_icons[slot]:alpha(255)
+    ui.hotbars[hotbar].slot_icons[slot]:color(255, 255, 255)
+    ui.hotbars[hotbar].slot_texts[slot]:text('')
+    ui.hotbars[hotbar].slot_cost[slot]:alpha(255)
+    ui.hotbars[hotbar].slot_cost[slot]:text('')
+end
+
+-- clear recast from a slot
+local function clear_recast(ui, r, s)
+    ui.hotbars[r].slot_recasts[s]:hide()
+    ui.hotbars[r].slot_keys[s]:show()
+    ui.hotbars[r].slot_recast_texts[s]:text('')
+    toggle_slot(ui, r, s, true)
+end
+
+-- clear recast from a slot
+local function hide_recast(ui, r, s)
+    ui.hotbars[r].slot_recasts[s]:hide()
+    ui.hotbars[r].slot_keys[s]:hide()
+    ui.hotbars[r].slot_recast_texts[s]:text('')
+    toggle_slot(ui, r, s, true)
+end
+
+local function get_inventory_count(theme, text_box, bag)
+    text_box:text(bag.count..'/'..bag.max)
+    if (bag.max - bag.count < 4) then
+        text_box:color(240, 0, 0)
+    else
+        text_box:color(theme.red, theme.green, theme.blue)
+    end
+end
+
+local function setup_disabled_icons(ui)
+    for h=1, ui.theme.rows,1 do
+        ui.disabled_icons[#ui.disabled_icons+1] = {}
+        for i=1, ui.theme.columns, 1 do
+            ui.disabled_icons[h][#ui.disabled_icons[h]+1] = 0
+        end
+    end
+end
+
+local function setup_environment_numbers(ui)
+    if ui.theme.hide_battle_notice == false then
+        ui.active_environment['field']:text('  1  ')
+        ui.active_environment['battle']:text('  2  ')
+    else
+        ui.active_environment['field']:text('')
+        ui.active_environment['battle']:text('')
+    end
+	local env_pos_x = get_slot_x(ui, ui.theme.environment.hook_onto_bar, ui.theme.columns+1) - 10
+	local env_pos_y = get_slot_y(ui, ui.theme.environment.hook_onto_bar, 0)
+    ui.active_environment['field']:pos(env_pos_x, env_pos_y)
+    ui.active_environment['field']:size(ui.theme.font_size + 13)
+    ui.active_environment['field']:show()
+    ui.active_environment['field']:italic(false)
+    ui.active_environment['battle']:pos(env_pos_x, env_pos_y + ui.theme.font_size + 41)
+    ui.active_environment['battle']:italic(false)
+    ui.active_environment['battle']:size(ui.theme.font_size + 13)
+    ui.active_environment['battle']:show()
+
+    ui.inventory_count = texts.new(inventory_count_setup)
+    setup_text(ui.inventory_count, ui.theme) 
+    ui.active_inv_pos_y = ui.pos_y + ui.image_height/2 +5
+
+    if (ui.theme.hide_inventory_count == false) then
+        ui.inventory_count:pos(env_pos_x + 10, env_pos_y + ui.theme.font_size + 91)
+        ui.inventory_count:size(ui.theme.font_size+1)
+        get_inventory_count(ui.theme, ui.inventory_count, ui.playerinv.inventory)
+        ui.inventory_count:show()
+    end
+end
+
+-- setup positions and dimensions for ui
+function setup_metrics(ui)
+    ui.playerinv = windower.ffxi.get_items()
+    ui.active_environment = {}
+    ui.active_environment['field'] = {}
+    ui.active_environment['battle'] = {}
+    ui.active_environment['field'] = texts.new(table.copy(environment_text_setup), true)
+    ui.active_environment['battle'] = texts.new(table.copy(environment_text_setup), true)
+    setup_text(ui.active_environment['field'], ui.theme) 
+    setup_text(ui.active_environment['battle'], ui.theme) 
+
+    ui.hotbar_width = ((40*ui.theme.columns) + ui.theme.slot_spacing * (ui.theme.columns-1))
+    ui.scaled_pos_x = windower.get_windower_settings().ui_x_res
+    ui.scaled_pos_y = windower.get_windower_settings().ui_y_res
+    ui.pos_x = 0 --math.floor(ui.scaled_pos_x/2.0) + ui.theme.offset_x 
+    ui.pos_y = 0 --ui.scaled_pos_y + ui.theme.offset_y
+
+    ui.slot_spacing = ui.theme.slot_spacing 
+
+    if ui.theme.hide_action_names == true then
+        ui.theme.hotbar_spacing = ui.theme.hotbar_spacing - 10
+        ui.pos_y = ui.pos_y + 10
+    end
+
+    ui.hotbar_spacing = ui.theme.hotbar_spacing 
+    setup_environment_numbers(ui)
+end
+
+-- init slot
+local function init_slot(ui, row, column, theme_options)
+
+    local slot_pos_x = get_slot_x(ui, row, column)
+    local slot_pos_y = get_slot_y(ui, row, column)
+    local right_slot_pos_x = slot_pos_x - windower.get_windower_settings().x_res + 16
+
+    ui.hotbars[row].slot_backgrounds[column] = images.new(table.copy(images_setup, true))
+    ui.hotbars[row].slot_icons[column] = images.new(table.copy(images_setup, true))
+    ui.hotbars[row].slot_recasts[column] = images.new(table.copy(images_setup, true))
+    ui.hotbars[row].slot_frames[column] = images.new(table.copy(images_setup, true))
+
+    ui.hotbars[row].slot_texts[column] = texts.new(table.copy(text_setup), true)
+    ui.hotbars[row].slot_cost[column] = texts.new(table.copy(text_setup), true)
+    ui.hotbars[row].slot_recast_texts[column] = texts.new(table.copy(text_setup), true)
+    ui.hotbars[row].slot_keys[column] = texts.new(table.copy(text_setup), true)
+
+    setup_image(ui.hotbars[row].slot_backgrounds[column], windower.addon_path..'/themes/' .. (theme_options.slot_theme:lower()) .. '/slot.png')
+    setup_image(ui.hotbars[row].slot_icons[column], windower.addon_path..'/images/other/blank.png')
+    setup_image(ui.hotbars[row].slot_frames[column], windower.addon_path..'/themes/' .. (theme_options.frame_theme:lower()) .. '/frame.png')
+
+    setup_text(ui.hotbars[row].slot_texts[column], theme_options)
+    setup_text(ui.hotbars[row].slot_cost[column], theme_options)
+    setup_text(ui.hotbars[row].slot_recast_texts[column], theme_options)
+    setup_text(ui.hotbars[row].slot_keys[column], theme_options)
+
+    ui.hotbars[row].slot_backgrounds[column]:alpha(theme_options.slot_opacity)
+    ui.hotbars[row].slot_backgrounds[column]:pos(slot_pos_x, slot_pos_y)
+    ui.hotbars[row].slot_recasts[column]:pos(slot_pos_x, slot_pos_y)
+
+	ui.hotbars[row].slot_recasts[column]:alpha(5)
+    ui.hotbars[row].slot_icons[column]:pos(slot_pos_x, slot_pos_y)
+    ui.hotbars[row].slot_frames[column]:pos(slot_pos_x, slot_pos_y)
+
+    ui.hotbars[row].slot_texts[column]:pos(slot_pos_x, slot_pos_y + ui.image_height -12)
+
+    ui.hotbars[row].slot_cost[column]:stroke_transparency(220)
+    ui.hotbars[row].slot_cost[column]:pos(slot_pos_x - 1, slot_pos_y - 4)
+    ui.hotbars[row].slot_cost[column]:size(theme_options.font_size)
+    ui.hotbars[row].slot_cost[column]:hide()
+
+    ui.hotbars[row].slot_keys[column]:alpha(255)
+    ui.hotbars[row].slot_keys[column]:stroke_width(2)
+    ui.hotbars[row].slot_keys[column]:pos(slot_pos_x - 1, slot_pos_y - 4)
+    ui.hotbars[row].slot_keys[column]:size(theme_options.font_size)
+    ui.hotbars[row].slot_keys[column]:alpha(255)
+
+    ui.hotbars[row].slot_recast_texts[column]:pos(slot_pos_x - 1, slot_pos_y - 4)
+    ui.hotbars[row].slot_recast_texts[column]:alpha(255)
+    ui.hotbars[row].slot_recast_texts[column]:color(100, 200, 255)
+    ui.hotbars[row].slot_recast_texts[column]:size(theme_options.font_size)
+    ui.hotbars[row].slot_recast_texts[column]:hide()
+
+    if keyboard.hotbar_rows[row] == nil or keyboard.hotbar_rows[row][column] == nil then 
+        ui.hotbars[row].slot_keys[column]:text("")
+    else
+        ui.hotbars[row].slot_keys[column]:text(convert_string(keyboard.hotbar_rows[row][column]))
+    end
+end
+
+local function init_hotbar(ui, theme_options, number)
+    local hotbar            = {}
+    hotbar.slot_backgrounds  = {}
+    hotbar.slot_icons        = {}
+    hotbar.slot_recasts      = {}
+    hotbar.slot_frames       = {}
+    hotbar.slot_texts        = {}
+    hotbar.slot_cost        = {}
+    hotbar.slot_recast_texts = {}
+    hotbar.slot_keys         = {}
+	hotbar.number           = texts.new(table.copy(text_setup), true)
+	setup_text(hotbar.number, theme_options)
+	hotbar.number:text(tostring(number))
+	if (theme_options.offsets[tostring(number)].Vertical == true) then
+		hotbar.number:pos(get_slot_x(ui ,number, 0)+30, get_slot_y(ui, number, 0)+25)
+	else
+		hotbar.number:pos(get_slot_x(ui, number, 0)+30, get_slot_y(ui, number, 0))
+	end
+	hotbar.number:size(theme_options.font_size + 5)
+	hotbar.number:font('agave Nerd Font')
+	return hotbar
+end
+
+-- load the images and text
+local function load(ui)
+    -- create ui elements for hotbars
+    for h=1,ui.theme.hotbar_number,1 do
+        ui.hotbars[h] = init_hotbar(ui, ui.theme, h)
+        for i=1, ui.theme.columns,1 do
+            init_slot(ui, h, i, ui.theme)
+        end
+    end
+
+    -- load feedback icon last so it stays above everything else
+    setup_feedback(ui)
+end
+
+-- load action into a hotbar slot
+local function load_action(ui, row, slot, action, player_vitals)
+
+    local is_disabled = false
+
+    clear_slot(ui, row, slot)
+
+    -- if slot is empty, leave it cleared
+    if action == nil then
+        if ui.theme.hide_empty_slots == true then
+            ui.hotbars[row].slot_backgrounds[slot]:hide()
+            ui.hotbars[row].slot_keys[slot]:hide()
+        else
+            ui.hotbars[row].slot_backgrounds[slot]:show()
+            ui.hotbars[row].slot_keys[slot]:show()
+        end
+
+        return
+    end
+
+    -- if slot has a skill (ma, ja or ws)
+    if action.type == 'ma' or action.type == 'ja' then
+        -- ui.hotbars[row].slot_icons[slot]:pos(ui:get_slot_x(row, slot) + 4, ui:get_slot_y(row, slot) + 4) -- temporary fix for 32 x 32 icons
+        ui.hotbars[row].slot_icons[slot]:fit(false) 
+        local skill = nil
+        local slot_image = nil
+
+        -- if its magic, look for it in spells
+        if action.type == 'ma' and database.spells[(action.action):lower()] ~= nil then
+            skill = database.spells[(action.action):lower()]
+            ui.hotbars[row].slot_icons[slot]:path(windower.addon_path .. '/images/icons/spells/' .. (string.format("%05d", skill.icon)) .. '.png')
+        elseif (action.type == 'ja' or action.type == 'ws') and database.abilities[(action.action):lower()] ~= nil then
+            skill = database.abilities[(action.action):lower()]
+            if action.type == 'ja' then
+                    ui.hotbars[row].slot_icons[slot]:path(windower.addon_path .. '/images/icons/abilities/' .. string.format("%05d", skill.icon) .. '.png')
+            else
+                skill.tpcost = '1000'
+            end
+        end
+
+        ui.hotbars[row].slot_backgrounds[slot]:alpha(200)
+        ui.hotbars[row].slot_icons[slot]:show()
+
+        if skill ~= nil then
+            -- display mp cost
+            if skill.mpcost ~= nil and skill.mpcost ~= 0 then
+                ui.hotbars[row].slot_cost[slot]:color(ui.theme.mp_cost_color_red, ui.theme.mp_cost_color_green, ui.theme.mp_cost_color_blue)
+                ui.hotbars[row].slot_cost[slot]:text(tostring(skill.mpcost))
+
+                if player_vitals.mp < tonumber(skill.mpcost) then
+                    ui.disabled_slots.no_vitals[action.action] = true
+                    is_disabled = true
+                end
+            -- display tp cost
+            elseif skill.tpcost ~= nil and skill.tpcost ~= '0' then
+                ui.hotbars[row].slot_cost[slot]:color(ui.theme.tp_cost_color_red, ui.theme.tp_cost_color_green, ui.theme.tp_cost_color_blue)
+                ui.hotbars[row].slot_cost[slot]:text(' ')
+
+                if player_vitals.tp < tonumber(skill.tpcost) then
+                    ui.disabled_slots.no_vitals[action.action] = true
+                    is_disabled = true
+                end
+            end
+        end
+    elseif action.type == 'ws' then
+        ws = database.weapon_skills[(action.action):lower()]
+        --windower.add_to_chat(7, "WS: "..ws.name..", ID: "..ws.id.." Icon: "..ws.icon)
+        ui.hotbars[row].slot_icons[slot]:pos(get_slot_x(ui, row, slot), get_slot_y(ui, row, slot))
+        ui.hotbars[row].slot_icons[slot]:path(windower.addon_path .. '/images/icons/weapons/' .. string.format("%02d", ws.icon) .. '.jpg')
+        ui.hotbars[row].slot_icons[slot]:show()
+    
+    -- if action is an item
+    elseif action.type == 'item' then
+        ui.hotbars[row].slot_icons[slot]:pos(get_slot_x(ui, row, slot), get_slot_y(ui, row, slot))
+        ui.hotbars[row].slot_icons[slot]:path(windower.addon_path .. '/images/icons/custom/item.png')
+        ui.hotbars[row].slot_icons[slot]:show()
+    -- If action is a gearswap type
+    elseif action.type == 'gs' then
+        ui.hotbars[row].slot_icons[slot]:pos(get_slot_x(ui, row, slot), get_slot_y(ui, row, slot))
+        ui.hotbars[row].slot_icons[slot]:path(windower.addon_path .. '/images/icons/custom/gear.png')
+        ui.hotbars[row].slot_icons[slot]:show()
+    -- If no custom icon is defined, just put on a gear.
+    else
+        ui.hotbars[row].slot_icons[slot]:pos(get_slot_x(ui, row, slot), get_slot_y(ui, row, slot))
+        ui.hotbars[row].slot_icons[slot]:path(windower.addon_path .. '/images/icons/custom/cog.png')
+        ui.hotbars[row].slot_icons[slot]:show()
+    end
+
+    -- if action is custom
+    if action.icon ~= nil then
+        ui.hotbars[row].slot_backgrounds[slot]:alpha(200)
+        ui.hotbars[row].slot_icons[slot]:pos(get_slot_x(ui, row, slot), get_slot_y(ui, row, slot))
+        ui.hotbars[row].slot_icons[slot]:path(windower.addon_path .. '/images/icons/custom/' .. action.icon .. '.png')
+        ui.hotbars[row].slot_icons[slot]:show()
+    end
+
+    -- check if action is on cooldown
+    if ui.disabled_slots.on_cooldown[action.action] ~= nil then is_disabled = true end
+
+    ui.hotbars[row].slot_frames[slot]:show()
+    ui.hotbars[row].slot_texts[slot]:text(action.alias)
+
+    -- hide elements according to settings
+    if ui.theme.hide_action_names == true then ui.hotbars[row].slot_texts[slot]:hide() else ui.hotbars[row].slot_texts[slot]:show() end
+
+    -- if slot is disabled, disable it
+    if is_disabled == true then
+        toggle_slot(ui, row, slot, false)
+        ui.disabled_slots.actions[action.action] = true
+    end
+end
+
+function ui:update_inventory_count()
+    if (self.is_setup == true) then
+        if (self.theme.hide_inventory_count == false) then
+            self.playerinv = windower.ffxi.get_items()
+            get_inventory_count(self.theme, self.inventory_count, self.playerinv.inventory)
+        end
+    end
+end
+
+----------------------
+-- Public Functions --
+----------------------
+function ui:change_image(environment, hotbar, slot)
+end
+
+function ui:setup(theme_options)
+    database:import()
+    self.theme = theme_options
+	self.image_width    = math.floor(self.image_width * self.theme.slot_icon_scale)
+	self.image_height   = math.floor(self.image_height * self.theme.slot_icon_scale)
+	self.hover_icon = images.new(table.copy(images_setup, true))
+    setup_image(self.hover_icon, windower.addon_path..'/images/other/square.png')
+	self.hover_icon:hide()
+	self.hover_icon:size(self.image_width+2, self.image_height+2)
+    setup_metrics(self)
+    setup_disabled_icons(self)
+    load(self)
+    self.is_setup = true
+end
+
+function ui:swap_icons(swap_table)
+	local source_row  = swap_table.source.row
+	local source_slot = swap_table.source.slot
+	local dest_row    = swap_table.dest.row
+	local dest_slot   = swap_table.dest.slot
+	local tempPathSource = self.hotbars[source_row].slot_icons[source_slot]:path()
+	local tempTextSource = self.hotbars[source_row].slot_texts[source_slot]:text()
+	local tempPathDest   = self.hotbars[dest_row].slot_icons[dest_slot]:path()
+	local tempTextDest   = self.hotbars[dest_row].slot_texts[dest_slot]:text()
+
+	self.hotbars[dest_row].slot_texts[dest_slot]:text(tempTextSource)
+	self.hotbars[dest_row].slot_icons[dest_slot]:path(tempPathSource)
+	self.hotbars[source_row].slot_texts[source_slot]:text(tempTextDest)
+	self.hotbars[source_row].slot_icons[source_slot]:path(tempPathDest)
+end
+
+-- hide all ui components
+function ui:hide()
+    self.battle_notice:hide()
+    self.feedback_icon:hide()
+    if (self.active_environment ~= nil) then
+        self.active_environment['battle']:hide()
+        self.active_environment['field']:hide()
+    end
+    self.inventory_count:hide()
+
+    for h=1,self.theme.hotbar_number,1 do
+
+		self.hotbars[h].number:hide()
+        for i=1, self.theme.columns, 1 do
+            self.hotbars[h].slot_backgrounds[i]:hide()
+            self.hotbars[h].slot_icons[i]:hide()
+            self.hotbars[h].slot_frames[i]:hide()
+            self.hotbars[h].slot_recasts[i]:hide()
+            self.hotbars[h].slot_texts[i]:hide()
+            self.hotbars[h].slot_cost[i]:hide()
+            self.hotbars[h].slot_recast_texts[i]:hide()
+            self.hotbars[h].slot_keys[i]:hide()
+        end
+    end
+end
+
+function ui:hide_hover()
+	self.hover_icon:hide()
+end
+
+-- show ui components
+function ui:show(player_hotbar, environment)
+    if (self.active_environment ~= nil) then
+        self.active_environment['battle']:show()
+        self.active_environment['field']:show()
+    end
+    self.inventory_count:show()
+    if self.theme.hide_battle_notice == false and environment == 'battle' then self.battle_notice:show() end
+
+    for h=1,self.theme.rows,1 do
+        for i=1, self.theme.columns, 1 do
+            local slot = i
+			local pos_x, pos_y = self.hotbars[h].slot_icons[i]:pos()
+			if (pos_x == 0 and pos_y == 0) then
+				print("h: " .. h .. ", i: " .. i)
+			end
+			pos_x, pos_y = self.hotbars[h].slot_recasts[i]:pos()
+			if (pos_x == 0 and pos_y == 0) then
+				print("h: " .. h .. ", i: " .. i)
+			end
+
+            local action = player_hotbar[environment]['hotbar_' .. h]['slot_' .. slot]
+
+            if self.theme.hide_empty_slots == false then self.hotbars[h].slot_backgrounds[i]:show() end
+            self.hotbars[h].slot_icons[i]:show()
+            if action ~= nil then self.hotbars[h].slot_frames[i]:show() end
+			self.hotbars[h].number:show()
+            if self.theme.hide_recast_animation == false then self.hotbars[h].slot_recasts[i]:show() end
+            if self.theme.hide_action_names == false then self.hotbars[h].slot_texts[i]:show() end
+            if self.theme.hide_recast_text == false then self.hotbars[h].slot_recast_texts[i]:show() end
+            if self.theme.hide_empty_slots == false then self.hotbars[h].slot_keys[i]:show() end
+        end
+    end
+end
+
+----------------
+-- Actions UI --
+----------------
+
+-- load player hotbar
+function ui:load_player_hotbar(player_hotbar, environment, player_vitals)
+    if environment == 'battle' and self.theme.hide_battle_notice == false then
+        self.active_environment['field']:color(255, 255, 255)
+        self.active_environment['battle']:color(100, 100, 100)
+    else
+        self.active_environment['field']:color(100, 100, 100)
+        self.active_environment['battle']:color(255, 255, 255)
+    end
+
+    -- reset disabled slots
+    self.disabled_slots.actions = {}
+    self.disabled_slots.no_vitals = {}
+    self.disabled_slots.on_cooldown = {}
+
+    for h=1,self.theme.hotbar_number,1 do
+        for i=1, self.theme.columns, 1 do
+			load_action(self, h, i, player_hotbar[environment]['hotbar_' .. h]['slot_' .. i], player_vitals)
+        end
+    end
+end
+
+
+
+--------------------
+-- Disabled Slots --
+--------------------
+
+function ui:update_mp(new_mp)
+	current_mp = new_mp
+end
+
+function ui:update_tp(current_tp)
+	if (current_tp < 1000) then can_ws = false else can_ws = true end
+end
+
+-- check action recasts
+function ui:check_recasts(player_hotbar, environment, player_vitals )
+    local ability_recasts = windower.ffxi.get_ability_recasts()
+    local spell_recasts = windower.ffxi.get_spell_recasts()
+    for h=1, self.theme.rows, 1 do
+        for i=1, self.theme.columns, 1 do
+            local is_action = false
+            local is_disabled = false
+            local slot = i
+            --if slot == 10 then slot = 0 end
+            local action = player_hotbar[environment]['hotbar_' .. h]['slot_' .. slot]
+            if (action ~= nil) then 
+                is_action = true 
+            end
+
+            if (is_neutralized == true) then 
+                is_disabled = true
+            elseif (is_action == true) then
+				if (action.type == 'ma' and current_mp < database.spells[(action.action):lower()].mpcost) then
+					is_silenced = true 
+				else 
+					is_silenced = false 
+				end
+                if (is_silenced == true and action.type == 'ma') then 
+                    is_disabled = true 
+                elseif (is_amnesiad == true and (action.type == 'ja' or action.type == 'ws')) then 
+                    is_disabled = true 
+				elseif (action.type == 'ws' and can_ws == false) then
+					is_disabled = true
+                end
+            end
+
+            if (is_action == true and is_disabled == true) then 
+                disable_slot(self, h, i, action)
+            elseif action == nil  then
+				if (self.theme.hide_empty_slots == true) then
+					self:hide_recast(h, i)
+				else
+					clear_recast(self, h, i)
+				end
+			elseif (action.type ~= 'ma' and action.type ~= 'ja' and action.type ~= 'ws') then
+                clear_recast(self, h, i)
+
+            -- if skill is in cooldown
+            else
+                local skill = nil
+                local action_recasts = nil
+                local in_cooldown = false
+                local is_in_seconds = false
+
+                -- if its magic, look for it in spells
+                if action.type == 'ma' and database.spells[(action.action):lower()] ~= nil then
+                    skill = database.spells[(action.action):lower()]
+                    action_recasts = spell_recasts
+                    is_in_seconds = false
+                elseif action.type == 'ja' and database.abilities[(action.action):lower()] ~= nil then
+                    skill = database.abilities[(action.action):lower()]
+                    action_recasts = ability_recasts
+                    is_in_seconds = true
+                end
+
+                -- check if skill is in cooldown
+                if skill ~= nil and action_recasts[tonumber(skill.icon)] ~= nil and action_recasts[tonumber(skill.icon)] > 0 then
+                    -- register first cooldown to calculate percentage
+                    if self.disabled_slots.on_cooldown[action.action] == nil then
+                        self.disabled_slots.on_cooldown[action.action] = action_recasts[tonumber(skill.icon)]
+
+                        -- setup recast elements
+                        self.hotbars[h].slot_recasts[i]:path(windower.addon_path..'/images/other/black-square.png')
+                    end
+
+                    in_cooldown = true
+                end
+
+                if in_cooldown == true then
+                    -- disable slot if it's not disabled
+                    if self.disabled_slots.actions[action.action] == nil then
+                        self.disabled_slots.actions[action.action] = true
+                        toggle_slot(self, h, i, false)
+                        self.disabled_icons[h][i] = 1
+                    else
+                        self.disabled_icons[h][i] = 1
+                    end
+
+                    -- show recast animation
+                    local recast_time = calc_recast_time(action_recasts[tonumber(skill.icon)], is_in_seconds)
+
+                    in_cooldown = true
+
+                    self.hotbars[h].slot_recasts[i]:show()
+                    self.hotbars[h].slot_recast_texts[i]:text(recast_time)
+                    self.hotbars[h].slot_recast_texts[i]:show()
+                    self.hotbars[h].slot_keys[i]:hide()
+                else
+                    self.disabled_icons[h][i] = 0
+                    clear_recast(self, h, i)
+
+                    if self.disabled_slots.on_cooldown[action.action] == true then
+                        self.disabled_slots.on_cooldown[action.action] = nil
+                    end
+
+                    -- if it's not disabled by vitals nor cooldown, enable slot
+                    if self.disabled_slots.actions[action.action] == true and self.disabled_slots.no_vitals[action.action] == nil then
+                        self.disabled_slots.actions[action.action] = nil
+                        toggle_slot(self, h, i, true)
+                    end
+                end
+            end
+        end
+    end
+end
+
+function ui:check_hover()
+
+    local disabled_opacity = self.theme.disabled_slot_opacity
+    local enabled_opacity  = 200
+    local row              = self.hover_icon.row
+    local col              = self.hover_icon.col
+    local prev_col         = self.hover_icon.col
+    local prev_row         = self.hover_icon.row
+
+    if (row ~= nil and col ~= nil) then
+        if (self.disabled_icons[row][col] == 0) then
+            self.hotbars[row].slot_icons[col]:alpha(disabled_opacity)
+            prev_row, prev_col = row, col
+        end
+    elseif(prev_row ~= nil and prev_col ~= nil) then
+        if (self.disabled_icons[prev_row][prev_col] == 1) then
+            opacity = disabled_opacity
+        else
+            opacity = enabled_opacity
+        end
+        self.hotbars[prev_row].slot_icons[prev_col]:alpha(opacity)
+        prev_col = nil
+        prev_row = nil
+    end
+
+    self.prev_col       = prev_col
+    self.prev_row       = prev_row
+    self.hover_icon.row = row
+    self.hover_icon.col = col
+end
 
 -----------------
 -- Feedback UI --
 -----------------
 
 -- trigger feedback visuals in given hotbar and slot
-function ui:trigger_feedback(hotbar, slot)
+function ui:trigger_feedback(row, slot)
     --if slot == 0 then slot = 10 end
 
-    self.feedback_icon:pos(self:get_slot_x(hotbar, slot), self:get_slot_y(hotbar, slot))
+    self.feedback_icon:pos(get_slot_x(self, row, slot), get_slot_y(self, row, slot))
     self.feedback.is_active = true
 end
 
@@ -965,7 +966,7 @@ end
 -- https://github.com/maverickdfz/FFXIAddons/blob/master/xivhotbar/ui.lua
 function ui:hovered(x, y)
 
-    local hotbar = nil
+    local row = nil
     local slot   = nil
     local found  = false
 
@@ -987,15 +988,15 @@ function ui:hovered(x, y)
 	if found == false then
 		for h=1,#self.hotbars,1 do
 			for i=1,self.theme.columns,1 do
-				pos_x = self:get_slot_x(h, i)
-				pos_y = self:get_slot_y(h, i)
+				pos_x = get_slot_x(self, h, i)
+				pos_y = get_slot_y(self, h, i)
 				off_x = pos_x + self.image_width
 				off_y = pos_y + self.image_height
 
 				if  ((pos_x <= x and x <= off_x) or (pos_x >= x and x >= off_x))
 				and ((pos_y <= y and y <= off_y) or (pos_y >= y and y >= off_y)) 
 				then
-					hotbar, slot, found = h, i, true
+					row, slot, found = h, i, true
 					break
 				end
 			end
@@ -1006,19 +1007,15 @@ function ui:hovered(x, y)
 		end
 	end
 
-    return hotbar, slot
+    return row, slot
 end
 
 function ui:light_up_action(row, column)
-	local x = ui:get_slot_x(row, column)
-	local y = ui:get_slot_y(row, column)
-	hover_icon:pos(x-1, y-1)
-	hover_icon:alpha(255)
-	hover_icon:show()
-end
-
-function ui:hide_hover()
-	hover_icon:hide()
+	local x = get_slot_x(ui, row, column)
+	local y = get_slot_y(ui, row, column)
+	self.hover_icon:pos(x-1, y-1)
+	self.hover_icon:alpha(255)
+	self.hover_icon:show()
 end
 
 function ui:move_icons(moved_row_info)
@@ -1029,24 +1026,24 @@ function ui:move_icons(moved_row_info)
 	self.theme.offsets[tostring(r)].OffsetX = off_x
 	self.theme.offsets[tostring(r)].OffsetY = off_y
 	for i=1,self.theme.columns,1 do
-		local x = ui:get_slot_x(r, i)
-		local y = ui:get_slot_y(r, i)
-		self.hotbars[r].slot_icon[i]:pos(x, y)
-		self.hotbars[r].slot_frame[i]:pos(x, y)
-		self.hotbars[r].slot_recast[i]:pos(x, y)
-		self.hotbars[r].slot_background[i]:pos(x, y)
-		self.hotbars[r].slot_recast_text[i]:pos(x, y)
-		self.hotbars[r].slot_text[i]:pos(x, y + ui.image_height -12)
-		self.hotbars[r].slot_key[i]:pos(x, y)
+		local x = get_slot_x(self, r, i)
+		local y = get_slot_y(self, r, i)
+		self.hotbars[r].slot_icons[i]:pos(x, y)
+		self.hotbars[r].slot_frames[i]:pos(x, y)
+		self.hotbars[r].slot_recasts[i]:pos(x, y)
+		self.hotbars[r].slot_backgrounds[i]:pos(x, y)
+		self.hotbars[r].slot_recast_texts[i]:pos(x, y)
+		self.hotbars[r].slot_texts[i]:pos(x, y + ui.image_height -12)
+		self.hotbars[r].slot_keys[i]:pos(x, y)
 	end
 	if (self.theme.offsets[tostring(r)].Vertical == true) then
-		self.hotbars[r].number:pos(ui:get_slot_x(r, 0)+30, ui:get_slot_y(r, 0)+25)
+		self.hotbars[r].number:pos(get_slot_x(self, r, 0)+30, get_slot_y(self, r, 0)+25)
 	else
-		self.hotbars[r].number:pos(ui:get_slot_x(r, 0)+30, ui:get_slot_y(r, 0))
+		self.hotbars[r].number:pos(get_slot_x(self, r, 0)+30, get_slot_y(self, r, 0))
 	end
 	if (r == self.theme.environment.hook_onto_bar) then
-		local env_pos_x = ui:get_slot_x(self.theme.environment.hook_onto_bar, self.theme.columns+1) - 10
-		local env_pos_y = ui:get_slot_y(self.theme.environment.hook_onto_bar, 0)
+		local env_pos_x = ui:get_slot_x(self, self.theme.environment.hook_onto_bar, self.theme.columns+1) - 10
+		local env_pos_y = ui:get_slot_y(self, self.theme.environment.hook_onto_bar, 0)
 
 		self.active_environment['field']:pos(env_pos_x, env_pos_y)
 		self.active_environment['battle']:pos(env_pos_x, env_pos_y + 50)

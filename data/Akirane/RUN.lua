@@ -43,8 +43,7 @@ xivhotbar_keybinds_job['Base'] = {
   {'b 4 8',  'gs', 'equip engaged', '', 'DPS'},
   {'b 4 9',  'ja', 'vivacious pulse', 'me', 'Pulse', 'pulse-icon'},
   {'b 4 10', 'ja', 'One for All', 'me', 'OFA', 'shellra'},
-  {'b 4 12',  'ws', 'fell cleave', 'stnpc', 'FC'},
-  {'b 1 12',  'gs', 'equip idle', '', 'Idle'},
+  {'b 5 2',  'ws', 'fell cleave', 'stnpc', 'FC'},
   {'b 4 11',  'gs', 'equip magic_def', '', 'MDef'},
   {'f 1 5',  'ma', 'Protect V', 'stal', 'Pro.V'},
   {'f 1 6',  'ma', 'Shell V', 'stal', 'She.V'},
@@ -63,11 +62,10 @@ xivhotbar_keybinds_job['WAR'] = {
 }
 xivhotbar_keybinds_job['SAM'] = {
   {'b 1 2',  'ja', 'Hasso', 'me', 'Has.'},
-  {'b 4 9',  'ja', 'Meditate', 'me', 'Med.'},
+  {'b 3 11',  'ja', 'Meditate', 'me', 'Med.'},
   {'b 4 10', 'ja', 'Sekkanoki', 'me', 'Sek.'},
-  {'b 5 2',  'ws', 'steel cyclone', 't', 'SC'},
-  {'b 5 3',  'ja', 'swipe', 't', 'swipe', 'sulpor-icon'},
-  {'b 5 4',  'ws', 'ground strike', 't', 'gs'},
+  {'b 3 12',  'ws', 'steel cyclone', 't', 'SC'},
+  {'b 2 11',  'ja', 'swipe', 't', 'swipe', 'sulpor-icon'},
 }
 xivhotbar_keybinds_job['BLU'] = {
   {'b 1 2',  'ma', 'Blank Gaze', 't', 'Blank'},
