@@ -1,13 +1,22 @@
-# XIVHotbar - [Version 0.3]
+# XIVHotbar - [Version 0.5]
 This version is further work on SirEdeonX's original addon, you can check his work from here: https://github.com/SirEdeonX/FFXIAddons/tree/master/xivhotbar. 
 
-![XIVHotbar](/images/demo/demo1.png)
+![XIVHotbar](/images/demo/hover.gif)
+
+
+## Note about 15/09/2020 update
+
+- It's now possible to get the description from hovering over an icon. This option can be disabled by checking the ShowDescription option in settings.xml.
 
 ## How this version differentiates
 
 - You can now move the hotbars around by typing in `//htb move`, the movement has a "snapping" feature, meaning it's easier to align the rows.
 
 ![XIVHotbar](/images/demo/movement1.gif)
+
+- It's now possible to move/delete icons by dragging the icons.
+
+![XIVHotbar](/images/demo/move_icons.gif)
 
 - The number of rows is customizable. Currently I support up to 6 hotbars.  
 - Job files now use `.lua` instead of `.xml` files. The main difference is everything loads much faster now. This means there's no ingame support for inserting new actions.
@@ -17,9 +26,6 @@ This version is further work on SirEdeonX's original addon, you can check his wo
 - The icons are clickable with your mouse now. By clicking on "1" or "2" you can change between battle and field environments.
 - If you receive sleep/stun/amnesia/silence/etc, the actions will be disabled.
 
-## Note about 15/09/2020 update
-
-- It's now possible to get the description from hovering over an icon. This option can be disabled by checking the ShowDescription option in settings.xml.
 
 ## Note about 23/08/2020 update
 
