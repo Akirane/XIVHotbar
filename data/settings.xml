@@ -45,7 +45,7 @@
                 </Fifth>
                 <First>
                     <OffsetX>530</OffsetX>
-                    <OffsetY>200</OffsetY>
+                    <OffsetY>230</OffsetY>
                     <Vertical>false</Vertical>
                 </First>
                 <Fourth>
@@ -55,7 +55,7 @@
                 </Fourth>
                 <Second>
                     <OffsetX>530</OffsetX>
-                    <OffsetY>150</OffsetY>
+                    <OffsetY>170</OffsetY>
                     <Vertical>false</Vertical>
                 </Second>
                 <Sixth>
@@ -65,13 +65,14 @@
                 </Sixth>
                 <Third>
                     <OffsetX>530</OffsetX>
-                    <OffsetY>100</OffsetY>
+                    <OffsetY>110</OffsetY>
                     <Vertical>false</Vertical>
                 </Third>
             </Offsets>
+            <ShowDescription>true</ShowDescription>
             <SlotIconScale>1.2</SlotIconScale>
             <columns>12</columns>
-            <rows>5</rows>
+            <rows>4</rows>
         </Hotbar>
         <Style>
             <HotbarSpacing>56</HotbarSpacing>
@@ -105,34 +106,4 @@
             <Slot>ffxiv</Slot>
         </Theme>
     </global>
-    <akirane>
-        <Hotbar>
-            <Offsets>
-                <Fifth>
-                    <OffsetX>1910</OffsetX>
-                    <OffsetY>1070</OffsetY>
-                </Fifth>
-                <First>
-                    <OffsetX>1080</OffsetX>
-                    <OffsetY>1370</OffsetY>
-                </First>
-                <Fourth>
-                    <OffsetX>1080</OffsetX>
-                    <OffsetY>1190</OffsetY>
-                </Fourth>
-                <Second>
-                    <OffsetX>1080</OffsetX>
-                    <OffsetY>1310</OffsetY>
-                </Second>
-                <Sixth>
-                    <OffsetX>1400</OffsetX>
-                    <OffsetY>160</OffsetY>
-                </Sixth>
-                <Third>
-                    <OffsetX>1080</OffsetX>
-                    <OffsetY>1250</OffsetY>
-                </Third>
-            </Offsets>
-        </Hotbar>
-    </akirane>
 </settings>

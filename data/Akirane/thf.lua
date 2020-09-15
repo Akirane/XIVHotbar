@@ -21,6 +21,7 @@ xivhotbar_keybinds_job['Base'] = {
 
 	{'b 4 1',  'ja', 'feint', 'me', 'feint'},
 	{'b 4 2',  'ja', 'conspirator', 'me', 'cons.'},
+	{'b 1 12', 'ct', 'lockstyleset 2', 'lock', ' '},
 }
 
 xivhotbar_keybinds_job['Dagger'] = {

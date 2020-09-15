@@ -45,6 +45,7 @@ theme.apply = function (settings)
     -- Hotbar
     local sh = settings.Hotbar
     options.enable_weapon_switching = sh.EnableWeaponSwitching
+    options.show_description        = sh.ShowDescription
     options.hotbar_number           = sh.rows
     options.rows                    = sh.rows
     options.columns                 = sh.columns

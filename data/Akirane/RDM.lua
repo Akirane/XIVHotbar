@@ -94,6 +94,7 @@ xivhotbar_keybinds_job['Base'] = {
 	{'f 2 12', 'ma', 'ice spikes', 'me', ' '},
 	{'f 1 11', 'ma', 'shock spikes', 'me', ' '},
 	{'f 1 12', 'ma', 'blaze spikes', 'me', ' '},
+	{'f 3 7', 'ct', 'lockstyleset 4', 't', 'lockstyle'},
 }
 
 xivhotbar_keybinds_job['Light Arts'] = {
@@ -102,7 +103,6 @@ xivhotbar_keybinds_job['Light Arts'] = {
 	{'b 2 6', 'ma', 'Erase', 'stal', 'Era.'},
 
 	{'b 4 1', 'ja', 'Penury', 'me', 'MP 1/2'},
-	{'b 4 2',  'ma', 'Break', 'stnpc' ,'' },
 	{'b 4 4', 'ja', 'Addendum: White', 'me', 'A.Wh.'},
 
 	-- Field
@@ -117,7 +117,6 @@ xivhotbar_keybinds_job['Dark Arts'] = {
 	{'b 2 6', 'ma', 'Thunder V', 'stnpc', ''},
 
 	{'b 4 1', 'ja', 'Parsimony', 'me', 'MP 1/2'},
-	{'b 4 2',  'ma', 'Break', 'stnpc' ,'' },
 	{'b 4 4', 'ma', 'Impact', 'stnpc', 'Imp.'},
 }
 
@@ -159,7 +158,6 @@ xivhotbar_keybinds_job['WAR'] = {
 	{'b 3 8', 'ja', 'Aggressor', 'me', 'Agg.'},
 
 	{'b 4 1', 'ma', 'Gain-VIT', 'me', 'VIT'},
-	{'b 4 2',  'ma', 'Break', 'stnpc' ,'' },
 	{'b 4 4', 'ma', 'Barthunder', 'me', 'Barth.'},
 	{'b 4 3', 'ma', 'impact', 't', ' '},
 }
@@ -203,8 +201,8 @@ xivhotbar_keybinds_job['NIN'] = {
 	{'f 4 6', 'ma', 'enaero', 'me', ''},
 
 
-	{'f 4 11',  'gs', 'equip low_lvl_daggers', 'me', 'Lv1D'},
-	{'f 4 10',  'gs', 'equip high_lvl_wep', 'me', 'Lv99D'},
+	--{'f 4 11',  'gs', 'equip low_lvl_daggers', 'me', 'Lv1D'},
+	--{'f 4 10',  'gs', 'equip high_lvl_wep', 'me', 'Lv99D'},
 	--{'b 5 6', 'gs', 'equip sets.mdef', '', 'MDEF'},
 	{'f 5 7', 'ma', 'barfire', 'me', 'Fire'},
 	{'f 5 8', 'ma', 'barwater', 'me', 'Fire'},
@@ -248,11 +246,11 @@ xivhotbar_keybinds_job['DRK'] = {
 xivhotbar_keybinds_job['BLM'] = {
 
 	-- Battle
-	{'b 2 5', 'ja', 'Elemental Seal', 'me', 'Ele.'},
+	{'b 4 2', 'ja', 'Elemental Seal', 'me', 'Ele.'},
 	{'b 2 6', 'ma', 'Stun', 'bt', ''},
 
 
-	{'b 4 2',  'ma', 'Break', 'stnpc' ,'' },
+	{'b 2 5',  'ma', 'Break', 'stnpc' ,'' },
 
 	-- Field
 	{'f 4 1', 'ma', 'Stonega II', 'stnpc', ''},

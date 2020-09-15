@@ -17,6 +17,9 @@ This version is further work on SirEdeonX's original addon, you can check his wo
 - The icons are clickable with your mouse now. By clicking on "1" or "2" you can change between battle and field environments.
 - If you receive sleep/stun/amnesia/silence/etc, the actions will be disabled.
 
+## Note about 15/09/2020 update
+
+- It's now possible to get the description from hovering over an icon. This option can be disabled by checking the ShowDescription option in settings.xml.
 
 ## Note about 23/08/2020 update
 

@@ -31,6 +31,8 @@ xivhotbar_keybinds_general['Root'] = {
     {'f 3 10', 'gs', 'c toggle weapon','','TGWep'},
     {'f 3 9', 'gs', 'c toggle acc','','TGAcc'},
     --{'f 5 0', 'ct', '/refa all',nil,'Ref'},
+	{'f 2 2', 'ma', 'king of hearts', 'me', 'Hearts'},
+	{'f 2 10', 'ma', 'moogle', 'me', 'Moogle'},
 }
 
 xivhotbar_keybinds_general['Medicine'] = {

@@ -34,7 +34,7 @@
 
 _addon.name = 'XIVHotbar'
 _addon.author = 'Edeon, Akirane'
-_addon.version = '0.3'
+_addon.version = '0.5'
 _addon.language = 'english'
 _addon.commands = {'xivhotbar', 'htb', 'execute'}
 
@@ -65,8 +65,8 @@ local theme_options = theme.apply(settings)
 -- Addon Dependencies --
 local keyboard = require('lib/keyboard_mapper')
 local box = require('lib/move_box')
-local player = require('player')
-local ui = require('ui')
+local player = require('lib/player')
+local ui = require('lib/ui')
 local xiv
 local current_zone = 0
 local state = {
@@ -88,19 +88,17 @@ function initialize()
     local windower_player = windower.ffxi.get_player()
     local server = resources.servers[windower.ffxi.get_info().server].en
 
-    if windower_player == nil then return end
 	local inventory = windower.ffxi.get_items()
 	local equipment = inventory['equipment']
-
-	weapon_id = windower.ffxi.get_items(equipment['main_bag'], equipment['main']).id
+	if (theme_options.enable_weapon_switching == true) then
+		weapon_id = windower.ffxi.get_items(equipment['main_bag'], equipment['main']).id
+		skill_type = resources.items[weapon_id].skill
+		player:load_weaponskill_actions(skill_type)
+	end
 	current_mp = windower_player.vitals.mp
 	current_tp = windower_player.vitals.tp
 	ui:update_mp(current_mp)
 	ui:update_tp(current_tp)
-
-	skill_type = resources.items[weapon_id].skill
-	player:load_weaponskill_actions(skill_type)
-
     player:initialize(windower_player, server, theme_options)
     player:load_hotbar()
     keyboard:bind_keys(theme_options.rows, theme_options.columns)
@@ -110,6 +108,7 @@ function initialize()
 	state.ready = true
 	print('[20/08/2020] XIVHOTBAR: Type "//htb help" for more info')
 	print('[23/08/2020] XIVHOTBAR: Keybinds have been moved to data/keybinds.lua.')
+	print('[15/09/2020] XIVHOTBAR: Description for icons has been added.')
 end
 
 
@@ -320,7 +319,7 @@ local function mouse_hotbars(type, x, y, delta, blocked)
 		elseif type == 0 then -- Mouse move
 			local hotbar, action = ui:hovered(x, y)
 			if(action ~= nil and hotbar ~= nil) then
-				ui:light_up_action(hotbar, action)
+				ui:light_up_action(x, y, hotbar, action, player:get_hotbar_info())
 				return_value = true
 			else
 				ui:hide_hover()
@@ -373,7 +372,7 @@ windower.register_event('prerender',function()
             ui:load_player_hotbar(player:get_hotbar_info())
 		end
         ui:check_recasts(player:get_hotbar_info())
-		ui:check_hover()
+		--ui:check_hover()
     end
 end)
 
