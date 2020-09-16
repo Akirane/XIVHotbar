@@ -812,7 +812,7 @@ function ui:inner_check_recasts(player_hotbar, environment, player_vitals, row, 
 		disable_slot(self, row, slot, action)
 	elseif action == nil  then
 		if (self.theme.hide_empty_slots == true) then
-			self:hide_recast(row, slot)
+			hide_recast(self, row, slot)
 		else
 			clear_recast(self, row, slot)
 		end
