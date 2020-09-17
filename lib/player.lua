@@ -28,30 +28,6 @@
 
 local action_manager = require('lib/action_manager')
 local player = {}
-local current_stance = nil
-
-buff_table = {
-    [211] = 'Light Arts',
-    [212] = 'Dark Arts',
-	-- Avatars
-	[1001] = 'Carbuncle',
-	[1002] = 'Ifrit',
-	[1003] = 'Shiva',
-	[1004] = 'Leviathan',
-	[1005] = 'Ramuh',
-	[1006] = 'Fenrir',
-	[1007] = 'Diabolos',
-	[1008] = 'Alexander',
-	[1009] = 'Cait Sith',
-	[1010] = 'Garuda',
-	[1011] = 'Odin',
-	[1012] = 'Titan',
-	[1013] = 'Atomos',
-	-- Weapons
-	[2001] = 'Sword',
-	[2002] = 'Dagger',
-	[2003] = 'Club',
-}
 
 --job_functions = {}
 
@@ -120,7 +96,7 @@ function player:load_weaponskill_actions(skill_type)
 end
 
 function player:load_job_ability_actions(buff_id)
-    current_stance = buff_id
+	action_manager:update_stance(buff_id)
 	action_manager:load(self)
 end
 

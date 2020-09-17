@@ -72,6 +72,8 @@ local current_zone = 0
 local state = {
 	ready = false,
 	demo = false,
+	inventory_ready = false,
+	inventory_loading = false
 }
 
 -------
@@ -419,9 +421,7 @@ windower.register_event('login', 'load', function()
     end
 end)
 
-
--- ON ACTION USED --
-windower.register_event('action', function(act)
+function check_action_used(act)
 	if state.ready == true then
 		if (act.param == 211 or act.param == 212) then 
 			if (act.actor_id == player.id and act.category == 0x06) then
@@ -430,8 +430,34 @@ windower.register_event('action', function(act)
 			end
 		end
 	end
-end)
+end
 
+
+-- ON ACTION USED --
+windower.register_event('action', check_action_used)
+
+function get_weapon_type(byte_one, byte_two)
+	if (theme_options.enable_weapon_switching == true) then
+		if (state.inventory_loading == false) then
+			log("Loading weapons...")
+			state.inventory_loading = true
+		end
+		if (windower.ffxi.get_items(byte_one, byte_two).id ~= 0) then
+			skill_type = resources.items[windower.ffxi.get_items(byte_one, byte_two).id].skill
+			if(skill_type  ~= player:get_current_weapontype()) then
+				player:load_weaponskill_actions(skill_type)
+				reload_hotbar()
+			end
+			if (state.inventory_ready == false) then
+				state.inventory_ready = true
+				log("Loading complete!")
+			end
+		else
+			coroutine.sleep(7)
+			get_weapon_type(byte_one, byte_two)
+		end
+	end
+end
 
 -- ON ZONE  --
 windower.register_event('incoming chunk', function(id, data)
@@ -443,13 +469,7 @@ windower.register_event('incoming chunk', function(id, data)
 			ui.hotbar.hide_hotbars = true
 			ui:hide()
 		elseif id == 0x50 and data:byte(6) == 0 then
-			if (theme_options.enable_weapon_switching == true) then
-				skill_type = resources.items[windower.ffxi.get_items(data:byte(7), data:byte(5)).id].skill
-				if(skill_type  ~= player:get_current_weapontype()) then
-					player:load_weaponskill_actions(skill_type)
-					reload_hotbar()
-				end
-			end
+			get_weapon_type(data:byte(7), data:byte(5))
 		end
 	end
 end)

@@ -105,6 +105,7 @@ xivhotbar_keybinds_job['Light Arts'] = {
   {'b 4 1',  'ja', 'Penury', 'me', 'MP 1/2'},
   {'b 4 2',  'ja', 'Celerity', 'me', 'Fast'},
   {'b 4 3',  'ja', 'Accession', 'me', 'AoE'},
+  {'b 4 4',  'ma', 'Regen IV', 'me', ''},
 }
 
 xivhotbar_keybinds_job['Dark Arts'] = {
@@ -112,6 +113,7 @@ xivhotbar_keybinds_job['Dark Arts'] = {
   {'b 4 1',  'ja', 'Parsimony', 'me', 'MP 1/2'},
   {'b 4 2',  'ja', 'Alacrity', 'me', 'Fast'},
   {'b 4 3',  'ja', 'Manifestation', 'me', 'AoE'},
+  {'b 4 4',  'ma', 'Impact', 't', ''},
 }
 
 xivhotbar_keybinds_job['WAR'] = {

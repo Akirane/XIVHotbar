@@ -35,6 +35,26 @@ local general_actions = {}
 local stance_actions = {}
 local job_ability_actions = {}
 local weaponskill_actions = {}
+local current_stance = nil
+
+buff_table = {
+    [211] = 'Light Arts',
+    [212] = 'Dark Arts',
+	-- Avatars
+	[1001] = 'Carbuncle',
+	[1002] = 'Ifrit',
+	[1003] = 'Shiva',
+	[1004] = 'Leviathan',
+	[1005] = 'Ramuh',
+	[1006] = 'Fenrir',
+	[1007] = 'Diabolos',
+	[1008] = 'Alexander',
+	[1009] = 'Cait Sith',
+	[1010] = 'Garuda',
+	[1011] = 'Odin',
+	[1012] = 'Titan',
+	[1013] = 'Atomos',
+}
 
 weaponskill_actions.xivhotbar_keybinds_job = {}
 subjob_actions.xivhotbar_keybinds_job = {}
@@ -51,10 +71,21 @@ _innerG.xivhotbar_keybinds_job = {}
 general_table = {}
 general_table.xivhotbar_keybinds_general = {}
 
-weaponskill_enum = {
-	dagger = 2,
-	sword = 3,
-	club = 11,
+weaponskill_types = {
+	[1] = "Hand-to-hand",
+	[2] = "Dagger", 
+	[3] = "Sword",
+	[4] = "Great Sword",
+	[5] = "Axe",
+	[6] = "Great Axe",
+	[7] = "Scythe",
+	[8] = "Polearm",
+	[9] = "Katana",
+	[10] = "Great Katana",
+	[11] = "Club",
+	[12] = "Staff",
+	[25] = "Bow",
+	[26] = "Marksmanship",
 }
 
 
@@ -202,6 +233,10 @@ local function fill_table(file_table, file_key, actions_table)
 	end
 end
 
+function action_manager:update_stance(buff_id)
+	current_stance = buff_id
+end
+
 -- create a default hotbar
 local function create_default_hotbar(action_manager)
     windower.console.write('XIVHotbar: no hotbar found. Creating a default hotbar.')
@@ -226,14 +261,6 @@ local function parse_binds(theme_options, player, hotbar)
 		fill_table(hotbar['Base'][key], key, actions)
 	end
 
-    if (hotbar[buff_table[current_stance]] ~= nil) then
-
-        local stance_table = hotbar[buff_table[current_stance]]
-        for key, val in pairs(stance_table) do
-            fill_table(stance_table[key], key, stance_actions)
-        end
-    end
-
 	if (hotbar[player.sub_job] ~= nil) then
 		for key, val in pairs(hotbar[player.sub_job]) do
 			fill_table(hotbar[player.sub_job][key], key, subjob_actions)
@@ -245,23 +272,18 @@ local function parse_binds(theme_options, player, hotbar)
 		subjob_actions = {}
 	end
 
+    if (hotbar[buff_table[current_stance]] ~= nil) then
+        local stance_table = hotbar[buff_table[current_stance]]
+        for key, val in pairs(stance_table) do
+            fill_table(stance_table[key], key, stance_actions)
+        end
+    end
+
 	if (theme_options.enable_weapon_switching == true) then
-		if (player.current_weapon == weaponskill_enum.dagger) then
-			if (hotbar['Dagger'] ~= nil) then
-				for key, val in pairs(hotbar['Dagger']) do
-					fill_table(hotbar['Dagger'][key], key, weaponskill_actions)
-				end
-			end
-		elseif (player.current_weapon == weaponskill_enum.sword) then
-			if (hotbar['Sword'] ~= nil) then
-				for key, val in pairs(hotbar['Sword']) do
-					fill_table(hotbar['Sword'][key], key, weaponskill_actions)
-				end
-			end
-		elseif (player.current_weapon == weaponskill_enum.club) then
-			if (hotbar['Club'] ~= nil) then
-				for key, val in pairs(hotbar['Club']) do
-					fill_table(hotbar['Club'][key], key, weaponskill_actions)
+		if (weaponskill_types[player.current_weapon] ~= nil) then
+			if (hotbar[weaponskill_types[player.current_weapon]] ~= nil) then
+				for key, val in pairs(hotbar[weaponskill_types[player.current_weapon]]) do
+					fill_table(hotbar[weaponskill_types[player.current_weapon]][key], key, weaponskill_actions)
 				end
 			end
 		end
@@ -386,8 +408,6 @@ function action_manager:insert_action(player_subjob, args)
 		if self.hotbar_settings.active_environment == 'field' then return 'f' else return 'b' end
 	end
 
-	print(prio)
-	print(environment_to_send())
     local new_action = action_manager:build(action_type, action, target, alias, icon)
 	file_manager:insert_action(new_action, prio, player_subjob, environment_to_send(), row, slot)
 end

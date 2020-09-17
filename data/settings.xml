@@ -37,6 +37,7 @@
             <HideInventoryCount>false</HideInventoryCount>
             <HideRecastAnimation>false</HideRecastAnimation>
             <HideRecastText>true</HideRecastText>
+            <ShowDescription>true</ShowDescription>
             <Offsets>
                 <Fifth>
                     <OffsetX>530</OffsetX>
@@ -69,7 +70,6 @@
                     <Vertical>false</Vertical>
                 </Third>
             </Offsets>
-            <ShowDescription>true</ShowDescription>
             <SlotIconScale>1.2</SlotIconScale>
             <columns>12</columns>
             <rows>4</rows>

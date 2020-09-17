@@ -3,6 +3,23 @@ This version is further work on SirEdeonX's original addon, you can check his wo
 
 ![XIVHotbar](/images/demo/hover.gif)
 
+## Note about 17/09/2020 update
+
+- The following issues has been resolved:
+	1. Hiding unused icons would print errors indefinitely.
+	2. Light Arts/Dark Arts stance changing would not load actions.
+
+- The weapon changing feature has been updated to include all weapon types. If you want to give this feature a try, change the value of EnableWeaponSwitching from false to true in the settings.xml file. The addon will wait for the inventory to be loaded, then it will load in the appropriate weapon type actions. Look at RUN.lua or RDM.lua in data/Akirane/ folder for examples. The keys are following (note they are case sensitive):
+
+|              |         |              |
+|--------------|---------|--------------|
+| Hand-to-hand | Dagger  | Sword        |
+| Great Sword  | Axe     | Great Axe    |
+| Scythe       | Polearm | Scythe       |
+| Polearm      | Katana  | Great Katana |
+| Club         | Staff   | Bow          |
+| Marksmanship |         |              |
+
 
 ## Note about 15/09/2020 update
 
