@@ -88,7 +88,10 @@ function initialize()
     ui:setup(theme_options)
 	box:init(theme_options)
     local windower_player = windower.ffxi.get_player()
-    local server = resources.servers[windower.ffxi.get_info().server].en
+    local server = "PrivateServer"
+    if resources.servers[windower.ffxi.get_info().server] ~= nil then
+        server = resources.servers[windower.ffxi.get_info().server].en
+    end
 
 	local inventory = windower.ffxi.get_items()
 	local equipment = inventory['equipment']
