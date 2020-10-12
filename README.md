@@ -5,7 +5,7 @@ This version is further work on SirEdeonX's original addon, you can check his wo
 
 ## 12/10/2020 update
 
-Implemented a workaround for private server players. You need to create a new directory named "PrivateServer_0" in Data/ folder. 
+Implemented a workaround for private server players. Keep in mind if you are playing on a private server you need to use a different font than Sans-Serif, you can find this setting under Texts/Font in settings.xml. Feel free to report if other fonts crashes the game.
 
 ## Note about 17/09/2020 update
 
