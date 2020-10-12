@@ -3,6 +3,10 @@ This version is further work on SirEdeonX's original addon, you can check his wo
 
 ![XIVHotbar](/images/demo/hover.gif)
 
+## 12/10/2020 update
+
+Implemented a workaround for private server players. You need to create a new directory named "PrivateServer_0" in Data/ folder. 
+
 ## Note about 17/09/2020 update
 
 - The following issues has been resolved:

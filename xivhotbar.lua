@@ -88,11 +88,9 @@ function initialize()
     ui:setup(theme_options)
 	box:init(theme_options)
     local windower_player = windower.ffxi.get_player()
-    local server = "PrivateServer"
-    if resources.servers[windower.ffxi.get_info().server] ~= nil then
-        server = resources.servers[windower.ffxi.get_info().server].en
-    end
-
+	local server = resources.servers[windower.ffxi.get_info().server] 
+		and resources.servers[windower.ffxi.get_info().server].en 
+		or "PrivateServer_"..tostring(windower.ffxi.get_info().server)
 	local inventory = windower.ffxi.get_items()
 	local equipment = inventory['equipment']
 	if (theme_options.enable_weapon_switching == true) then
