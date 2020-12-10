@@ -113,6 +113,15 @@ Create a folder with following structure inside *data* folder:
 	  {'b 3 1', 'ja', 'Light Arts', 'me', 'L.A.'},
 	}
 	
+	--Console Commands --Example General.lua for given character.
+	xivhotbar_keybinds_general['Root'] = {
+	   {'f 1 1', 's','ahsoka /assist <bt>','','AltAssist'}, --send a command using send addon to alt character.
+	   {'f 1 2', 'input','/assist <bt>','','Assist'}, -- input normal command as if player into chat log.
+	   
+	   Generic variant of option 1 1 above.
+	   {'f 1 1', 'macro','send ahsoka /assist <bt>','','AltAssist'} --execute a macro command, which inputs starting with //. Good for all windower macros.
+	}
+	
 	return xivhotbar_keybinds_job
 ```
 
