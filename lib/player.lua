@@ -159,6 +159,8 @@ function player:execute_action(slot)
         windower.chat.input('//gs ' .. action.action)
     elseif action.type == 's' then
         windower.chat.input('//send ' .. action.action)
+    elseif action.type == 'input' then
+        windower.chat.input('//input ' .. action.action)
     else
         windower.chat.input('/' .. action.type .. ' "' .. action.action .. '" <' .. action.target .. '>')
     end
