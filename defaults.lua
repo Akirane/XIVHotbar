@@ -40,8 +40,8 @@ defaults.Hotbar.HideInventoryCount = false
 defaults.Hotbar.EnableWeaponSwitching = false
 defaults.Hotbar.ShowDescription = true
 defaults.Hotbar.SlotIconScale = 1.0
-defaults.Hotbar.rows = 3
-defaults.Hotbar.columns = 3
+defaults.Hotbar.rows = 4
+defaults.Hotbar.columns = 12
 defaults.Hotbar.Offsets = {}
 defaults.Hotbar.Offsets.First  = { Vertical = false, OffsetX = 0, OffsetY = 0 }
 defaults.Hotbar.Offsets.Second = { Vertical = false, OffsetX = 0, OffsetY = 0 }
@@ -83,7 +83,7 @@ defaults.Color.Disabled = {}
 defaults.Color.Disabled.Opacity = 100
 
 defaults.Texts = {}
-defaults.Texts.Font = 'sans-serif'
+defaults.Texts.Font = 'Arial'
 defaults.Texts.Size = 7
 defaults.Texts.OffsetX = -100
 defaults.Texts.OffsetY = 0
